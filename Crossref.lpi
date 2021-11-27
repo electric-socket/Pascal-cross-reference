@@ -26,15 +26,19 @@
       <FormatVersion Value="2"/>
       <Modes Count="0"/>
     </RunParams>
-    <Units Count="2">
+    <Units Count="3">
       <Unit0>
-        <Filename Value="crossref.lpr"/>
+        <Filename Value="Crossref.lpr"/>
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="scan.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit1>
+      <Unit2>
+        <Filename Value="setup.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit2>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

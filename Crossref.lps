@@ -4,25 +4,336 @@
     <PathDelim Value="\"/>
     <Version Value="11"/>
     <BuildModes Active="Default"/>
-    <Units Count="2">
+    <Units Count="31">
       <Unit0>
-        <Filename Value="crossref.lpr"/>
+        <Filename Value="Crossref.lpr"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
-        <CursorPos X="17" Y="2"/>
-        <UsageCount Value="20"/>
+        <CursorPos X="18" Y="8"/>
+        <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="scan.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="1"/>
-        <CursorPos Y="2"/>
-        <UsageCount Value="20"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="46"/>
+        <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit1>
+      <Unit2>
+        <Filename Value="setup.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="3"/>
+        <UsageCount Value="100"/>
+        <Loaded Value="True"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="S:\xdp\lc_ident.pas"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="39" Y="213"/>
+        <UsageCount Value="50"/>
+        <Loaded Value="True"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="upd.pas"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="168"/>
+        <CursorPos X="38" Y="173"/>
+        <UsageCount Value="50"/>
+        <Loaded Value="True"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\PasCref-work\scan.pas"/>
+        <UnitName Value="Scan"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="157"/>
+        <UsageCount Value="2"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\PasCref-work\scan-old.pas"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="473"/>
+        <CursorPos X="41" Y="503"/>
+        <UsageCount Value="50"/>
+        <Loaded Value="True"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="..\PasCref-work\pascref.pas"/>
+        <EditorIndex Value="5"/>
+        <CursorPos X="31" Y="10"/>
+        <UsageCount Value="50"/>
+        <Loaded Value="True"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="X:\units\System.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="418"/>
+        <CursorPos X="17" Y="449"/>
+        <UsageCount Value="3"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="S:\xdp\clean.pas"/>
+        <EditorIndex Value="7"/>
+        <TopLine Value="480"/>
+        <CursorPos Y="481"/>
+        <UsageCount Value="45"/>
+        <Loaded Value="True"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="S:\PASCAL1.pas"/>
+        <UnitName Value="PASCALCOMPILER"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="24598"/>
+        <CursorPos Y="24623"/>
+        <UsageCount Value="3"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="S:\xdp\p1.pas"/>
+        <UnitName Value="PASCALCOMPILER"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="24562"/>
+        <CursorPos X="26" Y="24599"/>
+        <UsageCount Value="3"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="..\..\..\..\AppData\Local\Temp\Temp1_SRCCOMP.ZIP\SOURCE\COMPILER\PARSER.PAS"/>
+        <UnitName Value="parser"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="106"/>
+        <UsageCount Value="3"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="..\..\..\..\AppData\Local\Temp\Temp1_P_PASCAL.zip\SAMPLES\STRINGS.PAS"/>
+        <UnitName Value="string_test"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="3"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="..\..\..\..\AppData\Local\Temp\Temp1_P_PASCAL.zip\SAMPLES\YESNO.PAS"/>
+        <UnitName Value="yesno"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="9"/>
+        <UsageCount Value="3"/>
+      </Unit14>
+      <Unit15>
+        <Filename Value="..\..\..\..\AppData\Local\Temp\Temp1_PASCLIB.zip\PASCLIB.INC"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="41" Y="18"/>
+        <UsageCount Value="3"/>
+      </Unit15>
+      <Unit16>
+        <Filename Value="..\..\..\..\AppData\Local\Temp\Temp1_ZIPTEST.zip\ZIPTEST.PAS"/>
+        <UnitName Value="ziptest"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="110"/>
+        <UsageCount Value="3"/>
+      </Unit16>
+      <Unit17>
+        <Filename Value="..\..\..\..\AppData\Local\Temp\Temp1_ZIPSORT.zip\ZIPSORT.PAS"/>
+        <UnitName Value="ZipSort"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="69"/>
+        <UsageCount Value="3"/>
+      </Unit17>
+      <Unit18>
+        <Filename Value="..\..\..\..\AppData\Local\Temp\Temp1_xref10.zip\XREF.PAS"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="3"/>
+      </Unit18>
+      <Unit19>
+        <Filename Value="..\..\..\..\AppData\Local\Temp\Temp1_XREF.zip\XREF.PAS"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="562"/>
+        <UsageCount Value="3"/>
+      </Unit19>
+      <Unit20>
+        <Filename Value="..\..\..\..\AppData\Local\Temp\Temp1_XBASE3A.zip\XBASE3A.INC"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="52"/>
+        <UsageCount Value="3"/>
+      </Unit20>
+      <Unit21>
+        <Filename Value="..\..\..\..\AppData\Local\Temp\Temp1_TXREF1A.zip\TXREF1A.PAS"/>
+        <UnitName Value="TXREF"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="460"/>
+        <UsageCount Value="3"/>
+      </Unit21>
+      <Unit22>
+        <Filename Value="..\..\..\..\AppData\Local\Temp\Temp1_TWARS.zip\TW2001.PAS"/>
+        <UnitName Value="tw2001"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="397"/>
+        <UsageCount Value="3"/>
+      </Unit22>
+      <Unit23>
+        <Filename Value="..\..\..\..\AppData\Local\Temp\Temp1_tug002.zip\DEARC.PAS"/>
+        <UnitName Value="Dearc"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="3"/>
+      </Unit23>
+      <Unit24>
+        <Filename Value="..\..\..\..\AppData\Local\Temp\Temp1_tug002.zip\TRIG.PAS"/>
+        <UnitName Value="Trig"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="37"/>
+        <UsageCount Value="3"/>
+      </Unit24>
+      <Unit25>
+        <Filename Value="..\..\..\..\AppData\Local\Temp\Temp1_tug002.zip\TPSTACK.PAS"/>
+        <UnitName Value="TpStack"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="133"/>
+        <UsageCount Value="3"/>
+      </Unit25>
+      <Unit26>
+        <Filename Value="..\PasCref-work\crefscan.pas"/>
+        <UnitName Value="CrefScan"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="175"/>
+        <UsageCount Value="3"/>
+      </Unit26>
+      <Unit27>
+        <Filename Value="..\..\..\..\AppData\Local\Temp\Temp1_AAKINT14.ZIP\INT14.DOC"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="3"/>
+        <DefaultSyntaxHighlighter Value="None"/>
+      </Unit27>
+      <Unit28>
+        <Filename Value="..\RetroArchive\006A\3DGRAPH\3DGRAPH.doc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="10"/>
+        <UsageCount Value="3"/>
+        <DefaultSyntaxHighlighter Value="None"/>
+      </Unit28>
+      <Unit29>
+        <Filename Value="..\RetroArchive\006A\3DGRAPH\3DGRAPH.PAS"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="391"/>
+        <UsageCount Value="3"/>
+      </Unit29>
+      <Unit30>
+        <Filename Value="X:\source\err004.pas"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="14" Y="9"/>
+        <UsageCount Value="3"/>
+      </Unit30>
     </Units>
-    <JumpHistory HistoryIndex="-1"/>
+    <JumpHistory Count="29" HistoryIndex="28">
+      <Position1>
+        <Filename Value="S:\xdp\clean.pas"/>
+        <Caret TopLine="49"/>
+      </Position1>
+      <Position2>
+        <Filename Value="S:\xdp\clean.pas"/>
+        <Caret Line="507" Column="14" TopLine="493"/>
+      </Position2>
+      <Position3>
+        <Filename Value="S:\xdp\clean.pas"/>
+        <Caret Line="35" Column="3" TopLine="15"/>
+      </Position3>
+      <Position4>
+        <Filename Value="S:\xdp\clean.pas"/>
+        <Caret Line="511" TopLine="491"/>
+      </Position4>
+      <Position5>
+        <Filename Value="S:\xdp\clean.pas"/>
+        <Caret Line="332" TopLine="332"/>
+      </Position5>
+      <Position6>
+        <Filename Value="S:\xdp\clean.pas"/>
+      </Position6>
+      <Position7>
+        <Filename Value="S:\xdp\clean.pas"/>
+        <Caret Line="517" Column="12" TopLine="497"/>
+      </Position7>
+      <Position8>
+        <Filename Value="S:\xdp\clean.pas"/>
+        <Caret Line="189" Column="6" TopLine="170"/>
+      </Position8>
+      <Position9>
+        <Filename Value="S:\xdp\clean.pas"/>
+        <Caret Line="393" Column="11" TopLine="373"/>
+      </Position9>
+      <Position10>
+        <Filename Value="S:\xdp\clean.pas"/>
+        <Caret Line="420" Column="18" TopLine="497"/>
+      </Position10>
+      <Position11>
+        <Filename Value="S:\xdp\clean.pas"/>
+        <Caret Line="511" TopLine="446"/>
+      </Position11>
+      <Position12>
+        <Filename Value="S:\xdp\clean.pas"/>
+        <Caret TopLine="40"/>
+      </Position12>
+      <Position13>
+        <Filename Value="S:\xdp\clean.pas"/>
+        <Caret Line="463" TopLine="444"/>
+      </Position13>
+      <Position14>
+        <Filename Value="S:\xdp\clean.pas"/>
+        <Caret Line="35" Column="14" TopLine="15"/>
+      </Position14>
+      <Position15>
+        <Filename Value="S:\xdp\clean.pas"/>
+        <Caret Line="499" TopLine="480"/>
+      </Position15>
+      <Position16>
+        <Filename Value="setup.pas"/>
+        <Caret Line="33" Column="12"/>
+      </Position16>
+      <Position17>
+        <Filename Value="setup.pas"/>
+      </Position17>
+      <Position18>
+        <Filename Value="scan.pas"/>
+        <Caret Line="164" Column="24" TopLine="209"/>
+      </Position18>
+      <Position19>
+        <Filename Value="..\PasCref-work\scan-old.pas"/>
+        <Caret Line="212" TopLine="211"/>
+      </Position19>
+      <Position20>
+        <Filename Value="..\PasCref-work\scan-old.pas"/>
+      </Position20>
+      <Position21>
+        <Filename Value="..\PasCref-work\scan-old.pas"/>
+        <Caret Line="236" Column="36" TopLine="214"/>
+      </Position21>
+      <Position22>
+        <Filename Value="..\PasCref-work\scan-old.pas"/>
+        <Caret Line="432" Column="17" TopLine="425"/>
+      </Position22>
+      <Position23>
+        <Filename Value="..\PasCref-work\scan-old.pas"/>
+        <Caret Line="152" Column="3" TopLine="94"/>
+      </Position23>
+      <Position24>
+        <Filename Value="..\PasCref-work\scan-old.pas"/>
+        <Caret TopLine="7"/>
+      </Position24>
+      <Position25>
+        <Filename Value="S:\xdp\clean.pas"/>
+        <Caret Line="375" TopLine="356"/>
+      </Position25>
+      <Position26>
+        <Filename Value="S:\xdp\clean.pas"/>
+        <Caret Line="560" Column="5" TopLine="546"/>
+      </Position26>
+      <Position27>
+        <Filename Value="S:\xdp\clean.pas"/>
+      </Position27>
+      <Position28>
+        <Filename Value="S:\xdp\clean.pas"/>
+        <Caret Line="128" Column="16" TopLine="108"/>
+      </Position28>
+      <Position29>
+        <Filename Value="..\PasCref-work\scan-old.pas"/>
+        <Caret Line="427" TopLine="401"/>
+      </Position29>
+    </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>
       <Modes Count="0" ActiveMode=""/>

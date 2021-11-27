@@ -1,0 +1,602 @@
+TURBO SYNTAX CHECKER
+--------------------
+Version 4.1A
+Copyright (C) 1988 by Pradeep Arora (Supratech Inc.).
+All rights reserved.
+
+Please send all communications or suggestions to the address below.
+
+
+CONDITIONS ON USING THIS SOFTWARE
+---------------------------------
+
+This is NOT a free software.
+
+This copy of software is being distributed under the shareware concept of
+marketing software. You are allowed to distribute unmodified copies of this
+software for a modest fee provided you mention the shareware concept
+to the buyer and convey the fact that any use use of this software other
+than for testing purposes requires that a copy be registered with
+the author by paying the required fee.
+
+This is NOT a public domain program. You are allowed to try out the
+program for free. Any further use requires that you register your copy
+for $25 registration fee. Registration entitles you to obtain further
+updates of this software for free. Source code consists of over
+10,000 lines of well documented Turbo Pascal v4.0 code which is available
+for an additional source code license fee of $25.
+
+Please send me a check or money order only. No credit cards please.
+My business address is:
+
+Supratech Inc.
+Attn: Pradeep Arora
+P.O. Box 54622
+Oklahoma City, OK 73154
+
+TECHINCAL SUPPORT FOR REGISTERED USERS
+--------------------------------------
+
+I can support only the registered users on as available basis only through
+the following media:
+
+Compuserve: EasyPlex to [76446,526]
+
+Phone: (405) 329 1403
+   MONDAY to FRIDAY
+      Leave a message during day time (9am to 6pm). I can return your call
+         as CALL COLLECT (only) next day.
+      6pm to 8pm central time (Monday to Friday Evenings Only).
+   SATURDAY
+      9am to 5pm central time.
+   SUNDAY
+      Sorry, but I am busy on Sundays.
+
+Mail:
+    Pradeep Arora
+    P.O. Box 53251
+    Oklahoma City, OK 73152
+
+
+WHAT TSC PROGRAM DOES?
+----------------------
+The most important features of TSC program are:
+
+  It finds all syntax errors in a single pass through source code. This
+    error report generated from TSC program can be directed to any of
+    three reporting methods: to screen, to printer, or to an error file.
+    You can select any combination for reporting, even all three at the
+    same time. TSC can check complete programs or individual units.
+
+  It allows development of source code using the numeric coprocessor
+    data types (SINGLE, DOUBLE, EXTENDED and COMP) on a machine which
+    does not have a coprocessor (8087 or 80287 or 80387) installed.
+
+Turbo Syntax Checker (TSC) is a tool designed to work together
+with Borland International's Turbo Pascal v4.0 compiler. TSC is meant
+for the user who feels frustrated by Turbo Pascal's insistence on
+recompiling entire files again even for the most minor mistakes. If
+you are trying to convert an application from other languages or from
+version 3 of Turbo Pascal, you will benefit from multiple errors
+located by TSC for you.
+
+TSC program can load your compiler settings from wither of TURBO.TP or
+TPC.CFG files. This minimizes efforts required to use it.
+
+There are certain limitations to what TSC can do. Please see "TECHNICAL
+NOTES AND CAPABILITIES DISCUSSION" chapter for details.
+
+TRADEMARKS
+----------
+The following trademarks are used throughout this manual. When you
+come across them, please remember that they are the registered
+trademarks of the companies shown below.
+
+IBM, IBM PC, IBM PC XT and IBM PC AT are trademarks of International
+Business Machines Corporation.
+
+MS-DOS is a trademarks of Microsoft Corporation.
+
+Turbo Pascal is a trademark of Borland International.
+
+TDebug Plus is a trademark of Turbo Power Software.
+
+Mach2 is a trademark of MicroHelp Inc.
+
+
+HARDWARE REQUIREMENTS
+---------------------
+
+* IBM PC, XT, AT or close compatible running DOS 2.x or later.
+* 125K RAM available when invoking the TSC program.
+* 80 column monitor.
+* Optionally, a printer for printing error reports.
+
+
+FILES ON THE DISK
+-----------------
+
+READ.ME     - Read this before proceeding.
+TSC.EXE     - The main TSC program file.
+TSC.DOC     - This file that you are reading.
+SYSTEM.TDL  - Library file to load in SYSTEM unit definitions.
+DOS.TDL     - Library file to load in DOS unit definitions.
+PRINTER.TDL - Library file to load in PRINTER unit definitions.
+CRT.TDL     - Library file to load in CRT unit definitions.
+GRAPH.TDL   - Library file to load in GRAPH unit definitions.
+TURBO3.TDL  - Library file to load in TURBO3 unit definitions.
+GRAPH3.TDL  - Library file to load in GRAPH3 unit definitions.
+
+
+INSTALLATION
+------------
+
+In short, just use TSC program like any other program you run from the DOS
+command line prompt.
+
+There is no special install program that you need to run to be able to
+start using the TSC program. All you have to do is copy TSC program
+files to a directory and then use the "TSC MainFile.Ext"
+command from the DOS prompt.
+
+TSC program needs the .TDL files for supporting the standard units.
+If you are using DOS3.x, TSC program will first look for its support
+files in directory where TSC.EXE is located.
+It then looks for these files in the current directory, and then
+along the Turbo Files path as specified via the command line or in
+TURBO.TP or TPC.CFG files. This logic is same as the one used by the
+Turbo Pascal compiler programs, TURBO.EXE or TPC.EXE.
+
+We recommend that you copy these files to either the directory where
+your Turbo Pascal compiler files are or put them in a separate directory
+and then for DOS2.x set the Turbo Path to this directory using the /T
+command line switch or by using the TURBO.TP or the TPC.CFG files.
+
+
+USING TSC PROGRAM
+-----------------
+
+TSC program is used from the DOS command line by entering a command as per
+the following syntax:
+
+TSC [Switches] MainFile
+
+Remember to separate the [Switches] if you are using any, from word TSC
+on command line by a space and also separate MainFile from earlier part
+of the command line by preceding it with a space. A horizontal tab can
+also be used instead of space.
+
+TSC program first proceeds with its initialization and then will proceed
+with checking MainFile program/unit source file for errors. It will
+add a default extension of .PAS to MainFile if no extension was given. To
+use a FileName without any extension use a period '.' at its end.
+
+Switches are used to override or modify what TSC program does by virtue of
+its factory settings. These switches are discussed in the following
+"Command Line Switches" chapter. For first time use you may try to use
+the TSC program without any switches and then use those switches that
+you may need to.
+
+If you find that you are consistently using a particular switch, it may
+save you time to write a DOS batch file to invoke the TSC program. Consult
+your DOS User's Guide for details.
+
+Proper initialization of TSC program requires that certain data
+be read from SYSTEM.TDL file. This file is always processed first
+as a library file, before checking of your source program can
+begin.
+
+Whenever a source program request a unit be used, via the USES
+statement, TSC program first looks to see if it has already been
+processed.  If not, a file name with .PAS extension is searched for
+the unit. If that is also not found, a library file with .TDL
+extension is located. If that too fails, a file not found error
+message is generated.
+
+COMMAND LINE SWITCHES
+---------------------
+
+There are several command line switches through which you can give TSC
+instructions about modifying the current session. The scheme that we
+have used resembles the one used by TPC.EXE or TURBO.EXE compiler
+programs. This should facilitate your use of TSC program.
+
+The TSC program syntax (to repeat ourselves) is,
+TSC [Switches] MainFile
+
+The switches listed below are recognized as being legal by TSC program.
+All other switches are treated as errors and TSC program will halt
+with an error message. You must in that case correct the command you gave
+to run TSC and try again.
+
+Switches are started by leaving a space after the word TSC on the command
+line. MainFile should also be separated from the switches by a space.
+To use a switch type it in as shown below in the table. All switches are
+a single word in their entirety and may not contain any spaces/tabs.
+You may as many switches as you want to, by just putting them one after the
+other. You do not have to put a space in between the switches but you may do
+so if you want to. The '/' char is enough to tell TSC program that a
+new switch has been requested.
+
+
+Switch    What It Tells TSC Program To Do           Factor Setting
+
+/CFG      Use TPC.CFG file for initializing         NO
+          By default, TSC program uses TURBO.TP
+          file for program defaults.
+
+/NOPAUSE  Do not wait for user to press <Esc>
+          after each error is reported. Used
+          when obtaining reports to
+
+
+/87       Override 8087 detection to allow          NO
+          development of source code using
+          numeric coprocessor data types.
+/NO87     No numeric coprocessor data types.        NO
+
+          Default here is automatic detection
+          of coprocessor. Any switch setting
+          applies to all units processed in the
+          current session.
+
+/NOCRT    Suppress report to screen                 NO
+          Used when you want no report
+          on screen but still on the two listed
+          below.
+/LST      Error report to printer                   NO
+          TSC program uses the standard unit
+          PRINTER for this purpose.
+
+/ERRF     Error report to error file                NO
+          TSC creates a file called TSCERRF.$$$
+          in the current directory. Any existing
+          file of the same name would be deleted
+          and a new one created.
+
+          The above three options of /NOCRT,
+          /LST and /ERRF are processed in the sequence
+          they are put on the command line.
+          You may also select more than one method
+          of error reporting, at the same time
+          by giving TSC program the switches for
+          your choices.
+
+/B        Check all units completely for            NO
+          errors. This means check both the
+          INTERFACE and the IMPLEMENTATION
+          parts.
+/M        Do a make of MainFile specified.          YES
+          TSC will find errors in INTERFACE
+          part only of the units that are used
+          by the MainFile. To have TSC program
+          check the IMPLEMENTATION part too,
+          use the /B switch.
+
+/W9       A switch reserved for technical support   NO
+          of TSC program.
+
+/DDefines_List
+          Add conditional defines to the factory
+          set defines list. Defines_List is a
+          list of directive names that you want to
+          have defined for all of the units that
+          will be processed in this session. It is
+          a list of names separated by ';' char.
+          These names are added on to those that
+          are predefined and those that are set by
+          use of TURBO.TP or TPC.CFG files.
+
+/TTurbo_Files_Path
+          Add Turbo_Files_Path to where the files
+          used by TSC program will be looked for.
+          These are the TURBO.TP, TPC.CFG
+          and all of the .TDL library files.
+          Turbo_Files_Path is a list of directories
+          separated by ';' char.
+
+/UUnit_Files_Path
+          Add Unit_Files_Path to where the unit
+          files that are for units in USES statment
+          will be looked for. Unit_Files_Path is
+          a list of directories separated by
+          ';' char.
+
+/IInclude_Files_Path
+          Add Include_Files_Path to where the files
+          that are used with $I compiler directive
+          will be looked for. Include_Files_Path is a
+          list of directories separated by
+          ';' char.
+
+/OObj_Files_Path
+          Add Obj_Files_Path to where the external
+          assembler produced '.OBJ' files will
+          be looked for. These are used with the
+          link in file, the $L, compiler directive.
+          Obj_Files_Path is a list of directories
+          separated by ';' char.
+
+/$B+      Override the $B flag as set by factory
+/$B-      settings or the TURBO.TP or TPC.CFG
+          files.
+
+/$D+      Override the $D flag.
+/$D-
+
+/$F+      Override the $F flag.
+/$F-
+
+/$I+      Override the $I flag.
+/$I-
+
+/$L+      Override the $L flag.
+/$L-
+
+/$N+      Override the $N flag.
+/$N-
+
+/$R+      Override the $R flag.
+/$R-
+
+/$S+      Override the $S flag.
+/$S-
+
+/$T+      Override the $T flag.
+/$T-
+
+/$V+      Override the $V flag.
+/$V-
+
+The directives that start with '/$' characters can also be listed
+together without the use of '/$' characters but by using a comma ','
+to separate them.
+For example, '/$B+/$R+/$N-' and '/$B+,R-,N-' and '/$B+,R-/$N-'
+all three are equivalent and have exactly the same effect.
+These are discussed in detail on page 182 of your Turbo Pascal
+manual.
+
+Here are some examples to clarify how you could use command line
+switches.
+
+TSC /B PorgramA
+
+    This command line means to check ProgramA.PAS file for errors
+    and check all units that it uses.
+
+TSC /M ProgramA
+
+    This command line means to check PorgramA.PAS file for errors
+    and the INTERFACE part of all unit it uses. IMPLEMENTATION part
+    of these units is ignored.
+
+TSC ProgramA
+
+    This means exactly what preceding line with "TSC /M ProgramA"
+    means. '/M' switch is factory set.
+
+TSC /I..\SOURCE/U..\LIBS MyMain.P
+
+    This means add "..\SOURCE" to Include files path, add "..\LIBS"
+    to Unit Files path, and then process MyMain.P source file.
+
+TSC /DDEBUG MainFile.OLD
+
+    This means define a directive name "DEBUG" for all units that will
+    be processed in this session and then start checking with file
+    MainFile.OLD.
+
+
+CREATING YOUR .TDL LIBRARIES
+----------------------------
+
+To support the Turbo Pascal provided units of SYSTEM, DOS, CRT and
+others, TSC program uses a its own library format via .TDL files. These
+files are very easy to create. Remember that TSC first looks for a '.PAS'
+file for the units and only then for a '.TDL' file. Thus a '.TDL' file
+would need to be created only if you do not have source for the unit.
+
+A '.TDL' library file has the following format:
+
+UNIT UnitName;
+INTERFACE
+{*** declarations for the unit go here ****}
+IMPLEMENTATION
+{*** This implementation section is completely ignored by TSC program.
+    Thus it may be empty or a copy of the actual source.
+****}
+END.
+
+HOW TSC PROGRAM OPERATES?
+-------------------------
+
+This chapter deals with how TSC program goes about making decisions that
+will enable it to locate all the files that it needs. The steps that TSC
+program takes are very much like what the TPC.EXE (command line version
+of your compiler) or the TURBO.EXE (interactive version of your compiler)
+program does.
+
+Four different DOS PATH like strings are used to locate files of different
+types that TSC will work with. These correspond to the path strings used by
+the compiler programs to locate files.
+
+These file types are
+
+  Unit files(via /U switch), these are the source files that contain the
+    programs and units that will be either used or checked.
+
+  Obj files(via /O switch), these are the external assembler created .OBJ
+    files that are linked in with the $L compiler directives.
+
+  Included files(via /I switch), these files are included into source code
+    using the $I directive, and are different from unit files.
+
+  Turbo files(via /T switch), these are the TURBO.TP, TPC.CFG and
+    all of the .TDL library files that TSC program uses.
+
+See page 163 and chapter 12 "Command Line Reference" of Turbo Pascal manual for
+detailed discussion of these paths. /T path of TURBO.EXE and TPC.EXE programs
+is used for TSC program files too.
+
+TSC program adds on default extensions to your file names. The source
+file (included, program and unit files) are given a '.PAS' extension if
+a file name without an extension is given. These are the main file to be
+checked and the /I and /U path files. A default extension of '.OBJ' is
+used for /O path files. No default extension is used for /T path files
+and they must be specified along with their complete name and extension.
+To use a file name with no extension, use a period '.' at its end.
+
+The above discussed four paths may be set in TURBO.TP file, TPC.CFG file or
+could have been given from command line.
+
+TSC program reads in the command line paths and the switches given.
+The -CFG switch tells it to go and look for paths in TPC.CFG file.
+The -TP switch tells it to go look for TURBO.TP file. The -TP switch is the
+default and is not needed. If it can not find the file, TSC program halts.
+
+TSC then reads either TURBO.TP file or TPC.CFG file. All of the paths
+located in either of these files are then concatenated to the end of
+any command line paths given. This will cause path set via command line to
+be searched before the TURBO.TP and TPC.CFG paths.
+
+TSC program then completes the definition of SYSTEM unit by loading in
+SYSTEM.TDL file.
+
+Notes On Turbo Pascal Version 4.0
+
+Turbo Pascal version 4 is a very good compiler for developing
+applications on microcomputers. Even in a product of such a calibre,
+there are a few anomalies that programmers should be aware of.
+TSC attempts to "support" these quirks when they do not involve
+serious consequences:
+
+-----------------------------------------
+Consider a code fragment like:
+
+
+{$UNDEF NEVER}
+{$IFDEF NEVER}
+...
+    (* this comment is never closed off
+{$ENDIF}
+
+
+The Turbo Pascal manual says that all text between the {$IFDEF NEVER}
+directive and {$ENDIF} directive would be ignored. But the compiler
+fails to find the {$ENDIF} directive. It has to find the end of the
+comment that you started before it will recognize anything else at
+all. TSC was programmed to do exactly the same.
+
+-----------------------------------------
+Consider another code fragment like:
+
+
+TYPE
+  ChA : array[1..2] of char;
+VAR
+  X : INTEGER;
+  ChA1, ChA2 : ChA absolute X;
+
+
+The Turbo Pascal manual says you can not use a list of variable names
+to delare them to be absolute to same variable. You must do them one
+by one, each in a separate declaration. Version 4.0 of the compiler
+does not catch this error. So be warned against such usages. TSC was
+prgrammed again not to catch such usages.
+
+
+-----------------------------------------
+This one is not a bug but a situation which has no impact on the
+way your program will work:
+
+type
+	s : packed string[9];
+
+The manual says you can use PACKED before structured types. But
+you can also do so before the string type declaration.
+We just wanted to let you know that like the compiler, TSC does
+not catch this.
+
+-----------------------------------------
+Now consider a tricky bug as shown below:
+
+
+function A : integer;
+var A : integer;
+begin
+  A := 10;
+end;
+
+
+What we have here is that a variable with the same name as the function
+being declared. The value will get assigned to the local variable.
+Neither Turbo Pascal nor TSC can trap this kind of error, since such
+usage is perfectly legal.
+
+
+TECHNICAL NOTES AND CAPABILITIES DISCUSSION
+-------------------------------------------
+
+TSC was written using Version 4 of Turbo Pascal compiler running on
+a Kaypro 286 computer. A beta version of TDebug Plus from Turbo Power
+Software was used for debugging purposes.
+
+TSC is not a compiler. To compile your applications you still need
+to use the Turbo Pascal compiler.
+
+TSC program can NOT read .TPU units generated by the compiler.
+
+If your unit source file name is different from the unit name, you must
+use the $U directive to provide the complete file name where ever you use
+the unit.
+
+You can check units or program source files. TSC processes units that
+are being used in very much the same manner as the Turbo Pascal compiler
+does. When it encounters the USES statement, it starts interfacing these
+used units. If a unit is builtin (loaded via .TDL libraries), the defintions
+of that unit are linked in. If it is a new unit, we start checking this
+new unit for errors and build up its definitions. When this unit checking
+will be completed we will return and continue with the original unit we
+were checking. It is therfore very important that USES statements be
+correctly written. TSC can not guess as to what you wanted when you say
+typed in a wrong unit name. It will treat units related errors (Turbo
+Pascal error numbers 68..72 and 84) as fatal. These must be corrected
+before any further processing can occur.
+
+Since you are allowed to override the need for having a coprocessor to
+develop applications containing 8087 data types (SINGLE/DOUBLE/EXTENDED/
+COMP), TSC can not do a range check on constants involving all real data
+types. It still checks for type compatibility when real data types
+are used. The constants are still checked for being of right format as
+discussed on page 199 of Turbo Pascal manual.
+
+All real number constants are treated as being of type REAL.
+
+Errors in 8087 data types, whether while defining or while using them
+are always reported as error no 116, "Must be in 8087 mode to compile
+this."
+
+Compiling of source files containing 8087 data types still requires a
+computer having a math coprocessor installed. TSC will help you by finding
+your syntax errors.
+
+No checks are performed on the size of variables or values being
+typecasted to a different type.
+
+For inline statements and inline procedure declarations, TSC does not
+catch any errors relating to size of integer constants used.
+
+Like the Turbo Pascal compiler, TSC can not find out if more than 8
+value parameters of 8087 data types are being used in the parameter
+list of a procedure or a function.
+
+The development of applications when you are using external assembler
+routines is facilitated by the fact that TSC can find more than one errors.
+Even if .OBJ file is not ready yet, you can complete development of the
+rest of the source code. You must still write the interface part of
+the procedure or the function. Just ignore the "File not found error"
+you get for missing .OBJ file.
+
+SYSTEM.TDL library file must be loaded before checking can begin.
+
+

@@ -134,6 +134,7 @@ var
 
   Procedure OpenFile(Name:String);
   VAR
+      E,
       ActualSize: Integer;
       Found: Boolean;
 
@@ -161,19 +162,33 @@ var
            // Since we don't know how big the output file will be,
            // just use double the size of the input file
            GetMem(OutPtr,OutSize);
-
+           E := GetLastError;
+           if e<>0 then
+           Writeln(' Win Err ',E);
            ch  := ' ';
            EndOfFile := FALSE;
       end;
   end;
 
   Procedure Writefile;
+  Var
+      K,W: Integer;
   begin
+     Writeln('Writing: ',PasFolder+PasName+'.lst');
      Assign(F,PasFolder+PasName+'.lst');
-     Rewrite(F,1);
+     Rewrite(F);
+     K := IOResult;
+     W := WinIOResult;
+     if (k<>0) or (W<>0)  then
+      begin
+      writeln('Error ',K,' or ',W);
+      halt(99);
+      end;
+
      with buffer do
           BlockWrite(F, OutPtr^,OutPos);
      Close(F);
+     Writeln('Completed.');
   end;
 
 
