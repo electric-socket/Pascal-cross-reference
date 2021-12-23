@@ -1,28 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="12"/>
+    <Version Value="11"/>
     <PathDelim Value="\"/>
     <General>
       <Flags>
         <MainUnitHasCreateFormStatements Value="False"/>
         <MainUnitHasTitleStatement Value="False"/>
         <MainUnitHasScaledStatement Value="False"/>
-        <CompatibilityMode Value="True"/>
       </Flags>
       <SessionStorage Value="InProjectDir"/>
-      <Title Value="Crossref"/>
+      <MainUnit Value="0"/>
+      <Title Value="xreffull"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
     </General>
-    <VersionInfo>
-      <UseVersionInfo Value="True"/>
-      <AutoIncrementBuild Value="True"/>
-      <RevisionNr Value="1"/>
-      <BuildNr Value="6"/>
-      <Attributes pvaPreRelease="True"/>
-      <StringTable FileDescription="Cross Reference of Pascal Programs" InternalName="CrossRef" LegalCopyright="Copyright 2021 Paul Robinson" ProductVersion="0.0.1 Trv 16"/>
-    </VersionInfo>
     <BuildModes Count="1">
       <Item1 Name="Default" Default="True"/>
     </BuildModes>
@@ -32,39 +24,23 @@
     </PublishOptions>
     <RunParams>
       <FormatVersion Value="2"/>
+      <Modes Count="0"/>
     </RunParams>
-    <Units Count="5">
+    <Units Count="1">
       <Unit0>
-        <Filename Value="Crossref.lpr"/>
+        <Filename Value="xreffull.pas"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="xrefFull"/>
       </Unit0>
-      <Unit1>
-        <Filename Value="scan.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit1>
-      <Unit2>
-        <Filename Value="setup.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit2>
-      <Unit3>
-        <Filename Value="crossref_main.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="Crossref_Main"/>
-      </Unit3>
-      <Unit4>
-        <Filename Value="specials.inc"/>
-        <IsPartOfProject Value="True"/>
-      </Unit4>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="crossref"/>
+      <Filename Value="xreffull"/>
     </Target>
     <SearchPaths>
-      <IncludeFiles Value="$(ProjOutDir)"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
   </CompilerOptions>

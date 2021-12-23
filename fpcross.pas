@@ -1,5 +1,5 @@
 PROGRAM FPCross(input, output) ;
-(*$N+       ***********
+(* $N+       ***********
 PCROSS is a cross-referencing program for PASCAL source files,
 useful also to reformat programs (indentation, upper-lower case)
 and to find omitted or excessive BEGINS and ENDS.
@@ -150,7 +150,7 @@ The cross-reference file CROSSLIST contains 4 parts:
 
 
 
-(*$T-,R100   *)
+(* $T-,R100   *)
 (*PROGRAM WHICH CREATES A CROSS REFERENCE LISTING WITH SIMULTANEOUS
  FORMATTING OF A PASCAL PROGRAM.       WRITTEN BY MANUEL MALL.*)
 
@@ -226,7 +226,7 @@ DURES.
 
 
 
-"**********************************************************************
+{**********************************************************************
  *                                                                    *
  *                                                                    *
  *   PCROSS is now  modified  to  run  under  the  Stanford  PASCAL   *
@@ -261,12 +261,14 @@ DURES.
  *                               Jan. 22 1979.                        *
  *                                                                    *
  *                                                                    *
- **********************************************************************"
+ **********************************************************************}
 
 
 
 
-    LABEL  444;
+//    LABEL  444;
+
+uses unit1;
 
 CONST
     version ='PCROSS: VERSION OF 4-aug-78 AT STANFORD UNIVERSITY';
@@ -287,14 +289,15 @@ ITS TOTAL*)
 TYPE
     pack6 = PACKED ARRAY[1..6] OF char;
     pack9 = PACKED ARRAY[1..9] OF char;
+{P} alfa = string;
 
     errkinds = (begerrinblkstr,enderrinblkstr,missgenduntil,missgthen,missgof,
 missgexit,
                 missgrpar,missgquote,linetoolong,missgmain,missgpoint);
-    lineptrty = @line;
-    listptrty = @list;
-    procstructy = @procstruc;
-    calledty = @called;
+    lineptrty = ^line;
+    listptrty = ^list;
+    procstructy = ^procstruc;
+    calledty = ^called;
 
     linenrty = 0..max_line_count;
     pagenrty = 0..max_page_count;
@@ -308,7 +311,7 @@ externsy,langsy,forsy,whilesy,
               rbracket,rparent,semicolon,point,lparent,lbracket,colon,eqlsy,
 otherssy(*DELIMITER*),
               letterup, letterlo, digit,quotech, dquotech, spacech,
-              dollarch, undsch, skipch ) ;
+              poundch, cbracech, obracech, dollarch, undsch, skipch ) ;
 
     line = PACKED RECORD
                       (*DESCRIPTION OF THE LINE NUMBER*)
@@ -370,6 +373,9 @@ BY THIS ONE*)
                     END;
 
 VAR
+     PRDebug: boolean = FALSE;
+{p}  LINENUMBER,
+
     (*                    INPUT CONTROL*)
     i,                                    (*INDEX VARIABLE*)
     bufflen,                              (*LENGTH OF THE CURRENT LINE IN THE IN
@@ -428,7 +434,7 @@ RINTING*)
     tabs: ARRAY [1..17] OF (*ascii*) char;   (*A STRING OF TABS FOR FORMATTING*)
 
     linenb : PACKED ARRAY [1..5] OF char; (*SOS-LINE NUMBER*)
-   "date_text,time_text: alfa;"           (*HEADING DATE AND TIME*)
+   {date_text,time_text: alfa;}           (*HEADING DATE AND TIME*)
     prog_name,                            (*NAME OF CURRENT PROGRAM*)
     sy      : alfa;                       (*LAST SYMBOL READ*)
     syty    : symbol;                     (*TYPE OF THE LAST SYMBOL READ*)
@@ -478,14 +484,14 @@ N THIS LINE*)
     emarktext: char;                      (*CHARACTER FOR MARKING 'END' ETC.*)
 
     (*                    SETS*)
-    delsy : ARRAY [CHAR"' '..'_'"] OF symbol; (*TYPE ARRAY FOR DELIMITER CHARS*)
+    delsy : ARRAY [CHAR{' '..'_'}] OF symbol; (*TYPE ARRAY FOR DELIMITER CHARS*)
     resnum: ARRAY[char] OF integer;       (*INDEX OF THE FIRST KEYWORD BEGINNING
  WITH THE INDEXED LETTER*)
     reslist : ARRAY [1..46] OF alfa;      (*LIST OF THE RESERVED WORDS*)
     ressy   : ARRAY [1..46] OF symbol;    (*TYPE ARRAY OF THE RESERVED WORDS*)
-   "alphanum,                             (*CHARACTERS FROM 0..9 AND A..Z*)
+   {alphanum,                             (*CHARACTERS FROM 0..9 AND A..Z*)
     digits,                               (*CHARACTERS FROM 0..9*)
-    letters : SET OF char; "              (*CHARACTERS FROM A..Z*)
+    letters : SET OF char; }              (*CHARACTERS FROM A..Z*)
     relevantsym,                          (*START SYMBOLS FOR STATEMENTS AND PRO
 CEDURES*)
     prosym,                               (*ALL SYMBOLS WHICH BEGIN A PROC.*)
@@ -513,16 +519,16 @@ ROCEDURE CALLS LIST*)
     old_prot,old_ppn,
     new_prot,new_ppn,cross_prot,cross_ppn: integer;
     programname,oldfileid,newfileid,crossfileid: alfa;
-    TTY,
+    TtyOut,
     OLDSOURCE,NEWSOURCE,CROSSLIST: text;  (*FILES PROCESSED BY THIS PROGRAM*)
 
     (*INITPROCEDURES*)
 
-  PROCEDURE init0; "INITPROCEDURE;"
+  PROCEDURE init0; {INITPROCEDURE;}
     BEGIN (*CONSTANTS*)
     eob := false;
     maxch:=114;
-    increment:= "100" 1;
+    increment:= {100} 1;
     feed:=4;
     indentbegin:=0;
     nestcomments := true ;
@@ -550,7 +556,7 @@ ROCEDURE CALLS LIST*)
     END (*CONSTANTS*);
 
 
-   procedure init1; "INITPROCEDURE;"
+   procedure init1; {INITPROCEDURE;}
     BEGIN (*RESERVED WORDS*)
     resnum['A'] :=  1;    resnum['B'] :=  3;    resnum['C'] :=  4;
     resnum['D'] :=  6;    resnum['E'] :=  9;    resnum['F'] := 13;
@@ -613,11 +619,11 @@ ROCEDURE CALLS LIST*)
     END;
 
 
-  procedure init2; "INITPROCEDURE;"
+  procedure init2; {INITPROCEDURE;}
     BEGIN (*SETS*)
-   "digits := ['0'..'9'];
+   {digits := ['0'..'9'];
     letters := ['A'..'Z'];
-    alphanum := ['0'..'9','A'..'Z'] (*LETTERS OR DIGITS*); "
+    alphanum := ['0'..'9','A'..'Z'] (*LETTERS OR DIGITS*); }
     decsym := [labelsy,constsy,typesy,varsy,programsy];
     prosym := [functionsy..initprocsy];
     endsym := [functionsy..eobsy];      (*PROSYM OR ENDSYMBOLS*)
@@ -632,7 +638,9 @@ PROCEDURE init;
     init0 ;
     init1 ;
     init2 ;
+{P Time
     rtime[0]:=clock(1);
+}
     new(heapmark);    (*THE HEAP IS DEALLOCATED AFTER EACH PROGRAM*)
     workcall := NIL;
     i := 0;
@@ -656,11 +664,12 @@ PROCEDURE init;
     bmarktext := ' ';
     emarktext := ' ';
     sy := blanks;   prog_name := blanks;
-   "date(date_text);  time(time_text);"
+   {date(date_text);  time(time_text);}
     FOR ch := chr(0) to chr(255) DO
+    begin
         firstname [ch] := NIL;
-    FOR ch := ' ' TO 'Z' DO
         delsy [ch] := othersy;
+    end;
       FOR ch := 'A' TO 'I' DO    delsy[ch] := letterup ;
       FOR ch := 'J' TO 'R' DO    delsy[ch] := letterup ;
       FOR ch := 'S' TO 'Z' DO    delsy[ch] := letterup ;
@@ -669,7 +678,10 @@ PROCEDURE init;
       FOR ch := 's' TO 'z' DO    delsy[ch] := letterlo ;
       FOR ch := '0' TO '9' DO    delsy[ch] := digit ;
       delsy['"']  := dquotech;
-      delsy['#']  := skipch ;
+      delsy['{']  := obracech;
+      delsy['}']  := cbracech;
+      delsy['^']  := skipch;
+      delsy['#']  := poundch ;
       delsy['$']  := dollarch ;
       delsy[''''] := quotech ;
       delsy['_']  := undsch ;
@@ -687,7 +699,7 @@ PROCEDURE init;
     i := 0;
     new (firstname['M']);
     listptr := firstname ['M'];
-    WITH firstname ['M']@ DO
+    WITH firstname ['M']^ DO
         BEGIN
         name := 'MAIN.     ';
         llink := NIL;
@@ -695,7 +707,7 @@ PROCEDURE init;
         profunflag := 'M';
         new (first);
         last := first;
-        WITH last@ DO
+        WITH last^ DO
             BEGIN
             linenr := 1;
             pagenr:=1;
@@ -703,7 +715,7 @@ PROCEDURE init;
             END;
         END;
     new (procstrucf);
-    WITH procstrucf@ DO
+    WITH procstrucf^ DO
         BEGIN
         procname := firstname ['M'];
         nextproc := NIL;
@@ -715,8 +727,12 @@ PROCEDURE init;
     procstrucl := procstrucf;
     ch := ' ';
     FOR i := 1 TO 17 DO
-        tabs [i] := "chr (ht)" ' ';
+        tabs [i] := {chr (ht)} ' ';
     linenb := '-----' ;
+    // swpecial display
+    Writeln('**#999 delsy [@]=''',
+                    delsy ['@'],''' delsy [^]=''',
+                    delsy ['^'],'''');
     END (*INIT*);
     (*CHECKOPTIONS[*) (*SETSWITCH*)
 
@@ -775,9 +791,16 @@ OFF
      !
      +--------------------------------------------------------------------*)
 
+// dumkmy stuv function
+{P} FUNCTION Option(const Opt:alfa):Boolean;
+    begin
+
+        result := false
+    end;
+
+
 PROCEDURE checkoptions;
-    VAR
-        try: integer;
+    VAR    ThisTry: integer;
 
     PROCEDURE setswitch(opt:alfa;VAR switch:boolean);
         VAR
@@ -793,20 +816,20 @@ PROCEDURE checkoptions;
 
     PROCEDURE showthemall (i: integer);
         BEGIN
-        writeln (tty,'(',i:3,')',oldfileid,',',programname);
-        writeln (tty, new_name,',',new_prot,',',new_ppn,',',new_dev,',',
+        writeln (TtyOut,'(',i:3,')',oldfileid,',',programname);
+        writeln (TtyOut, new_name,',',new_prot,',',new_ppn,',',new_dev,',',
 newfileid,',',programname);
-        writeln (tty, cross_name,',',cross_prot,',',cross_ppn,',',cross_dev,',',
+        writeln (TtyOut, cross_name,',',cross_prot,',',cross_ppn,',',cross_dev,',',
 crossfileid,',',programname);
-        writeln (tty);
-         (* break(tty); *)
+        writeln (TtyOut);
+         (* break(TtyOut); *)
         END;
 
     BEGIN (*CHECKOPTIONS*)
                (*##############
     getparameter(oldsource,oldfileid,programname,true);
     IF NOT option('NONEW     ') THEN
-      parnameget(new_name,new_prot,new_ppn,new_dev,newfileid,programname,false);
+      parnameget(new_name,,new_ppn,new_dev,newfileid,programname,false);
     IF NOT option('NOCROSS   ') THEN
         parnameget(cross_name,cross_prot,cross_ppn,cross_dev,crossfileid,program
 name,false);
@@ -837,18 +860,18 @@ sfileid);
         end;
  #####################*)
 
-    renewing:= true "NOT option('NONEW     ')" ;
+    renewing:= true {NOT option('NONEW     ')} ;
 
-    crossing:= true "NOT option('NOCROSS   ')" ;
+    crossing:= true {NOT option('NOCROSS   ')} ;
     IF crossing THEN
         BEGIN
-  (*    getoption('CROSS     ',try);     *) try  := 0 ;
-        IF try = 0 THEN
-            try:=15;
-        callnesting:=try > 7;
-        decnesting:=(try MOD 8) > 3;
-        refing:= (try MOD 4) > 1;
-        crossing:=(try MOD 2) = 1;
+  (*    getoption('CROSS     ',ThisTry);     *) ThisTry  := 0 ;
+        IF ThisTry = 0 THEN
+            ThisTry:=15;
+        callnesting:=ThisTry > 7;
+        decnesting:=(ThisTry MOD 8) > 3;
+        refing:= (ThisTry MOD 4) > 1;
+        crossing:=(ThisTry MOD 2) = 1;
         END;
 
   (*if option('version   ') then    *)
@@ -875,13 +898,13 @@ sfileid);
   //    getoption('INDENT    ',feed);                 *)
         IF feed < 0 THEN
             feed:=4;
-        END;
+//{P}        END;
 
     IF option('INCREMENT ') THEN
         BEGIN
   (*    getoption('INCREMENT ',increment);            *)
         IF increment < 0 THEN
-            increment:= "100" 1;
+            increment:= {100} 1;
         END;
 
     doting:=NOT option('NODOTS    ');
@@ -916,6 +939,11 @@ sfileid);
     END (*CHECKOPTIONS*);
     (*PAGE AND LINE CONTROL*) (*HEADER*) (*NEWPAGE*) (*NEWLINE*)
 
+{P}  Procedure Page(Var F:Text);
+     begin
+         Writeln(F,Chr(12));
+     end;
+
 PROCEDURE header (name: alfa);
     (*PRINT TOP OF FORM AND HEADER ON LIST OUTPUT*)
     VAR
@@ -926,8 +954,8 @@ PROCEDURE header (name: alfa);
     reallincnt := 0;
     IF crossing THEN
         BEGIN
-        page(crosslist); " writeln(crosslist) ;"
-        write (crosslist, 'Page':9, pagecnt:4, '-', pagecnt2:3 ", ' ':15");
+        page(crosslist); { writeln(crosslist) ;}
+        write (crosslist, 'Page':9, pagecnt:4, '-', pagecnt2:3 {, ' ':15});
         position := 84;
         IF maxch < 84 THEN
             BEGIN
@@ -935,7 +963,8 @@ PROCEDURE header (name: alfa);
             writeln(crosslist);
             position := 42;
             END;
-        write(crosslist,'   [', prog_name,']', time"_text":50, date"_text");
+//{P}        write(crosslist,'   [', prog_name,']', time{_text}:50, date{_text});
+{P}     write(crosslist,'   [', prog_name,']');
         IF (name <> blanks) AND (maxch < position + 25) THEN
             BEGIN
             reallincnt := reallincnt + 1;
@@ -956,12 +985,15 @@ PROCEDURE newpage;
       (*write(newsource, chr(cr), chr(ff));*)    writeln(newsource) ;
     header (blanks);
     IF eoln (oldsource) THEN
-        readln(oldsource);
+{p}   BEGIN
+          readln(oldsource);
+{P}       inc(LINENUMBER);  if LINENUMBER >290 then PRDebug := TRUE;
+      END;
     linecnt := 0;
     reallincnt := 0;
     IF prog_name <> blanks  THEN
-        write(tty, pagecnt:3,'..');
-     (* break(tty); *)
+        write(TtyOut, pagecnt:3,'..');
+     (* break(TtyOut); *)
     END (*NEWPAGE*);
 
 
@@ -1023,8 +1055,8 @@ emarknr : 4);
                 END;
             writeln(crosslist,' *??*');
             END;
-        writeln(tty);
-        write(tty, ' ERROR AT ', linecnt*increment: 5, '/', pagecnt:2,
+        writeln(TtyOut);
+        write(TtyOut, ' ERROR AT ', linecnt*increment: 5, '/', pagecnt:2,
                     ord(errnr):12);
         END (*ERROR*) ;
 
@@ -1190,7 +1222,7 @@ ON KOMMENTAREN*)
                 (*HANDLES LEADING BLANKS AND BLANK LINES, READS NEXT NONBLANK LI
 NE
                  (WITHOUT LEADING BLANKS) INTO BUFFER*)
-                LABEL 111 ;
+//{P}                LABEL 111 ;
                 VAR
                     ch : char;
                 BEGIN (*READLINE*)
@@ -1199,8 +1231,11 @@ NE
                     WHILE eoln (oldsource) AND NOT eof (oldsource) DO
                         BEGIN
                         (*IS THIS A PAGE MARK?*)
-                       "getlinenr (oldsource,linenb);"
-                        readln(oldsource);
+           (**)         {getlinenr (oldsource,linenb);}
+
+                                  readln(oldsource);
+                        {P}          inc(LINENUMBER); if LINENUMBER >290 then PRDebug := TRUE;
+
                         IF (linenb = '     ') AND programpresent THEN
                             newpage
                         ELSE
@@ -1209,7 +1244,7 @@ NE
                                 (*HANDLE BLANK LINE*)
                                 newline;
                                 IF crossing THEN
-                                    writeln (crosslist,"chr(ht)"' ':12,linecnt *
+                                    writeln (crosslist,{chr(ht)}' ':12,linecnt *
  increment : 5);
                                 IF renewing THEN
                                     writeln(newsource);
@@ -1218,6 +1253,7 @@ NE
                                 END;
                         END;
                     read(oldsource, ch);
+     if PRDebug then    WRITE('** #1005 Ch=''',CH,''' (',ord(cH),') ');
                 UNTIL (ch <> ' ') OR (eof (oldsource));
                 bufflen := 0;
                 (*READ IN THE LINE*)
@@ -1226,18 +1262,24 @@ NE
                     buffer [bufflen] := ch;
                     flagger[bufflen]:=nonrcase;
               (*EXIT*) IF (eoln (oldsource) OR (bufflen = oldwidth))
-                         THEN GOTO 111 ;
+//{P}                         THEN GOTO 111 ;
+{P}              THEN break  ;
+
                     read(oldsource, ch);
+   if PRDebug then                 WRITE('** #1010 Ch=''',CH,' (',ord(cH),') ');
                   (*END*) UNTIL FALSE ;
-              111:
+//{P}              111:
                 buffer[bufflen+1] := ' '; (*SO WE CAN ALWAYS BE ONE CHAR AHEAD*)
                 IF NOT eoln (oldsource) THEN
                     error(linetoolong)
                 ELSE
                     IF NOT eof (oldsource) THEN
                         BEGIN
-                       "getlinenr (linenb);"
-                        readln(oldsource);
+                       {getlinenr (linenb);}
+
+                                  readln(oldsource);
+                  {p}         inc(LINENUMBER);  if LINENUMBER >290 then PRDebug := TRUE;
+
                         END;
                 bufferptr := 1;
                 buffmark := 0;
@@ -1266,7 +1308,7 @@ NE
 
         FUNCTION resword: boolean ;
             (*DETERMINES IF THE CURRENT IDENTIFIER IS A RESERVED WORD*)
-            LABEL 222 ;
+//{P}           LABEL 222 ;
             VAR
                 i,j: integer;  lid : alfa ;
             BEGIN (*RESWORD*)
@@ -1282,13 +1324,14 @@ NE
                  (* i:=resnum[succ(sy[1])]; ** BUG 1 **   *)
                     FOR j:=bufferptr-syleng-1 TO bufferptr-2 DO
                         flagger[j]:=rescase;
-                     GOTO 222;
+//{P}                     GOTO 222;
+{P}                     break;
                     END;
-            222:
+//{P}            222:
             END (*RESWORD*) ;
 
 
-        PROCEDURE findname "(curproc: listptrty)" (*does not seem to be used*);
+        PROCEDURE findname {(curproc: listptrty)} (*does not seem to be used*);
             VAR
                 lptr: listptrty;        (*ZEIGER AUF DEN VORGAENGER IM BAUM*)
                 bptr,
@@ -1308,23 +1351,23 @@ EIGER (FIRSTNAME)*)
             WHILE NOT found AND (listptr <> NIL) DO
                 BEGIN
                 lptr:= listptr;
-                IF sy = listptr@.name THEN
+                IF sy = listptr^.name THEN
                     BEGIN
                     found := true;
-                    IF"(listptr@.profunflag IN ['P', 'F'])"(NOT declaring) AND
-                      ((listptr@.profunflag = 'P')OR(listptr@.profunflag = 'F'))
+                    IF{(listptr^.profunflag IN ['P', 'F'])}(NOT declaring) AND
+                      ((listptr^.profunflag = 'P')OR(listptr^.profunflag = 'F'))
                       THEN
                         BEGIN
                         new (workcall);
-                        workcall@.whom := listptr@.procdata;
-                        workcall@.nextcall := NIL;
+                        workcall^.whom := listptr^.procdata;
+                        workcall^.nextcall := NIL;
                         END;
-                    zptr := listptr@.last;
-                    IF (zptr@.linenr <> linecnt+1) OR (zptr@.pagenr <> pagecnt)
+                    zptr := listptr^.last;
+                    IF (zptr^.linenr <> linecnt+1) OR (zptr^.pagenr <> pagecnt)
 THEN
                         BEGIN
-                        new (listptr@.last);
-                        WITH listptr@.last@ DO
+                        new (listptr^.last);
+                        WITH listptr^.last^ DO
                             BEGIN
                             linenr := linecnt + 1;
                             pagenr := pagecnt;
@@ -1334,27 +1377,27 @@ THEN
                             ELSE
                                 declflag := ' ';
                             END;
-                        zptr@.contlink := listptr@.last;
+                        zptr^.contlink := listptr^.last;
                         END
                     ELSE
-                        zptr@.declflag := 'M';
+                        zptr^.declflag := 'M';
                     END
                 ELSE
-                    IF sy > listptr@.name THEN
+                    IF sy > listptr^.name THEN
                         BEGIN
-                        listptr:= listptr@.rlink;
+                        listptr:= listptr^.rlink;
                         right:= true;
                         END
                     ELSE
                         BEGIN
-                        listptr:= listptr@.llink;
+                        listptr:= listptr^.llink;
                         right:= false;
                         END;
                 END;
             IF NOT found THEN
                 BEGIN (*UNKNOWN IDENTIFIER*)
                 new (listptr);
-                WITH listptr@ DO
+                WITH listptr^ DO
                     BEGIN
                     name := sy;
                     llink := NIL;
@@ -1367,13 +1410,13 @@ THEN
                     firstname [indexch] := listptr
                 ELSE
                     IF right THEN
-                        lptr@.rlink := listptr
+                        lptr^.rlink := listptr
                     ELSE
-                        lptr@.llink := listptr;
-                WITH listptr@ DO
+                        lptr^.llink := listptr;
+                WITH listptr^ DO
                     BEGIN
                     new (first);
-                    WITH first@ DO
+                    WITH first^ DO
                         BEGIN
                         linenr := linecnt + 1;
                         pagenr := pagecnt;
@@ -1397,25 +1440,29 @@ Y IN THE CALL SEQUENCE*)
 CE*)
 
             BEGIN (*INSERTCALL*)
-            IF locprocstl@.firstcall = NIL THEN
-                locprocstl@.firstcall := workcall
+  if PRdebug then   writeln('**#601 ');
+            IF locprocstl^.firstcall = NIL THEN
+                locprocstl^.firstcall := workcall
             ELSE
                 BEGIN
-                thiscall := locprocstl@.firstcall;
+         if PRdebug then   write('**#602 ');
+                thiscall := locprocstl^.firstcall;
                 repeated := false;
                 finished := false;
                 WHILE (NOT finished) AND (NOT repeated) DO
-                    IF thiscall@.whom@.procname@.name = workcall@.whom@.procname
-@.name THEN
+                    IF thiscall^.whom^.procname^.name = workcall^.whom^.procname
+^.name THEN
                         repeated := true
                     ELSE
-                        IF thiscall@.nextcall = NIL THEN
+                        IF thiscall^.nextcall = NIL THEN
                             finished := true
                         ELSE
-                            thiscall := thiscall@.nextcall;
+                            thiscall := thiscall^.nextcall;
+          if PRdebug then         write('**#605 ');
                 IF NOT repeated THEN
-                    thiscall@.nextcall := workcall;
+                    thiscall^.nextcall := workcall;
                 END;
+            if PRdebug then     write('**#610 ');
             workcall := NIL;
             END (*INSERTCALL*);
 
@@ -1478,14 +1525,15 @@ cleaning: boolean);
             PROCEDURE dumpit;
                 VAR i: integer;
                 BEGIN
-                write (tty, '<');
+                write (TtyOut, '<');
                 FOR i := 1 TO bufflen DO
-                    write (tty, buffer[i]);
-                writeln (tty);
-                writeln (tty,'<',' ':bufferptr -1, '@');
+                    write (TtyOut, buffer[i]);
+                writeln (TtyOut);
+                writeln (TtyOut,'<',' ':bufferptr -1, '@');
                 END;
 
             BEGIN (* DOCOMMENT *)
+   if PRdebug then     writeln('**#700 DOCOMMENT ');
             oldspacesmark := spaces;
             IF oldspaces THEN
                 spaces := lastspaces
@@ -1567,16 +1615,19 @@ cleaning: boolean);
             END (*DOCOMMENT*);
 
         BEGIN (*INSYMBOL*)
+   if PRdebug then  write('**#401 INSYMBOL ');
         syleng := 0;
-       "WHILE (ch IN ['_', '(', ' ', '$', '?', '!', '@', '%', '/', '\']) AND NOT
- eob  DO"
-        WHILE ((delsy[ch] in [spacech, dquotech, skipch, lparent])
+       {WHILE (ch IN ['_', '(', ' ', '$', '?', '!', '@', '%', '/', '\']) AND NOT
+ eob  DO}
+        if PRdebug then     WRITELN('**#401A DELSY[CH]=',DELSY[CH]);
+        WHILE ((delsy[ch] in [spacech, dquotech, skipch, lparent, obracech])
               AND (NOT eob)) DO
      (* WHILE  ( (ch = '_') OR (ch = '(') OR (ch = ' ') OR (ch = '$') OR
                 (ch = '?') OR (ch = '!') OR (ch = '@') OR (ch = '%') OR
                 (ch = '/') OR (ch = '\') OR (ch = '#') OR (ch = '"') )
                 AND (NOT eob)  DO  *)
             BEGIN
+   if PRdebug then  write('**#402 ');
             IF (ch = '(') AND (buffer[bufferptr] = '*') THEN
                 docomment (2,'*',')', false)
             ELSE
@@ -1584,6 +1635,7 @@ cleaning: boolean);
                     docomment (2,'*','/',cleaning)
                 ELSE   *)
                     IF ch = '"' then  docomment(1, '"', ' ', cleaning)
+                    ELSE  IF ch = '{' then  docomment(1, '}', ' ', cleaning)
                     ELSE  IF ch = '#' THEN buffer[bufferptr-1] := ' '
                     (*ELSE
                     IF ch = '%' THEN
@@ -1600,22 +1652,27 @@ cleaning: boolean);
                     ELSE
                         IF (ch = '(') (* OR (ch = '/') *) THEN
                             GOTO 1;
+        if PRdebug then  write('**#403 ');
             readbuffer;
+        if PRdebug then  write('**#403A ');
             END;
-      " CASE ch OF
+        if PRdebug then  write('**#406 ');
+      { CASE ch OF
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
             'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q',
             'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y',
-            'Z':"
+            'Z':}
      (*  IF (ch >= 'A') AND (ch <= 'Z')  THEN  *)
 
        CASE delsy[ch] OF
 
        letterup, letterlo :
               BEGIN
+      if PRdebug then  write('**#408 ');
               syleng := 0;
               sy := '          ';
               REPEAT
+      if PRdebug then  write('**#409 ');
                   syleng := syleng + 1;
                   IF syleng <= 10 THEN
                       sy [syleng] := ch;
@@ -1626,28 +1683,33 @@ cleaning: boolean);
                                       dollarch, undsch]) ;
               IF NOT resword THEN
                   BEGIN
+    if PRdebug then  write('**#420 ');
                   syty := ident ;
-                  findname"(curproc)";
+                  findname{(curproc)};
                   END
               END ;
       (* ELSE IF  (ch >= '0') AND (ch <= '9') THEN *)
-          " '0', '1', '2', '3', '4', '5', '6', '7', '8',
-            '9':"
+          { '0', '1', '2', '3', '4', '5', '6', '7', '8',
+            '9':}
 
             digit :
               BEGIN
+    if PRdebug then  write('**#422 ');
               REPEAT
+    if PRdebug then  write('**#424 ');
                   syleng := syleng + 1;
                   readbuffer;
               UNTIL NOT (('0' <= ch) AND (ch <= '9'));
               syty := intconst;
               IF ch = 'B' THEN
                   BEGIN
+     if PRdebug then   write('**#428 ');
                   flagger[bufferptr-1]:=true;
                   readbuffer;
                   END
               ELSE
                   BEGIN
+     if PRdebug then  write('**#430 ');
                   IF ch = '.' THEN
                       BEGIN
                       REPEAT
@@ -1669,6 +1731,7 @@ cleaning: boolean);
        (* ELSE IF ch = ''''  THEN  *)
           quotech :
                BEGIN
+      if PRdebug then    write('**#440 ');
                syty := strgconst;
                REPEAT
                 (* flagger[bufferptr]:=strcase; *)
@@ -1679,12 +1742,13 @@ cleaning: boolean);
                IF ch <> '''' THEN
                    error(missgquote);
                readbuffer;
+    if PRdebug then  write('**#450 ');
                END ;
       (*  ELSE IF ch = '"' THEN
               BEGIN
               REPEAT
                   readbuffer
-              UNTIL NOT ((ch >= '0') AND (ch <= '9')) "(digits + ['A'..'F']))";
+              UNTIL NOT ((ch >= '0') AND (ch <= '9')) {(digits + ['A'..'F']))};
               syty := intconst;
               END     *)
        (* ELSE IF ch = ' ' THEN *)
@@ -1695,6 +1759,7 @@ cleaning: boolean);
        othersy, lparent, rparent, lbracket, rbracket,
        semicolon, point, colon, eqlsy :
                  BEGIN
+    if PRdebug then  write('**#460 ');
         1:
                  syty := delsy [ch];
                  readbuffer;
@@ -1710,10 +1775,14 @@ cleaning: boolean);
                              parenthese (rparent)
                          ELSE
                              parenthese (rbracket);
-                 END ;
+                 END
+        ELSE
+    if PRdebug then  write('**#700 ');
               END;  (* CASE delsy[ch] OF *)
+    if PRdebug then   write('**#321 ');
         IF workcall <> NIL THEN
             insertcall;
+    if PRdebug then   writeln('**#331 End *InSymbol');
         END (*INSYMBOL*) ;
 
         (*"PARSING" PROCEDURES:*) (*RECDEF[*) (*CASEDEF*) (*PARENTHESE*) (*]*)
@@ -1735,6 +1804,7 @@ ATIERUNG VON VARIANT PARTS*)
                 VAR
                     oldspacesmark : integer;      (*SAVED VALUE OF 'SPACES'*)
                 BEGIN (*PARENTHESE*)
+       if PRdebug then   write('**#500 PARENTHESE ');
                 oldspacesmark := spaces;
                 IF NOT oldspaces THEN
                     setlastspaces (spaces);
@@ -1758,7 +1828,7 @@ ATIERUNG VON VARIANT PARTS*)
                                    declaring := false;
                                    insymbol;
                                    END;
-                       "OTHERS:  insymbol"
+                       {OTHERS:  insymbol}
                         END;
                     (*UNTIL WE APPARENTLY LEAVE THE DECLARATION*)
                 UNTIL syty IN [strgconst..whilesy,rparent,labelsy..exitsy,dosy..
@@ -1773,6 +1843,7 @@ beginsy,
                 END (*PARENTHESE*) ;
 
             BEGIN (*CASEDEF*)
+    if PRdebug then  write('**#500 CASEDEF ');
             variant_level := variant_level+1;
             oldspacesmark := spaces;
             IF NOT oldspaces THEN
@@ -1793,6 +1864,7 @@ beginsy,
             END (*CASEDEF*) ;
 
         BEGIN (*RECDEF*)
+  if PRdebug then  write('**#500 RECDEF ');
         oldspacesmark := spaces;
         setlastspaces(spaces);
         spaces := bufferptr - buffmark + spaces - syleng - 2 + feed;
@@ -1815,7 +1887,7 @@ beginsy,
                            declaring := false;
                            insymbol;
                            END;
-              " OTHERS   : insymbol "
+              { OTHERS   : insymbol }
                 END;
         UNTIL syty IN [untilsy..exitsy,labelsy..endsy,dosy..beginsy];
         oldspaces := true;
@@ -1840,6 +1912,7 @@ beginsy,
 
         PROCEDURE endedstatseq(endsym: symbol;  markch: char);
             BEGIN
+    if PRdebug then  write('**#500 endedstatseq ');
             statement;
             WHILE syty = semicolon DO
                 BEGIN
@@ -1876,6 +1949,7 @@ beginsy,
 
         PROCEDURE compstat;
             BEGIN (*COMPSTAT*)
+     if PRdebug then  write('**#500 COMPSTAT ');
             IF indentbegin = 0 THEN
                 IF NOT oldspaces THEN
                     setlastspaces (spaces-begexd)
@@ -1896,11 +1970,12 @@ beginsy,
 
 
         PROCEDURE casestat;
-            LABEL 333 ;
+//{P}            LABEL 333 ;
             VAR
                 oldspacesmark : integer;        (*SAVED VALUE OF 'SPACES'*)
 
             BEGIN (*CASESTAT*)
+     if PRdebug then  write('**#500 CASESTAT ');
             bmarktext := 'C';
             IF NOT oldspaces THEN
                 setlastspaces (spaces-feed);
@@ -1910,7 +1985,7 @@ beginsy,
                 writeline (bufferptr)
             ELSE
                 error (missgof);
-          " LOOP " REPEAT
+          { LOOP } REPEAT
                 REPEAT
                     REPEAT
                         insymbol
@@ -1927,10 +2002,11 @@ beginsy,
                         spaces := oldspacesmark;
                         END;
                 UNTIL syty IN endsym;
-          " EXIT"IF syty IN [endsy,eobsy,proceduresy,functionsy] THEN GOTO 333;
+//{P}          { EXIT}IF syty IN [endsy,eobsy,proceduresy,functionsy] THEN GOTO 333;
+{P}               IF syty IN [endsy,eobsy,proceduresy,functionsy] THEN break;
                 error (enderrinblkstr);
-                UNTIL FALSE "END";
-          333:
+                UNTIL FALSE {END};
+//{P}          333:
             writeline(bufferptr-syleng);
             emarktext := 'E';
             emarknr := curblocknr;
@@ -1946,6 +2022,7 @@ beginsy,
 
         PROCEDURE loopstat;
             BEGIN (*LOOPSTAT*)
+   if PRdebug then   write('**#500 LOOPSTAT ');
             bmarktext := 'L';
             IF NOT oldspaces THEN
                 setlastspaces (spaces - feed);
@@ -1981,7 +2058,8 @@ beginsy,
             VAR
                 oldspacesmark: integer;
 
-            BEGIN
+            BEGIN (* IFSTAT *)
+            if PRdebug then   write('**#500 IFSTAT ');
             oldspacesmark := spaces;
             bmarktext := 'I';
             IF NOT oldspaces THEN
@@ -2029,6 +2107,7 @@ beginsy,
 
         PROCEDURE labelstat;
             BEGIN (*LABELSTAT*)
+    if PRdebug then   write('**#500 LABELSTAT ');
             lastspaces := level * feed;
             oldspaces := true;
             insymbol;
@@ -2038,6 +2117,7 @@ beginsy,
 
         PROCEDURE repeatstat;
             BEGIN
+  if PRdebug then   write('**#500 REPEATSTAT ');
             bmarktext := 'R';
             IF NOT oldspaces THEN
                 setlastspaces (spaces - feed);
@@ -2052,6 +2132,7 @@ beginsy,
             END (*REPEATSTAT*) ;
 
         BEGIN (*STATEMENT*)
+   if PRdebug then   write('**#500 STATEMET ');
         oldspacesmark := spaces; (*SAVE THE INCOMING VALUE OF SPACES TO BE ABLE
 TO RESTORE  IT*)
         IF syty = intconst THEN
@@ -2110,16 +2191,19 @@ TO RESTORE  IT*)
         (*]BLOCK*)
 
     BEGIN (*BLOCK*)
+ if PRdebug then  writeLN('**#500 BLOCK ');
     REPEAT
         insymbol
     UNTIL syty IN relevantsym;
+        write('** #102 ');
     level := level + 1;
     curproc := listptr;
     spaces := level * feed;
     (*HANDLE NESTING LIST*)
     locprocstl := procstrucf;
+        write('#104 ');;
   IF procstrucdata.exists then      (*** BUG 2 ***)
-    WITH procstrucdata, item, procname@ DO
+    WITH procstrucdata, item, procname^ DO
       (*IF exists THEN*)
             BEGIN
             IF procdata <> NIL THEN
@@ -2138,14 +2222,15 @@ TO RESTORE  IT*)
                         externflag := 'E'
                     ELSE
                         externflag := 'F';
-                new(procstrucl@.nextproc);
-                procstrucl := procstrucl@.nextproc;
+                new(procstrucl^.nextproc);
+                procstrucl := procstrucl^.nextproc;
                 procdata := procstrucl;
-                procstrucl@ := item;
+                procstrucl^ := item;
                 locprocstl := procstrucl;
                 END;
             procstrucdata.exists := false
             END;
+ if PRdebug then   write('**#120 ');;
     REPEAT
         fwddecl := false;
         WHILE syty IN decsym DO
@@ -2156,15 +2241,15 @@ TO RESTORE  IT*)
                 BEGIN
                 insymbol;
                 prog_name := sy;
-                procstrucf@.procname := listptr;
-                listptr@.procdata := procstrucf;
-                listptr@.profunflag := 'M';
-                writeln(tty);
-                write(tty,'1', version:8,new_name:7,' [',prog_name,']  1..');
+                procstrucf^.procname := listptr;
+                listptr^.procdata := procstrucf;
+                listptr^.profunflag := 'M';
+                writeln(TtyOut);
+                write(TtyOut,'1', version:8,new_name:7,' [',prog_name,']  1..');
                 IF pagecnt > 1 THEN
                     FOR i := 2 TO pagecnt DO
-                        write (tty, i:3,'..');
-                 (* break(tty); *)
+                        write (TtyOut, i:3,'..');
+                 (* break(TtyOut); *)
                 declaring := false;
                 END
             ELSE
@@ -2173,17 +2258,39 @@ TO RESTORE  IT*)
                 IF forcing THEN
                     writeline(bufferptr);
                 END;
+     if PRdebug then   writeln('**#121 LN=',LINENUMBER);
             REPEAT
-                insymbol;
+     if PRdebug then  writeln('**#121A ln=',LINENUMBER);
+                 insymbol;
+     if PRdebug then   writeln('**#121B ln=',LINENUMBER);
                 CASE syty OF
-                    semicolon, lparent : declaring := true;
-                    eqlsy, colon : declaring := false;
-                    recordsy: recdef;
+                    semicolon, lparent :
+                    begin
+     if PRdebug then  write('**#191 ');
+                           declaring := true;
                     END;
+                    eqlsy, colon :
+                    begin
+     if PRdebug then   write('**#192 ');
+                    declaring := false;
+                    end;
+                    recordsy:
+                    begin
+       if PRdebug then    write('**#193A ');
+                        recdef;
+        if PRdebug then   write('**#193B ');
+                    end
+                  else
+         if PRdebug then  write('**#199 ');
+                    END;
+
             UNTIL syty IN relevantsym;
+      if PRdebug then   write('**#121C ');
             END;
+      if PRdebug then     write('**#122 ');
         WHILE syty IN prosym DO
             BEGIN
+      if PRdebug then   write('**#410A ');
             writeline(bufferptr-syleng);
             setlastspaces(spaces-feed);
             IF syty <> initprocsy THEN
@@ -2192,9 +2299,9 @@ TO RESTORE  IT*)
                 declaring := true;
                 insymbol;
                 IF itisaproc THEN
-                    listptr@.profunflag := 'P'
+                    listptr^.profunflag := 'P'
                 ELSE
-                    listptr@.profunflag := 'F';
+                    listptr^.profunflag := 'F';
                 WITH procstrucdata, item DO
                     BEGIN
                     exists := true;
@@ -2208,11 +2315,13 @@ TO RESTORE  IT*)
                     END;
                 END;
             block;
+        if PRdebug then  write('**#123 ');
             IF syty = semicolon THEN
                 insymbol;
             END;
         (*FORWARD AND EXTERNAL DECLARATIONS MAY COME BEFORE 'VAR', ETC.*)
     UNTIL NOT fwddecl;
+    if PRdebug then  write('**#124 ');
     IF forcing THEN
         writeline(bufferptr-syleng);
     level := level - 1;
@@ -2226,16 +2335,19 @@ TO RESTORE  IT*)
         WHILE NOT (syty IN [beginsy,forwardsy,externsy,eobsy,langsy,point]) DO
             insymbol
         END;
+  if PRdebug then   write('**#125 ');
     IF syty = beginsy THEN
         BEGIN
+  if PRdebug then   write('**#410 ');
         declaring := false;
-        locprocstl@.begline := linecnt + 1;
-        locprocstl@.begpage := pagecnt;
+        locprocstl^.begline := linecnt + 1;
+        locprocstl^.begpage := pagecnt;
         statement;
-        locprocstl@.endline := linecnt + 1;
-        locprocstl@.endpage := pagecnt;
+        locprocstl^.endline := linecnt + 1;
+        locprocstl^.endpage := pagecnt;
         END
     ELSE
+  if PRdebug then   write('**#127 ');
         IF NOT nobody THEN
             BEGIN
             fwddecl := true;
@@ -2243,6 +2355,7 @@ TO RESTORE  IT*)
             IF syty = langsy THEN
                 insymbol
             END;
+    if PRdebug then   write('**#128 ');
     IF programpresent AND (level = 0) THEN
         BEGIN
         IF nobody THEN
@@ -2261,10 +2374,11 @@ TO RESTORE  IT*)
             UNTIL (syty = point) OR (syty = eobsy);
             END;
         writeline(bufflen+2);
-        writeln(tty);
-        writeln(tty);
-        writeln (tty,errcount:4,' ERROR(S) DETECTED');    (* break(tty); *)
+        writeln(TtyOut);
+        writeln(TtyOut);
+        writeln (TtyOut,errcount:4,' ERROR(S) DETECTED');    (* break(TtyOut); *)
         END;
+   if PRdebug then     write('**#191 ');
     END (*BLOCK*) ;
 
 PROCEDURE print_xref_list;
@@ -2280,10 +2394,11 @@ DRUCKEN*)
 
     PROCEDURE checkpage(heading: boolean);
         BEGIN
+    if PRdebug then  write('**#500 checkpage ');
         IF reallincnt = maxline THEN
             BEGIN
             IF heading THEN
-                header (listptr@.name)
+                header (listptr^.name)
             ELSE
                 header (blanks);
             END;
@@ -2293,9 +2408,10 @@ DRUCKEN*)
     PROCEDURE writeprocname (procstrucl: procstructy; depth: integer; mark: char
 ; numbering: boolean);
         BEGIN (*WRITEPROCNAME*)
+    if PRdebug then     write('**#500 checkpage ');
         writeln(crosslist);
         checkpage(false);
-        WITH procstrucl@, procname@ DO
+        WITH procstrucl^, procname^ DO
             BEGIN
             IF numbering THEN
                 write (crosslist, linecnt * increment:6, '  ')
@@ -2306,7 +2422,7 @@ DRUCKEN*)
                 write (crosslist, '.':depth);  *)
             write  (crosslist, ' ': depth*3, name: 10, ' ':25-depth*3,
                     ' (', profunflag, ')', mark:2, externflag:2
-                    ",chr(ht), linenr * increment : 8");
+                    {,chr(ht), linenr * increment : 8});
             IF numbering then  write(crosslist, linenr*increment:10) ;
             IF listpgnr OR (pagenr > 1) THEN
                 write(crosslist, ' / ',pagenr : 1);
@@ -2331,10 +2447,11 @@ DRUCKEN*)
             maxcnt,             (*MAXIMUM ALLOWABLE VALUE OF COUNT*)
             count : integer;  (*ZAEHLT DIE GEDRUCKTEN ZEILENNUMMERN PRO ZEILE*)
         BEGIN (*WRITELINENR*)
+   if PRdebug then          write('**#500 WRITELINENR ');
         count := 0;
         maxcnt := (maxch+20 - spaces) DIV itemlen; (*ITEMS ARE ITEMLEN CHARS EAC
 H*)
-        link := listptr@.first;
+        link := listptr^.first;
         REPEAT
             IF count = maxcnt THEN
                 BEGIN
@@ -2344,11 +2461,11 @@ H*)
                 count := 0;
                 END;
             count := count + 1;
-            write (crosslist, link@.linenr * increment : 6);
+            write (crosslist, link^.linenr * increment : 6);
             IF listpgnr THEN
-                write(crosslist, '/',link@.pagenr : 2);
-            write (crosslist,link@.declflag,'  ');
-            link := link@.contlink;
+                write(crosslist, '/',link^.pagenr : 2);
+            write (crosslist,link^.declflag,'  ');
+            link := link^.contlink;
         UNTIL link = NIL;
         END (*WRITELINENR*) ;
 
@@ -2357,8 +2474,9 @@ H*)
             thiscall: calledty;
 
         BEGIN (*DUMPCALL*)
+     if PRdebug then     write('**#500 DUMPCALL ');
         linecnt := linecnt + 1;
-        WITH thisproc@ DO
+        WITH thisproc^ DO
             IF printed THEN
                 writeprocname (thisproc, depth,'*', true)
             ELSE
@@ -2370,14 +2488,15 @@ H*)
                 thiscall := firstcall;
                 WHILE thiscall <> NIL DO
                     BEGIN
-                    dumpcall (thiscall@.whom, depth + "4"1);
-                    thiscall := thiscall@.nextcall;
+                    dumpcall (thiscall^.whom, depth + {4}1);
+                    thiscall := thiscall^.nextcall;
                     END;
                 END;
         END (*DUMPCALL*);
         (*]PRINT_XREF_LIST*)
 
     BEGIN (*PRINT_XREF_LIST*)
+ if PRdebug then   write('**#201 PRINT_XREF_LIST ');
     oldcrossing := crossing;
     crossing := true;
     listpgnr := pagecnt > 1;
@@ -2385,18 +2504,19 @@ H*)
         itemlen := 12
     ELSE
         itemlen := 9;
-    WITH firstname ['M']@ DO  (*DELETE 'MAIN'*)
+    WITH firstname ['M']^ DO  (*DELETE 'MAIN'*)
         IF rlink = NIL THEN
             firstname ['M'] := llink
         ELSE
             BEGIN
             listptr := rlink;
-            WHILE listptr@.llink <> NIL DO
-                listptr := listptr@.llink;
-            listptr@.llink := llink;
+            WHILE listptr^.llink <> NIL DO
+                listptr := listptr^.llink;
+            listptr^.llink := llink;
             firstname ['M'] := rlink;
             END;
     indexch := 'a';
+    if PRdebug then    write('**#202 ');
     WHILE (indexch < 'Z') AND (firstname [indexch] = NIL) DO
         indexch := succ (indexch);
     IF firstname [indexch] <> NIL THEN
@@ -2415,22 +2535,23 @@ H*)
                 WHILE firstname [indexch] <> NIL DO
                     BEGIN
                     listptr := firstname [indexch];
-                    WHILE listptr@.llink <> NIL DO
+                    WHILE listptr^.llink <> NIL DO
                         BEGIN
                         pred := listptr;
-                        listptr := listptr@.llink;
+                        listptr := listptr^.llink;
                         END;
                     IF listptr = firstname [indexch] THEN
-                        firstname [indexch] := listptr@.rlink
+                        firstname [indexch] := listptr^.rlink
                     ELSE
-                        pred@.llink := listptr@.rlink;
+                        pred^.llink := listptr^.rlink;
                     writeln(crosslist);
                     checkpage(true);
-                    write (crosslist, listptr@.profunflag, listptr@.name : 11);
+                    write (crosslist, listptr^.profunflag, listptr^.name : 11);
                     writelinenr (12);
                     END;
             writeln(crosslist) ;
             END;
+     if PRdebug then   write('**#203 ');
 
         IF procstrucl <> procstrucf THEN
             BEGIN
@@ -2449,11 +2570,12 @@ H*)
                 reallincnt:= reallincnt + 4;
                 procstrucl := procstrucf;
                 REPEAT
-                    writeprocname (procstrucl, procstrucl@.proclevel"* 2",' ',
+                    writeprocname (procstrucl, procstrucl^.proclevel{* 2},' ',
 false);
-                    procstrucl := procstrucl@.nextproc;
+                    procstrucl := procstrucl^.nextproc;
                 UNTIL procstrucl = NIL;
                 END;
+      if PRdebug then    write('**#203 ');
             IF callnesting THEN
                 BEGIN
                 pagecnt := pagecnt + 1;
@@ -2471,26 +2593,77 @@ false);
                 procstrucl := procstrucf;
                 WHILE procstrucl <> NIL DO
                     BEGIN
-                    IF NOT procstrucl@.printed THEN
+                    IF NOT procstrucl^.printed THEN
                         dumpcall (procstrucl, 0);
-                    procstrucl := procstrucl@.nextproc;
+                    procstrucl := procstrucl^.nextproc;
                     END;
                 END;
+       if PRdebug then    write('**#205 ');
             writeln(crosslist) ;
             END;
         END;
     crossing := oldcrossing;
     END (*PRINT_XREF_LIST*) ;
 
+VAR
+{P}    SFN,
+       OFN,
+       CRL:String;
+       IR,          // IOResult
+       fm: Integer; // file mode
+
     (*MAIN PROGRAM*)
 
 BEGIN
-  RESET(OLDSOURCE) ;
-  REWRITE(NEWSOURCE);
-  REWRITE(CROSSLIST) ;
-  REWRITE(TTY) ;
+
+    repeat
+  {P} Write('Source? ');
+    Readln(SFN);
+    ASSIGN(OldSource,SFN);
+    FM:= FileMode;
+    FileMode := 0;
+
+ {$I-} RESET(OLDSOURCE) ; {$I+}
+    IR := IOResult;
+    If IR<>0 then
+       WRITELN('?Err opening source #',IR);
+    until IR = 0;
+
+      repeat
+  {P} Write('Output? ');
+      Readln(OFN);
+      ASSIGN(NewSource,OFN);
+      FileMode := FMoutput;
+   {$I-}   REWRITE(NEWSOURCE); {$I+}
+      IR := IOResult;
+      If IR<>0 then
+         WRITELN('?Err opening newsource #',IR);
+      until IR = 0;
+
+      repeat
+  {P} Write('Listing? ');
+      Readln(CRL);
+      ASSIGN(CROSSLIST,CRL);
+ {$I-}  REWRITE(CROSSLIST);     {$I+}
+    IR := IOResult;
+      If IR<>0 then
+         WRITELN('?Err opening listing #',IR);
+      until ir=0  ;
+
+      ASSIGN(TtyOut,'TTYout.TXT');
+
+      {$I-}   REWRITE(TtyOut) ;  {$I+}
+    IR := IOResult;
+      If IR<>0 then
+      begin
+         WRITELN('?Err opening tty out #',IR);
+      write('Press Rnter: ');
+      halt(16);
+      end;
+   if PRdebug then  writeln('**#001');
 checkoptions;
-  "getstatus(oldsource,new_name,new_prot,new_ppn,new_dev);"
+   if PRdebug then  writeln('#002');
+  {getstatus(oldsource,new_name,new_prot,new_ppn,new_dev);}
 
 (*FIND MAX POSSIBLE LINE NUMBER WITH THIS INCREMENT*)
   increment := 1 ;
@@ -2498,25 +2671,32 @@ maxinc := (99999 DIV increment);
 IF maxinc > 4000 THEN
     maxinc := 4000;
 
-  "LOOP" REPEAT
+  {LOOP} REPEAT
+
     init;
     block;
-  "EXIT" IF NOT programpresent OR (syty = eobsy) THEN GOTO 444;
+
+//{P}  {EXIT} IF NOT programpresent OR (syty = eobsy) THEN GOTO 444;
+{P}        IF NOT programpresent OR (syty = eobsy) THEN break;
+
     IF refing OR decnesting OR callnesting THEN
         print_xref_list;
-    "dispose(heapmark);"    (*RELEASE THE ENTIRE HEAP*)
-    rtime[0]:=clock(1)-rtime[0];
+
+    {dispose(heapmark);}    (*RELEASE THE ENTIRE HEAP*)  
+//{P}    rtime[0]:=clock(1)-rtime[0];
+
     rtime[1]:=rtime[0] DIV 60000;
     rtime[2]:=(rtime[0] MOD 60000) DIV 1000;
     rtime[3]:=rtime[0] MOD 1000;
-    writeln(tty);
-    writeln(tty,' RUNTIME:',rtime[1]:3,':',rtime[2]:2,'.',rtime[3]:3);
-     (* break(tty); *)
-    UNTIL FALSE "END";
-    444:
-     (* writeln(tty, bel);   break(tty); *)
 
-    "getnextcall (link_name, link_device);
+    writeln(TtyOut);
+    writeln(TtyOut,' RUNTIME:',rtime[1]:3,':',rtime[2]:2,'.',rtime[3]:3);
+     (* break(TtyOut); *)
+    UNTIL FALSE {END};
+//{P}    444:
+     (* writeln(TtyOut, bel);   break(TtyOut); *)
+
+    {getnextcall (link_name, link_device);
      IF link_name <> '         ' THEN
-       call (link_name, link_device); "
+       call (link_name, link_device); }
 END (*PCROSS*).

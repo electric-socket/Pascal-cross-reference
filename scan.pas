@@ -3,10 +3,11 @@
 // January 9, 2021
 // Copyright 2021 Paul Robinson
 
-// Licensed under GPL v3 or at your option any later version
+// Licensed under GPL v2
 
 // Scan unit
-// Scan the source file, copying it to the output file
+// Scan the source file, processing it for keywords and identifiers,
+// responding to both, then copying the file to the output file
 
 
 
@@ -18,155 +19,103 @@ type
 
 var
 
-        TimeString,
-        ProgramPath,
-        ProgramFolder,
-        ProgramName,
-        ProgramExt,
-        PasPath,
+        StartTime,                      // time when program began
+        EndTime:String;
+        // file descriptor for this program
+        ProgramPath,                    // FQFN of nsme up to folder
+        ProgramFolder,                  // folser it's in, null if root
+        ProgramName,                    // name excluding extension
+        ProgramExt,                     // This program's extension if any
+        PasPath,                        // filename being processed
         PasFolder,
         PasName,
-        PasExt:       String;
+        PasExt,
+        ErrorMessage: UnicodeString;    // error message text
 
-   Procedure Catastrophic(Msg:String);
-   Procedure Init;
-   procedure SplitPath(const Path: String; var Folder, Name, Ext: String);
-   Procedure OpenFile(Name:String);
-   procedure ScanFile;
-   Procedure Writefile;
+   Procedure Catastrophic(Msg:UnicodeString);
+   procedure SplitPath(const Path: UnicodeString; var Folder, Name, Ext: UnicodeString);
+//   Procedure OpenFile(Name:String);
+//   procedure ScanFile;
+
 
 
 implementation
 Const
-    BufferSize = 102400; // 100K
+   FileLimit = 20;   // maximum number of simultaneously open files
+
+
 
 type
-    PCharacter = ^Char;
+
     TBuffer = record
-       inPtr,
-       OutPtr: PCharacter;
-       InFile,
-       OutFile: String;
-       Ch: Char;
-       Line,
-       InPosition,
-       OutPosition,
-       InSize,
-       OutSize,
-       inPos,
-       OutPos: Integer;
-       EndOfFile: Boolean;
+       Line,                       // line being read
+       FileName: UnicodeString;    // name of this file
+       LineNumbet,                 // line number we're at
+       LinePosition: Integer;      // current position on line
+       Size: Int64;                // file size
+       F: Text;                    // file pointer
     end;
 
 
 
 var
-  F: File;
   CrLf: String[2];
-  buffer: TBuffer;
+  buffer: Array[1..filelimit] of TBuffer;
+  CurrentFile: 1..Filelimit ;
 
 
-  Procedure Catastrophic(Msg:String);
+  Procedure Catastrophic(Msg:UnicodeString);
   begin
       Writeln;
       Writeln(Msg);
       halt(16);
   end;
 
-
-
-  Procedure WriteChar(C:Char);
-  begin
-     with buffer do
-     begin
-         PCharacter(Integer(outPtr) + outPos)^ := C;
-         inc(outPos);
-     end;
-  end;
-
-  Procedure WriteString(S:string);
-  Var L: Integer;
-
-  Begin
-     with buffer do
-     For L := 1 to Length(S) do
-     begin
-         PCharacter(Integer(outPtr) + outPos)^ := S[L];
-         inc(outPos);
-     end;
-  end;
-
-
-  procedure NewLine;
-  begin
-      WriteString( CrLf);
-  end;
-
-  Procedure NextCh;
-  begin
-      with Buffer do
-      begin
-          if ch=#10 then
-          begin
-              Inc(line);
-              NewLine;
-              InPosition  := 0;
-              OutPosition := 0;
-          end;
-          ch := #0;
-          if inPos <= inSize then
-          begin
-              ch := PCharacter(Integer(inPtr) + inPos)^;
-              Inc(inPos);
-              Inc(InPosition);
-              if (Ch=#13) then exit;
-              PCharacter(Integer(outPtr) + outPos)^ := Ch;
-              inc(outPos);
-              inc(OutPosition);
-          end
-       else
-          EndOfFile:= TRUE;
-          if outposition <>0 then
-            newline;
-        end;
-    end;
-
-
+{
   Procedure OpenFile(Name:String);
   VAR
       E,
+      IR,
       ActualSize: Integer;
       Found: Boolean;
 
-
-  begin
-       Assign(F, Name );
-       Reset(F, 1);
-       if IOResult <> 0 then
-           Catastrophic('Fatal: Unable to open source file "' + Name+'".');
-       with Buffer do
-       begin
-           InSize := FileSize(F);
-           Line := 1;
-           inPosition := 0;
-           OutPosition:= 0;
-           inPos := 0;
-           OutPos := 0;
-           GetMem(inPtr, inSize );
-           OutSize := Insize*2;
-           ActualSize := 0;
-           BlockRead(F, inPtr^, inSize , ActualSize);
-           Close(F);
-           if ActualSize <> inSize then
-              Catastrophic('Fatal: Unable to read source file ' + Name);
-           // Since we don't know how big the output file will be,
-           // just use double the size of the input file
-           GetMem(OutPtr,OutSize);
-           E := GetLastError;
-           if e<>0 then
-           Writeln(' Win Err ',E);
-           ch  := ' ';
-           EndOfFile := FALSE;
+  begin // we need to use file folders per unitpath
+      if currentFile < Filelimit then
+      begin
+// this needs to be replacwd with a folder search
+          inc(CurrentFile);
+          Assign(Buffer[CurrentFile].F, Name );
+          {$I-}
+          Reset(Buffer[CurrentFile].F);
+          {$I+}
+          IR := IOResult
+          if IR <> 0 then
+          begin
+//     here, we'll move to next folder unless we run out of folders
+//     ro search
+          end;
+// if we still have a failure, bsil
+          if IR <>9 then
+          begin
+              Writeln('?Cannot open ',Name);
+              writeln('** Skipping file');
+              Dec(CurrentFile);
+              Exit;
+          end;
+          with Buffer[Currentfile) do
+          begin
+              Size := FileSize(F);
+              if size = 0 then
+              begin
+                  Writeln('** Skipping empty file ',Name);
+                  Close(F);
+                  Dec(CurrentFile);
+                  exit;
+              end;
+              LineNumber := 1;
+              LinePosition := 1;
+              Line := '';
+         end;
       end;
   end;
 
@@ -191,9 +140,9 @@ var
      Writeln('Completed.');
   end;
 
+  }
 
-
-procedure SplitPath(const Path: String; var Folder, Name, Ext: String);
+procedure SplitPath(const Path: UnicodeString; var Folder, Name, Ext: UnicodeString);
 var
     DotPos, SlashPos, i: Integer;
 begin
@@ -223,29 +172,6 @@ begin
     end;
 
 end;
-
-
-
-
-  procedure ScanFile;
-  begin
-       repeat
-            NextCh;
-       until Buffer.EndOfFile;
-  end;
-
-
-  Procedure Init;
-  begin
-      CrLf := #13;
-      CrLf := CrLf+#10;
-      Buffer.Ch := ' ';
-      ProgramPath := ParamStr(0);
-      SplitPath(ProgramPath, ProgramFolder, ProgramName, ProgramExt);
-
-
-  end;
-
 
 
 end.
