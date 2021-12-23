@@ -1,0 +1,96 @@
+Cross reference points
+Function and procedure list
+Unit table,
+   Uses
+   Usedby has pointer to another table
+   need to separate used by / used table from unit table.
+   Might have it point to unit entry same as for proc/func
+   might have variant record, something like
+    useusedbytable: record =
+      name: unicodestring;
+      case kind: usagetype of
+           procusedby: usedptr;
+           procuses: useptr
+           unitusedby: usedptr
+           unituses: useptr;
+       end;
+
+    defined . declared : boolean // defined in interface or by forward
+                                 // in implementation
+                 declared is where its signature starts
+                 begin and end lines
+    main - true if in main program (instead of unit)
+    above_the_line: defined in interface, i.e. public
+
+
+   class is similar to record, has no block warning like record
+   class named by class(x) means this is derived from class x
+   scalars or base items
+   , records   block
+   , fields    items in record
+
+   Labeling
+    A / array of
+    ANS / Ansistring
+    ASM / assembly
+    B / Boolean
+    C / char
+    BEG / begin on - line where first begin appear proc/func
+    BCL / base class
+    BY / byte
+    CON / const - constant
+    CL / class of
+    CP / class prop = class property
+    DCL / declared - where signature first appeared
+    DEF / defined - where signature is
+    DR - double precision real
+    EN / enumerator
+    EY / enumerated type of
+    END - line where last end proc/func
+    F / func - function
+    FLD / field of
+    FWD / forward
+    G / global -  above the line
+    CV / class variable
+    CM / class method  - method of class
+    EF / external func . external function
+    RP / external proc . external procedure
+    FLD / field - field of record
+    I / Integer
+    INV / in var of
+    I64 / 64-bit integer
+    LCL / Local - Local (inside procedural)
+    M / main program identifier
+    N / nested - procedural inside one
+    NF / nested func
+    NP / nested proc
+    O / object - similar to record
+    OM / object method  - method of object
+    OP / object property
+    OPR / operator - related to special objects
+    OUV / out var of
+    OV / object vatiable
+    P / proc - procedure
+    PRE / predefined - predefined item (no location)
+    PRM / Param - parameter used in procedural signature
+    PUB / public - public declaration
+    PTR / pointer - pointer
+    PVT / private - private declaration
+     PY / property
+    R / record
+    R80 / 80-bit real
+    RE / real
+    S / string
+    SET
+    TC / typed const  - typed constsnt
+    TYP / type - a type
+    U / unicode string
+    UN / unit - unit nsme
+    UL / unit local - (below the line)
+    V / virtual
+    VAR - variable
+    W / word
+    WC / widechar
+
+
+

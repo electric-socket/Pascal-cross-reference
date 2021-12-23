@@ -6,7 +6,7 @@ Cross-reference points:
 
 
 Special Notes:
-* Have a "With table" or "With linked lis" (the latter sounds better) you
+* Have a "With table" or "With linked list" (the latter sounds better) you
   pick up the record definition from its type, then we can reference
   those fields, e.g. when a cariable is referenced in a WITH statement, we
   can follow it to get its parent record.
@@ -81,7 +81,8 @@ Symbol Table items:
 	"every cross-reference program is a compiler at heart" At least if it wants to do 
            interconnecions, I.E procedure maps.
          options: list only global vars, give list of keywords used and counts, 
-             set numbr of lines per page, give list of compiler options and cond
+             set numbr of lines per page, give list of compiler options and conditionals
+             ignore conditional compilation, set colors
            
 
         
