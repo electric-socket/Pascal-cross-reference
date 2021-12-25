@@ -8,7 +8,7 @@ Cross-reference points:
 Special Notes:
 * Have a "With table" or "With linked list" (the latter sounds better) you
   pick up the record definition from its type, then we can reference
-  those fields, e.g. when a cariable is referenced in a WITH statement, we
+  those fields, e.g. when a variable is referenced in a WITH statement, we
   can follow it to get its parent record.
 
 
@@ -20,7 +20,7 @@ Symbol Table items:
 * If Item is record, object, or class
 * Type of definition: 
   UG - Unit Global, the item is defined in the
-  implementation part of as unit (or any non-procedural part of Main)\
+  implementation part of as unit (or any non-procedural part of Main).
   UL - Unit Local, defined "below the line" in a non-procedural part 
   of a unit
   PL - Procedure Local, defined and used in a procedure
@@ -66,7 +66,7 @@ Symbol Table items:
 	Location can be integer. Line number is added to page*100, can use div/mod to get page and line
 
 	Procedure or function names
-        GetSymolTableRecord - returns a new symbol table entry, with the reference already set up
+        GetSymbolTableRecord - returns a new symbol table entry, with the reference already set up
 	AddToUnitGlobal - puts a link to this item in the current unit's gobal idents
         AddToUnitLocal - for a "below the line" ident
         AddToProcLocal - put on the list of items defined for this procedural type

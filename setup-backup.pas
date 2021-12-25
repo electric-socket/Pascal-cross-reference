@@ -153,7 +153,7 @@ Datatype= (notype,     // not a base type
                        ClearElem,    //< This keyword clears ElemDec flag
 
                       // These all start a block when found ; closed by
-                       unitprogDec,   //< unit or program header ; end
+        unitprogDec,      //< unit or program header ; end
                        InterDec,     //< interface declaration  ; implemetation
                        impDec,       //< implementation declaration ; end
                        pfdec,        //< procedure or funcrion
@@ -268,8 +268,7 @@ Datatype= (notype,     // not a base type
                       PrevInUnit,           //< prior itrm in unit
                       NextinUnit,           //< next item in unit
 
-                      // enclosure: immediate container: record, object,
-                      // class or procedural
+                      // enclosure: immediate container: record, object, class or procedural
                       PrevInPlace,          //< Prior item this enclosure
                       NextInPlace,          //< Next item this enclosure
                       PrevTotal,            //> Prior item in global symbol list
@@ -320,21 +319,8 @@ Datatype= (notype,     // not a base type
           Prev: WithP;
     end;
 
-    SearchType = (NoSearch,    // not started
-                  TableEmpty,  // This particulae letter
-                               // of table has no entries
-                  SearchLow,   // This record precedes the
-                               // lowest record
-                  LowerRecord,   // Record not found, returning
-                               // highest record found that
-                               // is less than the search term
-                  SearchMatch);// Matching record; if more
-                               // than one, this is the first
-
 
 VAR
-    SearchResult: SearchType;
-
 { In order to make searches faster, I divide up the symbol table
   into 27 segments, consisting of the first letter of the identifier
   A-Z plus _ (underline). It is a double-liked list, SymbolTable is
@@ -367,14 +353,8 @@ VAR
    // Bookkeeping
    IdentifierCount: Integer = 0;
 
-
    // General initialization
     Procedure Init;
-   ..symbol table related
-    Function SearchSymbolTable(Which:Integer;             //< letter index #
-                           Ident: AnsiString): ItemP; //< uppercase identifier
-    Procedure DumpSymbolTable;
-
     // adds base classes, i.e. int, char, etc.
     Procedure AddBaseClass(N,   // name
               Abbr:AnsiString;  // short name
@@ -385,11 +365,10 @@ VAR
                                BlockClose: AnsiString = '';  // presumed to require no block closure
                                KW:KeywordType=noactdec;// what kind of keyword
                                SC:StateCond =NoState);  // any changes
-
-    // general Utility funcyions
     Function Plural(N:Int64; Plu:AnsiString; Sng: AnsiString): Ansistring;
     Function Version:String ;
     Function CopyRight:String ;
+    Procedure DumpSymbolTable;
 
 
 
@@ -655,7 +634,6 @@ var
                         
 
 BEGIN
-      // standard initialization
         Ident := UpperCase(N);
         CW := Copy(Ident,1,1);
         For Which := 1 to IdentMax do
@@ -666,23 +644,20 @@ BEGIN
         // is previously defined, return that one
         NewItem := InsertInSymbolTable(Which,Ident,TRUE);
 
-        // tight now we have one of thrrr things:
-        // 1. A new blank record, which we created now, initialize it
-        // 2. A previously called "closer" kryword which
-        //    is now appearing to pick up its initialization
-
         With NewItem^ do
+        if Name = '' then  // this item is brand new
         begin
-            Name  := N;
-            DT    := NoType;
-            Kind  := [ refonly ,CompilerDefined ];
-
+                  Name  := N;
+                  NameUC:= Ident;
+                  DT    := NoType;
+                  Kind  := [ refonly ,CompilerDefined ];
+                  What  :=  isKeywordType;
             StateChange := SC;
                   Count := 0;
         END;
 
         // If this keyword requires a "closer" find it. If it has not yet
-        // been defined, create it. When it shows up, we'll fully initialize it
+        // been defined, create it.
         if BlockClose <> '' then
         begin // Oksy, go look for it
             Ident := UpperCase(BlockClose);
@@ -700,7 +675,6 @@ BEGIN
             with CloseItem^ do
             begin
                  Kind  := [ temporary ]; // use as debugging tool
-                 What  :=  isKeywordType;
                  Inc(Count);
             end;
         end;
@@ -1162,78 +1136,6 @@ begin
  end;
 
 
-Function SearchSymbolTable(Which:Integer;             //< letter index #
-                           Ident: AnsiString): ItemP; //< uppercase identifier
-
-Var
-NextItem,
-PriorItem: ItemP;
-
-begin
-
-    If SymbolTable[Which] = NIL then
-    begin     // first entry this "letter"
-        SearchResult := TableEmpty;
-        Writeln('** Table empty');
-        Result :=  NIL;
-        exit
-     end;
-     If Ident <= SymbolTable[Which]^.NameUC then // is before beginning
-     begin
-         if (Ident = SymbolTable[Which]^.NameUC) then
-         Begin
-             write('&& Match ');
-             SearChResult := SearchMatch;
-             Result := SymbolTable[Which]  // return item found
-         End
-         else
-         begin
-             Writeln('** Top of table');
-             SearchResult := SearchLow;
-             Result := NIL;
-
-         end;
-         exit
-     end;
-     PriorItem := SymbolTable[Which];
-     NextItem := SymbolTable[Which]^.NextTotal;
-
-     repeat
-            If NextItem = NIL then
-            begin  // we're at bottom of top-to-bottom chain
-                writeln('** Item before found');
-                SearchResult := SearchLow;
-                Result := PriorItem;
-                exit
-             end;
-             if Ident = NextItem^.NameUC then
-             begin  // "you know it takes some time,
-                    // in the middle, in the middle"
-                 Writeln('** Match');
-                 SearchResult :=  SearchMatch;
-                 Result := NextItem ;   // return item found
-                 exit;
-             end;
-             If Ident < NextItem^.NameUC then
-             begin
-                 // it goes before this one, after previous
-                 Writeln('*** Item before found');
-                 SearchResult :=  LowerRecord;
-                 Result := PriorItem;
-                 exit;
-             end;
-
-             // "But I still haven't found, what I'm looking for."
-             // Follow the chain and keep looking
-
-             // "rotate" the two items, prior item points here
-             PriorItem := NextItem;
-             // move to next item
-             NextItem  := NextItem^.NextTotal;
-     until  false;   // keep going forever (or more likely, until we
-                     // reach the  correct insertion point)end;
-END;
-
 Procedure DumpSymbolTable;
 Var
     Walker: ItemP;
@@ -1245,29 +1147,6 @@ Var
     I: Integer;
     SC: StateCond;
 
-    Procedure Retrieve(N:AnsiString);
-    var
-      Which: integer;
-      Ident,
-      CW: ansistring;
-      NewItem: ItemP;
-
-    BEGIN
-        Writeln(' Utem is ',N);
-        Ident := UpperCase(N);
-        CW := Copy(Ident,1,1);
-        For Which := 1 to IdentMax do
-             if CW = ValidIdent[Which] then
-               break;
-
-        NewItem := SearchSymbolTable(Which,Ident);
-        writeln('Searchresult=',Searchresult);
-        If NewItem = NIL then
-           Writeln('Returned null')
-        Else
-           Writeln('Result is ',NewItem^.NameUC);
-
-    END;
 
 begin
     Z :=0;
@@ -1322,17 +1201,6 @@ begin
     end;
     Writeln;
     Writeln(' Total: ',Z);
-
-    Writeln('Test search');
-    Retrieve('if');
-    Retrieve('apple');
-    Retrieve('z');
-    Retrieve('baker');
-    Retrieve('begone');
-    Retrieve('Written');
-    Retrieve('I');
-
-
 
 end;
 

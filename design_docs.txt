@@ -179,6 +179,12 @@ For code not compiled because of conditionals
 * IC / I[NCLUDE] C[ONDITIONALS] -   List AND CREF skipped code (INVERSE XC)
 Skipped code on the same line as visible code is listed in strike-out
 When Included, it is in slightly lighter print
+Skipped code should have 3 choices:
+1. Skip code without notice, next line number is wherr code starts again
+2. Skip code and count missing lines, showing a linr numbrt change (or
+   an indication that so many lines were askipped
+   3  . List it anywat, showing it in different colors, or
+        dimmed/strikeouy
 
 
 

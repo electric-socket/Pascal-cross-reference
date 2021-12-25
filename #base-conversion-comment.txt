@@ -1,0 +1,57 @@
+Perhaps about 40+ years ago, I was reading a programming manual on microfiche, and discovered an interesting means to specify an integer constant in another base. This
+allows, not just base 16 (as the $ prefix allows), or octal (as the & prefix allows), but any base from 2-36. In that example, it allowed a number like baseRnumber
+where base was 2-36  and number was  a string of characters in that base, e.g. 16R3efc  for $3efc , 8R177362 for &177362, etc. At the time I thought it was a great
+idea. But how would you implement it? Then I saw someone had thought to use the # symbol in infix form (as opposed to the current prefix form) to define a radix
+constant.
+
+This would allow the above to be specified as 16#4efc and 8#177362. 
+
+If interested in adding this feature, this is how it can be implemented:
+
+1. in the scanner loop which create tokens there  will probably be a case statement like
+
+  Case CH of // Ch is the current character
+...
+  '0'..'9': GetNumber
+
+2. 
+In the following, getch reads the next character from the input file (or stream) into the global var CH/ NextUpperCh ensures if it is a letter, it's uppercase.
+
+Procedure GetNumber:
+var
+    digit: byte;
+   isReal:  Boolean;
+    Realsum: Double;
+   Sum  Integer;
+begin
+       Sum :=0;
+       while Ch in ['0'..'9'] do 
+      begin
+             Digit := Ord(CH)-ord('0'):
+             NextUpperCh;
+             If sum>maximum then
+             begin
+// do error check
+
+             end
+             else
+                     Sum := Sum*10+Digit;
+      end;
+      if ch ='.' then
+      begin
+              // handle real
+      end
+      else
+      if ch ='#' then
+      begin 
+             nextch
+             HandleRadixConstant(Sum);
+       end
+// optional to handle 0X  c-style hex constants
+      else
+             if (ch='X') and (sum = 0) then
+             begin 
+                     Sum := 16;
+                     HandleRadixConstant(Sum);
+             end;
+end;

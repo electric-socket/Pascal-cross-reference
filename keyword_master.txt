@@ -80,6 +80,8 @@ try
 // them, as it might be confusing
 exit
 halt
+break
+continue
 
 // List of modifiers:
 absolute  
