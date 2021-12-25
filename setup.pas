@@ -1,11 +1,12 @@
 // Pascal Cross-Reference Program
+// Copyright 2021 Paul Robinson
 // 2021-12-17
 
 Unit setup;
 
 
 interface
-{$DEFINE Interface}
+
 
 Uses Scan,sysutils;
 
@@ -31,65 +32,6 @@ Days: Array[0..6] of string[9]=
 
 SlashChar = '\'; // Your system's directory separator,
                  // \ on windows; / on unix, linux, etc
-
-// ** Keyword definitions **
-// ** keyword values **
-
-// keyword definitions for Pascal Cross-Reference
-
- // 0 = keyword has no significance, e.g. 'for' has 0 signifiance, but
- // 'do' has 1 because a statement beginning with do (for, while, with)
- // carries for one statement unless encased in a block (begin or repeat)
- // but with, on the other hand, changes the relevance of each identifier
- // following in the next statement..
-
- // these are the base standard set
-
- 
-  kwdo        = 1 ;   // do      - starts a single statement
-  kwthen      = 1 ;   // then    - good for one statement
-  kwelse      = 1 ;   // else    - also good for one statement
-  kwbegin     = 10 ;  // begin   - start of counted block
-  kwrecord    = 11 ;  // record  - starts a declaration block
-  kwcase      = 12 ;  // case    - case is also special
-  kwend       = 13 ;  // end     - block closure
-  kwrepeat    = 14 ;  // repeat  - another block
-  kwuntil     = 15 ;  // until   - special closure
-  kwwith      = 16 ;  // with    - with has special processing
-  kwconst     = 20 ;  // const     - start of definitions
-  kwtype      = 21 ;  // type      - start of definitions
-  kwvar       = 22 ;  // var       - start of definitions
-  kwfunction  = 23 ;  // function  - subroutine returning a value
-  kwprocedure = 24 ;  // procedure - subroutine not returning a value
-  kwprogram   = 30 ;  // program   - main program
-  kwunit      = 31 ;  // unit      - a module
-  kwforward   = 101 ; // forward   : modifier of procedurals
-  kwif        = 0 ;
-  kwof        = 0 ;
-  kwto        = 0 ;
-  kwin        = 0 ;
-  kwor        = 0 ;
-  kwand       = 0 ;
-  kwnot       = 0 ;
-  kwxor       = 0 ;
-  kwshl       = 0 ;
-  kwshr       = 0 ;
-  kwfor       = 0 ;
-  kwdiv       = 0 ;
-  kwmod       = 0 ;
-  kwset       = 0 ;
-  kwgoto      = 0 ;
-  kwfile      = 0 ;
-  kwwhile     = 0 ;
-  kwarray     = 0 ;
-  kwlabel     = 0 ;
-  kwdownto    = 0 ;
-  kwpacked    = 0 ;
-
-// bext ones are for Extended Pascal
-
-
-
 
 
 //  ** Identifier group **
@@ -130,7 +72,7 @@ type
 
 // this only concerns identifier vslues;
 // procedutal types ate encapsulated elsewhere
-Sizetype= (notype,     // not a base type
+Datatype= (notype,     // not a base type
            enumGroup,  // name of enumerator list
            EnumType,   // enumerated value,
            boolType,   // boolean
@@ -164,40 +106,113 @@ Sizetype= (notype,     // not a base type
                        next: UseP;   // next usage pointer
                    end;
 
+
+    StateCond = (NoState,         // Not in a state
+                 inProgram,       // program
+                 inUnit,          // unit found
+                 inInterface,     // Which part (carries to succeeding statements)
+                 inImplementation,
+                 inConst,         // CONST, TYPE, VAR declaration
+                 inType,
+                 inVar,
+                 inforward,       // FORWARD
+                 inExternal,      // EXTERNAL
+                 inProcedure,     // Proc, Func, etc. (carries forward
+                 inFunction,      //                   until closed)
+                 inConstructor,
+                 inDestructor,
+                 inProperty,
+                 inRecord,        // block types
+                 inObject,
+                 inClass,
+                 inOneStmt,       // this affects the next statement
+                 inWith,          // a with statement is in effect (will
+                                  // carry over to block or stmt following
+                 inBegin,         // begin-end block
+                 inRepeat,        // repeat-until block
+                 inIgnore,        // block where we should ignore code (ASM-END)
+                 inCase          // case-end but not record case (that closes with record)
+                 );
+    StateP = ^State;
+    State  = Record           // Our running state
+          Cond: StateCond;    // condition
+          closer: string;     // if in block, symbol we watch for to close
+          WithCount: byte;    // if the with stmt had multiple records, number
+          prev: StateP;       // if we are in a block, pointer to state to
+                              // returm to
+    end;
+
+        KeywordType = (NoActDec,     //< words having no action for
+                                     //< our purposes: array, to, of, in, etc
+                                     //< most keywords will have this setting
+                       ElemDec,      //< const, type, or var section, is
+                                     //< released by:
+                                     //<  implementation when interface ends
+                                     //<  procedure, function in open code
+                                     //<  begin in proc/func
+                       ClearElem,    //< This keyword clears ElemDec flag
+
+                      // These all start a block when found ; closed by
+        unitprogDec,      //< unit or program header ; end
+                       InterDec,     //< interface declaration  ; implemetation
+                       impDec,       //< implementation declaration ; end
+                       pfdec,        //< procedure or funcrion
+                       BlockDec,     //< any block
+                       CaseDec,      //< Case stmt
+                       structdec,    //< Record, Object or class
+                       nxstmtDec,    //< has next statement effect: probably
+                                     //< "do" as used in for, while, with
+                       closureDec,   //< This keyword closes some block or structure
+                       usesDec,      //< uses clause
+                       prepfmod,     //< modifier used before procedural header
+                                     //< proc, func, property or method
+                       postpfmod,    //< modifier used after procedural
+       _            );
+
         UnitRecord = record
-                     Name,                 // irs name
+                     Name,                 // its name
                      FileName: ansistring; // file used
                      isDeclared,           // someone refeenced it
                      isfinished: boolean;  // we've read it through
                      usedby,               // units used by
-                     UserOf: UserUsed;       // uses other units
+                     UserOf: UserUsed;     // uses other units
                      GlobalTable,          // interface items
                      LocalTable:ItemP;     // implementation items
                      end;
 
                    // info bits 
-        MajorKind= ( inVisible,            //< not visible in cross-reference 
+        MajorKind= ( inVisible,            //< not visible in cross-reference
+                                           //< used for placeholder or
+                                           //< "dummy" items
                      BaseType,             //< base type: char, integer etc.
-                     refonly,              //< list only if referenced
-                                           //< used (for predefined items) 
+                     refonly,              //< list only if requested to
+                                           //< show usage of standard items
+                                           //< used (for predefined items)
+
                      stdPF,                //< standard procedure/funcrion
+                                           //< as opposed to a const/type/var
                      predefined,           //< stystem or user predefined
-                     compilerdefined,      //< predefined by standards
-                                           //< or by this orogram
+                                           //< has no definition location
+                     compilerdefined,      //< predefined by compiler
+                                           //< or by this program
                      AboveTheLine,         //< in interface
                      isLocal,              //< identifier declared within p/f 
                      selector,             //< selector in record CASE stmt   
                      SignatureKind,        //< args of proc/func 
                      temporary,            //< temporary item for search
                                            //< purposes (usually for WITH stmt
-                     declared,             //< forward declaraation (forward proc or pointer)
-                     definred,             //< Actual defiition (begin, etc.)
-                     // actual identifiers
+                     declared,             //< forward declaraation (forward or
+                                           //< interface p/f  or pointer)
+                     defined,              //< Actual definition (resolution of
+                                           //< pointer reference or p/f after
+                                           //< interface or forward)
+
+                     // these indicate actual identifiers
                      prockind,             //< procedure
-                     Funckind,             //< dunction
-                     constKind,            //< in CONST in code or signature
-                     varKind,              //< VAR declaration
-                     typeKind,             //< type declaration
+                     Funckind,             //< function
+                     constKind,            //< CONST dec in code or signature
+                     typeKind,             //< TYPE declaration
+                     varKind,              //< VAR declaration in code or sig
                      valueKind,            //< unspecified arg in signature
                      fieldKind,            //< field of record, object or class
                      // record, object and class are in SizeType
@@ -210,32 +225,55 @@ Sizetype= (notype,     // not a base type
                       ElementType,          //< const, type, var
                       UnitType,             //< unit or program
                       PreUnit,              //< predefined unit
-                      KeywordType,          //< action
+                      isKeywordType,        //< action
                       ModifierType,         //< modifies keyword
                       PredefinedType);      //< predefined by system or other units
 
          LineP = ^LineTable;                //< list of line number usage
+
          signatureP = ^Signature;           //< proc/func arge
+
          Item = record                      //< identifier record  "Symbol Table"
                       Abbrev,               //< optional Short name
                       NameUC,               //< Upper case copy of Name
                       Name: ansistring;     //< its name as given
+                      Index,                //< Identifier Serial Number
+                      Count,                //< Usage count
                       DefPage,              //< page where it's defined
                       DefLine: Integer;     //< Line # or line # in Defpage
                       Usage: LineP;         //< Places where it's used
                       UnitIn: UnitP;        //< Unit it's in
                       Owner,                //< If in record, class of
                                             //< object, which one
+                      LPS,                  //< chain of "lastProcStanding"
+                                            //< links for nested procedures
+                                            //< (see comment on that variable)
+
+                      {  Note: here I have 4 pointers:
+                         Prev/Next + inunit + ATL/Local, to indicate the list
+                         of procedures declared/defined in a unit, both
+                         "above the line" and those in implementation. Now, I
+                         did a reconsideration. If it's in one of these places
+                         do I need both? Well, for public procedures we need
+                         to show where declared, and where defined. However,
+                         we already have a setting for that in KIND. So,
+                         because I might need two lists, I'll dike these out
+                         for now so I can restore then later if I find I
+                         do need differentiated list.
                       PrevinUnitATL,        //< prior item in this units interface
                       NextinUnitATL,        //< next item in interface
                       PrevinUnitLocal,      //< Prior item in implementation this unit
                       NextinUnitLocal,      //< Next item in implementation this unit
+                      }
+                      PrevInUnit,           //< prior itrm in unit
+                      NextinUnit,           //< next item in unit
+
                       // enclosure: immediate container: record, object, class or procedural
                       PrevInPlace,          //< Prior item this enclosure
                       NextInPlace,          //< Next item this enclosure
                       PrevTotal,            //> Prior item in global symbol list
                       NextTotal: ItemP;     //< Next item in global symbol list
-                      size: sizetype;       //< what it uses
+                      DT: Datatype;       //< what it uses
                       Kind: set of Majorkind;      //< statistics
                       case What: identType of      //< what it is
                         proceduralType:
@@ -246,17 +284,18 @@ Sizetype= (notype,     // not a base type
 
                         SignatureType:
                            ( NextSignature: SignatureP;); //< next arg of p/f
-                          elementType:                    //< elements: const, type. var
+
+                        ElementType:                    //< elements: const, type. var
                            ( NextField: ItemP);         //< if a field in record
                                                         //< class, or object next one
 
-                        KeywordType, ModifierType:      //< Keywords and modifiers
-                           ( Closedby,                  //<If this is a block
-                           // keyword does it start a block
-                             Closs: Itemp;              //< or does it
-                           // close a keyword block
-                             KeyWordClass:Word;         //< What type of keyword is it
-                             Specials: word);           //< Sprcial instrucyions
+                        isKeywordType, ModifierType:      //< Keywords and modifiers
+                        (    Closedby:ItemP;            //< If this starts a block
+                                                        //< what closes it
+                             KW: KeywordType;           //< what it does
+                             StateChange: StateCond;    //< if it chnages our state
+                             KeyWordClass:Word;         //< What class of keyword is it
+                             Specials: word);           //< Special instrucrions
 
                         PreUnit, UnitType:
                            ( Status: UnitP  );     //< Unit fetails
@@ -292,29 +331,49 @@ VAR
    SymbolBottom,                           //< in reverse order
    Symboltable: Array[IdentSize] of ItemP; //< alphabetical order
 
+   // when a procedural declaration occurs, we save its entry, for various
+   // purposes: (1) in case it will be modified (Forward or external);
+   // (2) we see a const/type/var/declaration not in interface, we know
+   // to whom this element belongs to
+   // (3) we see a BEGIN statement, to know where references are
+   // This is a "push down" list, if a new proc/func is defined
+   // in IMPLEMENTATION, or in the case of a nested p/f, an intervening
+   // p/f, we attach the prior one
+   LastProcStanding: ItemP;
+
+   // if in with, which one
    WithTable: WithP;
-   // this ptogtam's name
+
+   // what we are doing
+   StateTable: StateP;
+
+   // this program's file name
    PasPath,PasFolder,PasName,PasExt: UnicodeString;
 
+   // Bookkeeping
+   IdentifierCount: Integer = 0;
 
    // General initialization
     Procedure Init;
     // adds base classes, i.e. int, char, etc.
     Procedure AddBaseClass(N,   // name
               Abbr:AnsiString;  // short name
-              NewSZ:SizeType;   // what it is
+              NewDT:DataType;   // what it is
               Visible: Boolean = TRUE); // hide item if false
     // installs keywords
-    Procedure AddKeyword(N:Ansistring; Flag:Integer);
+    Procedure AddKeyword(const N:AnsiString;  // name
+                               BlockClose: AnsiString = '';  // presumed to require no block closure
+                               KW:KeywordType=noactdec;// what kind of keyword
+                               SC:StateCond =NoState);  // any changes
     Function Plural(N:Int64; Plu:AnsiString; Sng: AnsiString): Ansistring;
     Function Version:String ;
     Function CopyRight:String ;
     Procedure DumpSymbolTable;
 
 
-{$UNDEF Interface}
+
 implementation
-{$DEFINE implementation}
+
 
 
   Function Plural(N:Int64; Plu:AnsiString; Sng: AnsiString): Ansistring;
@@ -348,20 +407,42 @@ end;
 Procedure InitEntry(Var NewItem:ItemP);
 Begin
   New(NewItem);
+  inc(IdentifierCount);
   With NewItem^ do
   begin
+      // don't init Ident because we want to
+      // leave the key alone
+      Name      := '';
+      Abbrev    := '';
+      NameUC    := '';
       NextTotal := NIL;
       PrevTotal := NIL;
       NextField := NIL;
+      Count     := 0;
+      Index     := IdentifierCount; // Serial Number
 
       // to prevent errors, null *all* pointers
       Usage              := NIL;
       UnitIn             := NIL;
       Owner              := NIL;
+      LPS                := NIL;
+      {
       PrevinUnitATL      := NIL;
       NextinUnitATL      := NIL;
       PrevinUnitLocal    := NIL;
       NextinUnitLocal    := NIL;
+      }
+      DefPage            := 0;
+      DefLine            := 0;
+      // Zero the largest variant and
+      // you zero all others
+      SigCount           := 0;
+      SignatureList      := Nil;
+      LocalTable         := Nil;
+      ResultType         := Nil;
+
+      PrevinUnit         := NIL;
+      NextinUnit         := NIL;
       PrevInPlace        := NIL;
       NextInPlace        := NIL;
       PrevTotal          := NIL;
@@ -379,7 +460,14 @@ End;
    // opposite, (always the highest), i.e. starting at 'KZ' and
    // working down to  'ka'.
 
-    Function InsertInSymbolTable(Which:Integer;  Ident: AnsiString ): ItemP;
+    Function InsertInSymbolTable(Which:Integer;     //< letter index #
+                                                    //< into symbol table
+                                 Ident: AnsiString; //< uppercase identifier
+
+                                 // the next one is if we want to
+                                 // stop and return if we find an item
+                                 // of the same name
+                                 StopOnEqual: Boolean=FALSE ): ItemP;
     Var
        AddItem,
        NextItem,
@@ -387,27 +475,44 @@ End;
 
     begin
         If SymbolTable[Which] = NIL then
-        begin
-            InitEntry(SymbolTable[Which]);
+        begin     // first entry this "letter"
+            InitEntry(SymbolTable[Which]);  // replaces new()
+                                            // to initialise structure
+            SymbolTable[Which]^.NameUC := Ident;
 
 {       Not needed here because initentry will zero these anyway
             SymbolTable[Which]^.PrevTotal := NIl;
             SymbolTable[Which]^.NextTotal := NIL;
 }
+            // top and bottom now point to same entry
             SymbolBottom[Which] := SymbolTable[Which];
+
+            // give this structure to caller, ready to use
             Result :=  SymbolTable[Which];
             exit
          end;
-         If Ident < SymbolTable[Which]^.NameUC then // before beginning
+         If Ident <= SymbolTable[Which]^.NameUC then // is before beginning
          begin
-             InitEntry(AddItem);
-{       Not needed here because initentry will zero this anyway
-             Additem^.PrevTotal := NIL;
+             if StopOnEqual and (Ident = SymbolTable[Which]^.NameUC) then
+                 Result := SymbolTable[Which]  // return item found
+             else
+             begin
+                 InitEntry(AddItem);  // replaces new() to initialise structure
+                 AddItem^.NameUC :=Ident;
+{                Not needed here because initentry will zero this anyway
+                 Additem^.PrevTotal := NIL;
 }
-             AddItem^.NextTotal := SymbolTable[Which];
-             SymbolTable[Which]^.PrevTotal := AddItem;
-             SymbolTable[Which] := AddItem;
-             Result := AddItem;
+                 // attach this entry to first item
+                 AddItem^.NextTotal := SymbolTable[Which];
+
+                 // make this top of chain
+                 SymbolTable[Which]^.PrevTotal := AddItem;
+
+                 // now make top of chain point here
+                 SymbolTable[Which] := AddItem;
+                 // give this structure to caller, ready to use
+                 Result := AddItem;
+             end;
              exit
          end;
          PriorItem := SymbolTable[Which];
@@ -417,38 +522,74 @@ End;
                 // item was less than ItemUC, so let's see
                 // if this one is, is equal, or is more
                 If NextItem = NIL then
-                begin
-                    InitEntry( AddItem);
+                begin  // we're at bottom of top-to-bottom chain
+                    InitEntry( AddItem);      // replaces new()
+                                              // to initialise structure
+                    AddItem^.NameUC :=Ident;
+
 {       Not needed here because initentry will zero this anyway
                  Additem^.NextTotal  := NIL;
 }
+             //  attach this entry to end of top-to-bottom chain
                      AddItem^.PrevTotal  := PriorItem;
+             //  place at bottom of chain
                      PriorItem^.NextTotal := AddItem;
+             // tell bottom pointer we're now last ebtry
                      SymbolBottom[Which] := AddItem;
+             // give this structure to caller, ready to use
                      Result := AddItem;
                      exit
                  end;
                  if Ident <= NextItem^.NameUC then
-                 begin  // it goes before this one, after previous
-                     InitEntry(AddItem);
+                 begin  // "you know it takes some time,
+                        // in the middle, in the middle"
+                     if StopOnEqual and (Ident =NextItem^.NameUC) then
+                        Result := NextItem    // return item found
+                     else
+                     begin
+                         // it goes before this one, after previous
+                         InitEntry(AddItem);  // replaces new() to
+                                             // initialise structure
+                         AddItem^.NameUC :=Ident;
 
-                     PriorItem^.NextTotal := AddItem;
-                     AddItem^.NextTotal := NextItem;
-                     NextItem^.PrevTotal := AddItem;
-                     AddItem^.PrevTotal := PriorItem;
-                     Result := AddItem;
+                         // insert in the middlr of structure, "middle"
+                         // being "after the first and before the last
+
+                         // first, insert after prior item
+                         PriorItem^.NextTotal := AddItem;
+
+                         // now, the chain is broken, insert this "link" in the
+                         // top-to-bottom chain
+                         AddItem^.NextTotal := NextItem;
+
+                         // now that top-down chain is fixed, insert
+                         // this entry in the other (bottom-to-top) chain
+                         NextItem^.PrevTotal := AddItem;
+
+                         // agin we brokr the chain, insert this entry and close
+                         AddItem^.PrevTotal := PriorItem;
+
+                         // give this structure to caller, ready to use
+                         Result := AddItem;
+                     end;
                      exit
                  end;
-              PriorItem := NextItem;
-              NextItem  := NextItem^.NextTotal;
-         until  false;
+                 // "But I still haven't found, what I'm looking for."
+                 // Follow the chain and keep looking
+
+                 // "rotate" the two items, prior item points here
+                 PriorItem := NextItem;
+                 // move to next item
+                 NextItem  := NextItem^.NextTotal;
+         until  false;   // keep going forever (or more likely, until we
+                         // reach the  correct insertion point)
     end;
 
 
 // adds a base class, i.e. int, char, etc. to stmbol table
 Procedure AddBaseClass(N,   // name
           Abbr:AnsiString;  // short name
-          NewSZ:SizeType;   // what it is
+          NewDT:DataType;   // what it is
           Visible: Boolean = TRUE); // hide item if false
 var
   Which: integer;
@@ -472,7 +613,7 @@ begin
           Name  := N;
           NameUC:= Ident;
           Abbrev:= Abbr;
-          Size  := NewSZ;
+          DT    := NewDT;
           Kind  := [BaseType,RefOnly,predefined];
           If Not Visible then
               Kind := Kind+[invisible];
@@ -480,40 +621,172 @@ begin
       end;
 end;
 
-Procedure AddKeyword(N:Ansistring; Flag:Integer);
-Begin
+Procedure AddKeyword(const N:AnsiString;                 // name
+                           BlockClose: AnsiString = '';  // presumed to require no block closure
+                           KW:KeywordType=noactdec;      // what kind of keyword
+                           SC:StateCond =NoState);       // any changes
+var
+      Which: integer;
+      Ident,
+      CW: ansistring;
+      CloseItem,      // keyword belonging to blockclose
+      NewItem: ItemP;
+                        
 
-
-
-end;
-
-
-Procedure AddStdVar(N:Ansistring; NewSZ:SizeType);
-Begin
-
-
-END;
-
-Procedure AddStdFunc(N:Ansistring; NewSZ:SizeType);
 BEGIN
+        Ident := UpperCase(N);
+        CW := Copy(Ident,1,1);
+        For Which := 1 to IdentMax do
+             if CW = ValidIdent[Which] then
+               break;
 
+        // TRUE in the following function call means that if this name
+        // is previously defined, return that one
+        NewItem := InsertInSymbolTable(Which,Ident,TRUE);
 
+        With NewItem^ do
+        if Name = '' then  // this item is brand new
+        begin
+                  Name  := N;
+                  NameUC:= Ident;
+                  DT    := NoType;
+                  Kind  := [ refonly ,CompilerDefined ];
+                  What  :=  isKeywordType;
+            StateChange := SC;
+                  Count := 0;
+        END;
+
+        // If this keyword requires a "closer" find it. If it has not yet
+        // been defined, create it.
+        if BlockClose <> '' then
+        begin // Oksy, go look for it
+            Ident := UpperCase(BlockClose);
+            CW := Copy(Ident,1,1);
+            For Which := 1 to IdentMax do
+                if CW = ValidIdent[Which] then
+                    break;
+
+            // if it's already there, take it
+            CloseItem := InsertInSymbolTable(Which,Ident,TRUE);
+            NewItem^.Closedby := CloseItem;    // this will never be nil
+
+            if CloseItem^.Name ='' then  // it doesn't exist,
+                                         // this is a new entry
+            with CloseItem^ do
+            begin
+                 Kind  := [ temporary ]; // use as debugging tool
+                 Inc(Count);
+            end;
+        end;
 END;
 
-Procedure AddStdProc(N:Ansistring; NewSZ:SizeType);
+
+Procedure AddStdVar(N:Ansistring; NewDT:DataType);
+var
+      Which: integer;
+      Ident,
+      CW: ansistring;
+      NewItem: ItemP;
+
 BEGIN
+        Ident := UpperCase(N);
+        CW := Copy(Ident,1,1);
+        For Which := 1 to IdentMax do
+             if CW = ValidIdent[Which] then
+               break;
 
+        NewItem := InsertInSymbolTable(Which,Ident);
+
+        With NewItem^ do
+        begin
+            Name  := N;
+            NameUC:= Ident;
+            Abbrev:= '';
+            DT    := NewDT; 
+
+            Kind  := [ varkind, refonly, Predefined];
+{ add later if hidden procs needed
+            If not Visible  then
+                 Kind := Kind+[invisible];
+}
+            What  := ElementType;
+          END;
 
 END;
 
 
-Procedure AddStdConst(N:Ansistring; NewSZ:SizeType);
+Procedure AddStdType(N:Ansistring; NewDT:DataType);
+var
+      Which: integer;
+      Ident,
+      CW: ansistring;
+      NewItem: ItemP;
+
+BEGIN
+        Ident := UpperCase(N);
+        CW := Copy(Ident,1,1);
+        For Which := 1 to IdentMax do
+             if CW = ValidIdent[Which] then
+               break;
+
+        NewItem := InsertInSymbolTable(Which,Ident);
+
+        With NewItem^ do
+        begin
+            Name  := N;
+            NameUC:= Ident;
+            Abbrev:= '';
+            DT    := NewDT;
+            Kind  := [ Typekind, refonly, Predefined ];
+{ add later if hidden procs needed
+            If not Visible  then
+                 Kind := Kind+[invisible];
+}
+            What  := ElementType;
+          END;
+
+END;
+
+
+Procedure AddStdFunc(N:Ansistring; NewDT:DataType);
+var
+      Which: integer;
+      Ident,
+      CW: ansistring;
+      NewItem: ItemP;
+
+BEGIN
+        Ident := UpperCase(N);
+        CW := Copy(Ident,1,1);
+        For Which := 1 to IdentMax do
+             if CW = ValidIdent[Which] then
+               break;
+
+        NewItem := InsertInSymbolTable(Which,Ident);
+
+        With NewItem^ do
+        begin
+            Name  := N;
+            NameUC:= Ident;
+            Abbrev:= '';
+            DT    := NewDT;
+            Kind  := [predefined, funckind, refonly, stdPF];
+{ add later if hidden procs needed
+            If not Visible  then
+                 Kind := Kind+[invisible];
+}
+            What  := proceduralType;
+          END;
+
+END;
+
+
+Procedure AddStdConst(N:Ansistring; NewDT:DataType);
 var
   Which: integer;
   Ident,
   CW: ansistring;
   NewItem: ItemP;
-
 
 begin
       Ident := UpperCase(N);
@@ -529,7 +802,7 @@ begin
           Name  := N;
           NameUC:= Ident;
           Abbrev:= '';
-          Size  := NewSZ;
+          DT    := NewDT;
           Kind  := [RefOnly,predefined,ConstKind];
           If inVisible in Kind then
                Kind := Kind+[invisible];
@@ -558,21 +831,78 @@ BEGIN
         Name  := N;
         NameUC:= Ident;
         Abbrev:= '';
-        Size  := notype;
-        Kind  := [RefOnly,predefined,ConstKind];
+        DT  := notype;
+        Kind  := [RefOnly,predefined,isUnit];
         If not Visible  then
              Kind := Kind+[invisible];
-        What  := ElementType;
+        What  := UnitType;
       END;
-
-
 END;
 
 Procedure AddStdProc(N:Ansistring);
-BEGIN
+var
+      Which: integer;
+      Ident,
+      CW: ansistring;
+      NewItem: ItemP;
 
+BEGIN
+        Ident := UpperCase(N);
+        CW := Copy(Ident,1,1);
+        For Which := 1 to IdentMax do
+             if CW = ValidIdent[Which] then
+               break;
+
+        NewItem := InsertInSymbolTable(Which,Ident);
+
+        With NewItem^ do
+        begin
+            Name  := N;
+            NameUC:= Ident;
+            Abbrev:= '';
+            DT    := notype;
+            Kind  := [predefined, prockind, refonly, stdPF];
+{ add later if hidden procs needed
+            If not Visible  then
+                 Kind := Kind+[invisible];
+}
+            What  := proceduralType;
+          END;
 
 END;
+
+Procedure AddStdFile(N:Ansistring);
+var
+      Which: integer;
+      Ident,
+      CW: ansistring;
+      NewItem: ItemP;
+
+BEGIN
+        Ident := UpperCase(N);
+        CW := Copy(Ident,1,1);
+        For Which := 1 to IdentMax do
+             if CW = ValidIdent[Which] then
+               break;
+
+        NewItem := InsertInSymbolTable(Which,Ident);
+
+        With NewItem^ do
+        begin
+            Name  := N;
+            NameUC:= Ident;
+            Abbrev:= '';
+            DT  := FileType;
+            Kind  := [predefined,  refonly];
+{ add later if hidden files needed
+            If not Visible  then
+                 Kind := Kind+[invisible];
+}
+            What  := proceduralType;
+          END;
+
+END;
+
 
 
 Procedure Init;
@@ -580,11 +910,32 @@ Var
     I: Integer;
 
 begin
-{$DEFINE INIT}
+    New(StateTable);
+    With StateTable^ Do
+    Begin
+        Cond:= NoState;
+        Closer:= '';
+        WithCount:= 0;
+        Prev:= NIL;
+    End;
+
+    WithTable := NIL;
+
     For I := 1 to IdentMax do
        SymbolTable[I] := Nil;
 
-                 // name,         nickname,     type      Vidible
+{For thr initialization, we load only the
+ identifiers of standard Pascal. Extended,
+ Turbo, UCSD, XDPascal, Object, Delphi, or
+ Free Pascal extensions will be installed
+ later. This is another resson to have
+ keywords as symbol table entries: I can
+ add or remove them as needed, but standard
+ Pascal items can't be removed. (Can't
+ examine a program if Begin is dropped!)
+}
+
+                 // name,         nickname,     type      Visible
     AddBaseClass('enumerator',       'enum',    EnumGroup,False);  // PLACEHOLDER
     AddBaseClass('enumerated value', 'econ',    EnumType, False);  // PLACEHOLDER
     AddBaseClass('byte',             'byte',     Bytetype);   // 8-bit integer
@@ -598,7 +949,7 @@ begin
     AddBaseClass('pointer',           'ptr',  pointerType);   // address
     AddBaseClass('set',               'set',      setType);   // set
     AddBaseClass('array',             'arr',   ArrayType);    // general array
-    AddBaseClass('string',           'strg',   stringType);   // array of char with length
+    AddBaseClass('string',            'str',   stringType);   // array of char with length
     AddBaseClass('ansistring',        'ans',   AnsStrType);   // Ansistring
     AddBaseClass('unicodestring',     'uni',   uniStrType);   // unicodeString
     AddBaseClass('record',            'rec',   RecordType);   // record
@@ -612,50 +963,119 @@ begin
 
 
 // std keywords
+{
+   StateCond = (NoState,         // Not in a state
+                 ProgUnit,        // program or unit found
+                 inInterface,     // Which part (carries to succeeding statements)
+                 inImplementation,
+                 inConst,         // CONST, TYPE, VAR declaration
+                 inType,
+                 inVar,
+                 inProcedure,     // Proc, Func, etc. (carries forward
+                 inFunction,      //                   until closed)
+                 inConstructor,
+                 inDestructor,
+                 inProperty,
+                 inRecord,        // block types
+                 inObject,
+                 inClass,
+                 inOneStmt,       // this affects the next statement
+                 inWith,          // a with statement is in effect (will
+                                  // carry over to block or stmt following
+                 inBegin,         // begin-end block
+                 inRepeat,        // repeat-until block
+                 inIgnore,        // block where we should ignore code (ASM-END)
+                 inCase          // case-end but not record case (that closes with record)
 
-    AddKeyWord('if',          kwif);
-    AddKeyWord('do',          kwdo);
-    AddKeyWord('of',          kwof);
-    AddKeyWord('to',          kwto);
-    AddKeyWord('in',          kwin);
-    AddKeyWord('or',          kwor);
-    AddKeyWord('and',         kwand);
-    AddKeyWord('not',         kwnot);
-    AddKeyWord('xor',         kwxor);
-    AddKeyWord('shl',         kwshl);
-    AddKeyWord('shr',         kwshr);
-    AddKeyWord('end',         kwend);
-    AddKeyWord('for',         kwfor);
-    AddKeyWord('var',         kwvar);
-    AddKeyWord('div',         kwdiv);
-    AddKeyWord('mod',         kwmod);
-    AddKeyWord('set',         kwset);
-    AddKeyWord('then',        kwthen);
-    AddKeyWord('else',        kwelse);
-    AddKeyWord('with',        kwwith);
-    AddKeyWord('goto',        kwgoto);
-    AddKeyWord('case',        kwcase);
-    AddKeyWord('type',        kwtype);
-    AddKeyWord('file',        kwfile);
-    AddKeyWord('begin',       kwbegin);
-    AddKeyWord('until',       kwuntil);
-    AddKeyWord('while',       kwwhile);
-    AddKeyWord('array',       kwarray);
-    AddKeyWord('const',       kwconst);
-    AddKeyWord('label',       kwlabel);
-    AddKeyWord('repeat',      kwrepeat);
-    AddKeyWord('record',      kwrecord);
-    AddKeyWord('downto',      kwdownto);
-    AddKeyWord('packed',      kwpacked);
-    AddKeyWord('forward',     kwforward);
-    AddKeyWord('program',     kwprogram);
-    AddKeyWord('function',    kwfunction);
-    AddKeyWord('procedure',  kwprocedure);
+     KeywordType = (NoActDec,        //< words having no action for
+                                     //< our purposes: array, to, of, in, etc
+                                     //< most keywords will have this setting
+                       ElemDec,      //< const, type, or var section, is
+                                     //< released by:
+                                     //<  implementation when interface ends
+                                     //<  procedure, function in open code
+                                     //<  begin in proc/func
+                       ClearElem,    //< This keyword clears ElemDec flag
+
+                      // These all start a block when found ; closed by
+                       progDec,      //< program header ; end
+                       unitDec,      //< Unit clause  ;uses
+                       InterDec,     //< interface declaration  ; implemetation
+                       impDec,       //< implementation declaration ; end
+                       BeginDec,     //< Begin block
+                       UntilDec,     //< Until block
+                       ASMDec,       //< ASM block
+                       CaseDec,      //< Case stmt
+                       structdec,    //< Record, Object or class
+                       nxstmtDec,    //< has next statement effect: probably
+                                     //< "do" as used in for, while, with
+
+                       withDec,      //< with declaratiom
+                       closureDec,   //< This keyword closes some block
+                                     //< or structure
+                       usesDec,      //< uses clause
+                       prepfmod,     //< modifier used before procedural header
+                                     //< proc, func, property or method
+                       postpfmod,    //< modifier used after procedural
+       _            );
+
+
+
+           N,AnsiString;  // name
+           BlockClose: AnsiString = '';  // presumed to require no block closure
+           KW:KeywordType=noactdec;// what kind of keyword
+           SC:StateCond =NoState;
+ }
+
+    AddKeyWord('if', '', NoActDec, NoState );  // default
+    AddKeyWord('do', '', nxstmtDec  );
+    AddKeyWord('of' );
+    AddKeyWord('to' );
+    AddKeyWord('in' );
+    AddKeyWord('or' );
+    AddKeyWord('and'  );
+    AddKeyWord('not'  );
+    AddKeyWord('xor'  );
+    AddKeyWord('shl'  );
+    AddKeyWord('shr'  );
+    // END (and any closure) does not have to
+    // say anyrhing; the gentleman calling err
+    // I mean keyword callinf will
+    // announce when it needs her
+//*TEMP*    AddKeyWord('end','', closureDec );
+    AddKeyWord('for'  );
+    AddKeyWord('var','', ElemDec , invar );
+    AddKeyWord('div'  );
+    AddKeyWord('mod'  );
+    AddKeyWord('set'   );
+    AddKeyWord('then','', nxstmtDec  );
+    AddKeyWord('else','', nxstmtDec  );
+    AddKeyWord('with','', BlockDec, inwith );
+    AddKeyWord('goto' );
+    AddKeyWord('case', 'end' , BlockDec, incase );
+    AddKeyWord('type', '', ElemDec,intype  );
+    AddKeyWord('begin', 'end' ,BlockDec, inBegin  );
+    AddKeyWord('until','',closureDec);
+    AddKeyWord('while','',nxstmtDec);
+    AddKeyWord('array'  );
+    AddKeyWord('const','',ElemDec, inConst );
+    AddKeyWord('label' );
+    AddKeyWord('repeat','until' ,BlockDec,  inRepeat );
+    AddKeyWord('record', 'end' , structdec, inRecord );
+    AddKeyWord('downto' );
+    AddKeyWord('packed' );
+    AddKeyWord('forward','', postpfmod, inForward );
+    AddKeyWord('program','end',unitprogDec, inProgram );
+    AddKeyWord('external', '',postpfmod, inExternal );
+    AddKeyWord('function','',pfdec,inFunction );
+    AddKeyWord('procedure', '' ,pfdec, inProcedure );
+
+    // extended
+    AddKeyWord('unit','end',unitprogDec, inunit );
+
 
     AddStdConst('false',       Booltype);
     AddStdConst('true',        Booltype);
-    AddStdConst('input',       FileType);
-    AddStdConst('output',      FileType);
     AddStdConst('text',        FileType);
     AddStdConst('nil',         pointerType);
     AddStdConst('maxint',      intType);
@@ -698,10 +1118,17 @@ begin
     AddStdProc('mark');
     AddStdProc('release');
     AddStdProc('halt');
+    AddStdProc('break');
+    AddStdProc('continue');
+
+    AddStdFile('input');
+    AddStdFile('output');
+    AddStdFile('stdin');
+    AddStdFile('stdout');
+    AddStdFile('stderr');
 
 
-// extended
-    AddKeyWord('unit',kwunit);
+
 
 
 
@@ -713,10 +1140,16 @@ Procedure DumpSymbolTable;
 Var
     Walker: ItemP;
     Q: Majorkind;
+    T: DataType;
+    X: IdentType;
+    Z,
     K,
     I: Integer;
+    SC: StateCond;
+
 
 begin
+    Z :=0;
     For I := 1 to 27 do
     begin
         K := 0;
@@ -731,17 +1164,44 @@ begin
         While Walker <> NIL do
         begin
             Inc(K);
+            Inc(Z);
             With Walker^ do
             begin
-               Write(K:4,' ',Name,' (',abbrev,') ');
+               Write(Z:4,',', K:4,' Name=');
+               Write(Name,', ');
+               if Name = '' then
+                   Write('"',NameUC,'" ');
+
+               Write('(',abbrev,') [');
+               For T := notype to filetype  do
+                  if T in [DT] then
+                    write(T,' ');
+               write('] ');
                for Q := invisible to isunit do
                if Q in Kind then
                   write(Q,' ');
+               if Count>0 then
+                  write(' Count=',Count,', ');;
+               writeln;
+               Write('    ');
+               for X := proceduralType to PredefinedType do
+                 if X in [What] then
+                    Write(X,' ');
+               if Closedby<>Nil then
+               begin
+                 Write('Closedby=',ClosedBy^.NameUC,'= ');
+               end;
+               for SC :=  NoState to inCase do
+                  if  SC  in [StateChange] then
+                    Write(SC,' ');
                writeln;
             end;
             Walker:= Walker^.NextTotal;
         end;
     end;
+    Writeln;
+    Writeln(' Total: ',Z);
+
 end;
 
 end.
