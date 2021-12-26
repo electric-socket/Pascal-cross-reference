@@ -71,7 +71,7 @@ type
 // base types
 
 // this only concerns identifier vslues;
-// procedutal types ate encapsulated elsewhere
+// procedutal types are encapsulated elsewhere
 Datatype= (notype,     // not a base type
            enumGroup,  // name of enumerator list
            EnumType,   // enumerated value,
@@ -94,8 +94,9 @@ Datatype= (notype,     // not a base type
            uniStrType, // unicodeString
            RecordType, // record
            objectType, // object
-           ClassType,  // class
-           FileType);  // file
+            ClassType, // class
+         TemplateType, // template
+            FileType); // file
 
 
         UnitP = ^UnitRecord;
@@ -105,11 +106,22 @@ Datatype= (notype,     // not a base type
                        this: unitp;  // this unit's pointer
                        next: UseP;   // next usage pointer
                    end;
+        UnitRecord = record
+                     Name,                 // its name
+                     FileName: ansistring; // file used
+                     isDeclared,           // someone refeenced it
+                     isfinished: boolean;  // we've read it through
+                     usedby,               // units used by
+                     UserOf: UserUsed;     // uses other units
+                     GlobalTable,          // interface items
+                     LocalTable:ItemP;     // implementation items
+                     end;
 
 
     StateCond = (NoState,         // Not in a state
                  inProgram,       // program
                  inUnit,          // unit found
+                 inLibrary,       // library
                  inInterface,     // Which part (carries to succeeding statements)
                  inImplementation,
                  inConst,         // CONST, TYPE, VAR declaration
@@ -125,22 +137,21 @@ Datatype= (notype,     // not a base type
                  inRecord,        // block types
                  inObject,
                  inClass,
+                 inGeneric,       // defining a generic (template)
                  inOneStmt,       // this affects the next statement
                  inWith,          // a with statement is in effect (will
                                   // carry over to block or stmt following
                  inBegin,         // begin-end block
                  inRepeat,        // repeat-until block
+                 inTry,           // try-finally block
                  inIgnore,        // block where we should ignore code (ASM-END)
-                 inCase          // case-end but not record case (that closes with record)
+                 inCase,          // case-end but not record case (that is
+                                  // closed with the end statement on record)
+                 condIf,          // we are currently in a
+                                  // successful {@IF ditective
+                 condElse         // we are currently in the {$ELSE part
+                                  // of a no-match {$IF directive
                  );
-    StateP = ^State;
-    State  = Record           // Our running state
-          Cond: StateCond;    // condition
-          closer: string;     // if in block, symbol we watch for to close
-          WithCount: byte;    // if the with stmt had multiple records, number
-          prev: StateP;       // if we are in a block, pointer to state to
-                              // returm to
-    end;
 
         KeywordType = (NoActDec,     //< words having no action for
                                      //< our purposes: array, to, of, in, etc
@@ -153,7 +164,8 @@ Datatype= (notype,     // not a base type
                        ClearElem,    //< This keyword clears ElemDec flag
 
                       // These all start a block when found ; closed by
-                       unitprogDec,   //< unit or program header ; end
+                       unitprogDec,  //< unit, module, libtary, or
+                                     //< program header ; end
                        InterDec,     //< interface declaration  ; implemetation
                        impDec,       //< implementation declaration ; end
                        pfdec,        //< procedure or funcrion
@@ -164,21 +176,11 @@ Datatype= (notype,     // not a base type
                                      //< "do" as used in for, while, with
                        closureDec,   //< This keyword closes some block or structure
                        usesDec,      //< uses clause
+                       genMod,       //< general modifier
                        prepfmod,     //< modifier used before procedural header
                                      //< proc, func, property or method
-                       postpfmod,    //< modifier used after procedural
-       _            );
-
-        UnitRecord = record
-                     Name,                 // its name
-                     FileName: ansistring; // file used
-                     isDeclared,           // someone refeenced it
-                     isfinished: boolean;  // we've read it through
-                     usedby,               // units used by
-                     UserOf: UserUsed;     // uses other units
-                     GlobalTable,          // interface items
-                     LocalTable:ItemP;     // implementation items
-                     end;
+                       postpfmod     //< modifier used after procedural
+                  );
 
                    // info bits 
         MajorKind= ( inVisible,            //< not visible in cross-reference
@@ -225,6 +227,8 @@ Datatype= (notype,     // not a base type
                       ElementType,          //< const, type, var
                       UnitType,             //< unit or program
                       PreUnit,              //< predefined unit
+                      StructureType,        //< structure: template, class,
+                                            //< object, record etc.
                       isKeywordType,        //< action
                       ModifierType,         //< modifies keyword
                       PredefinedType);      //< predefined by system or other units
@@ -232,6 +236,20 @@ Datatype= (notype,     // not a base type
          LineP = ^LineTable;                //< list of line number usage
 
          signatureP = ^Signature;           //< proc/func arge
+
+         StateP = ^State;
+         State  = Record            //< Our running state
+                Cond: StateCond;    //< condition
+                closer: string;     //< if in block, symbol we watch for
+                                    //< to close it
+                BlockCount:integer; //< If in a block, how deep.
+                WithCount: byte;    // if the with stmt had multiple records,
+                                    // (or multiple With statements) number
+                prev: StateP;       // if we are in a block, pointer to
+                                    // state to return to
+         end;
+
+
 
          Item = record                      //< identifier record  "Symbol Table"
                       Abbrev,               //< optional Short name
@@ -289,22 +307,42 @@ Datatype= (notype,     // not a base type
                         ElementType:                    //< elements: const, type. var
                            ( NextField: ItemP);         //< if a field in record
                                                         //< class, or object next one
+                                                        //< Our "owner" points to record
 
-                        isKeywordType, ModifierType:      //< Keywords and modifiers
+                        StructureType:                  //< structure: templ, obj, rec
+                          ( Child: ItemP);              //< Structure it encapsulates
+                                                        //< this is pointed back thru
+                                                        //< "owner" field
+
+                        isKeywordType, ModifierType:    //< Keywords and modifiers
                         (    Closedby:ItemP;            //< If this starts a block
                                                         //< what closes it
                              KW: KeywordType;           //< what it does
-                             StateChange: StateCond;    //< if it chnages our state
-                             KeyWordClass:Word;         //< What class of keyword is it
+                             StateChange: StateCond;    //< if it chnages
+                                                        //< our state
+                             KeyWordClass,              //< What class of
+                                                        //< keyword is it
                              Specials: word);           //< Special instrucrions
 
-                        PreUnit, UnitType:
-                           ( Status: UnitP  );     //< Unit fetails
+                        PreUnit, UnitType:              //< Unit details
+                           ( Status: UnitP;             //< what has happened
+                             Dotted: boolean;           //< is this a "dotted"
+                                    //< unit (effectively a subunit or "record"
+                                    //< of the parenr unit
+                             ParentUnit,                //< if we are a
+                                                        //< dotted unit
+                            { Don't need this; use "owner" field
+                             SiblingUnit,              //< If regular unit, nil
+
+                                  // if a child unit, next one on chain
+                             }
+                             ChildUnit ItemP);
                       end;
 
            LineTable = record
                           UsePage,              // page where it's used
                           UseLine: Integer;     // Line # or line # in Defpage
+
                           Next: LineP;
                        end;
 
@@ -345,7 +383,7 @@ VAR
    SymbolBottom,                           //< in reverse order
    Symboltable: Array[IdentSize] of ItemP; //< alphabetical order
 
-   // when a procedural declaration occurs, we save its entry, for various
+   // When a procedural declaration occurs, we save its entry, for various
    // purposes: (1) in case it will be modified (Forward or external);
    // (2) we see a const/type/var/declaration not in interface, we know
    // to whom this element belongs to
@@ -355,10 +393,10 @@ VAR
    // p/f, we attach the prior one
    LastProcStanding: ItemP;
 
-   // if in with, which one
+   // if in WITH, which one
    WithTable: WithP;
 
-   // what we are doing
+   // what we are doing - this is also a oush-down list
    StateTable: StateP;
 
    // this program's file name
@@ -367,10 +405,21 @@ VAR
    // Bookkeeping
    IdentifierCount: Integer = 0;
 
+   // pascal language variants
+   Lang_extended,            // extended Pascal
+   Lang_turbo,               // turbo Pascal
+   Lang_XD,                  // XDPascal
+   Lang_Borland,             // Borland Pascal
+   Lang_object,              // object Pascal
+   Lang_Delphi,              // Delphi
+   Lang_FreePascal: boolean; // Free Pascal
+
+
 
    // General initialization
     Procedure Init;
-   ..symbol table related
+
+   //symbol table related
     Function SearchSymbolTable(Which:Integer;             //< letter index #
                            Ident: AnsiString): ItemP; //< uppercase identifier
     Procedure DumpSymbolTable;
@@ -606,6 +655,81 @@ End;
                          // reach the  correct insertion point)
     end;
 
+// This scans the symbol table and returns one of the following:
+//   1. The particular table is empty so return NIL, set the SearchStatus
+//      variable to TableEempty
+//   2. The item we are searching for is alphabetically lower than the lowesr
+//      item in the rable, return nil, set SearchStatus to SearchLow
+//   3. The item is a match. return the record,
+//      set SearchStatus to SearchMatch
+//   4. The item is not found. Return the lowest record not exceeding this
+//      item's alphabetic value, set SearchStatus to  LowerRecord.
+Function SearchSymbolTable(Which:Integer;             //< letter index #
+                           Ident: AnsiString): ItemP; //< uppercase identifier
+
+    Var
+    NextItem,
+    PriorItem: ItemP;
+
+    begin
+
+        If SymbolTable[Which] = NIL then
+        begin     // first entry this "letter"
+            SearchResult := TableEmpty;
+            Result :=  NIL;
+            exit
+        end;
+        If Ident <= SymbolTable[Which]^.NameUC then // is before beginning
+        begin
+             if (Ident = SymbolTable[Which]^.NameUC) then
+             Begin
+                 SearChResult := SearchMatch;
+                 Result := SymbolTable[Which]  // return item found
+             End
+             else
+             begin
+                 SearchResult := SearchLow;
+                 Result := NIL;
+             end;
+             exit
+        end;
+        PriorItem := SymbolTable[Which];
+        NextItem := SymbolTable[Which]^.NextTotal;
+
+        repeat
+                If NextItem = NIL then
+                begin  // we're at bottom of top-to-bottom chain
+                    SearchResult := LowerItem;    // we're returning prior rec
+                    Result := PriorItem;
+                    exit
+                 end;
+                 if Ident = NextItem^.NameUC then
+                 begin  // "you know it takes some time,
+                        // in the middle, in the middle"
+                     SearchResult :=  SearchMatch;  // return item found
+                     Result := NextItem ;
+                     exit;
+                 end;
+                 If Ident < NextItem^.NameUC then
+                 begin
+                     // it goes before this one, after previous
+                     SearchResult :=  LowerRecord; // we're returning prior rec
+                     Result := PriorItem;
+                     exit;
+                 end;
+
+                 // "But I still haven't found, what I'm looking for."
+                 // Follow the chain and keep looking
+
+                 // "rotate" the two items, prior item points here
+                 PriorItem := NextItem;
+                 // move to next item
+                 NextItem  := NextItem^.NextTotal;
+        until  false;   // keep going forever (or more likely, until we
+                         // reach the  correct insertion point)
+END;
+
+
 
 // adds a base class, i.e. int, char, etc. to stmbol table
 Procedure AddBaseClass(N,   // name
@@ -642,6 +766,7 @@ begin
       end;
 end;
 
+// adds keywords and modifiers
 Procedure AddKeyword(const N:AnsiString;                 // name
                            BlockClose: AnsiString = '';  // presumed to require no block closure
                            KW:KeywordType=noactdec;      // what kind of keyword
@@ -663,14 +788,21 @@ BEGIN
                break;
 
         // TRUE in the following function call means that if this name
-        // is previously defined, return that one
+        // is previously defined, return that one, don't make a duplicate
+
         NewItem := InsertInSymbolTable(Which,Ident,TRUE);
 
-        // tight now we have one of thrrr things:
+        // tight now we have one of three things:
         // 1. A new blank record, which we created now, initialize it
         // 2. A previously called "closer" kryword which
         //    is now appearing to pick up its initialization
+        // 3. A duplicate keyword because different dialects of Pascal
+        //    have additional keywords and modifiers. Since modifiers
+        //    can be the same as identifiers, make sure if one has the
+        //    same name as a modifier, make the modifier later in the
+        //    in the stack so the identifier is found first
 
+        if name <> '' then  // don't reinitialize
         With NewItem^ do
         begin
             Name  := N;
@@ -690,6 +822,12 @@ BEGIN
             For Which := 1 to IdentMax do
                 if CW = ValidIdent[Which] then
                     break;
+
+            // In our case, we request a symbol table slot,
+            // if this entry was nor previously created
+            // (by another keyword that uses it to
+            // close a block,) we don't want a new entry,
+            // we want the previous one.
 
             // if it's already there, take it
             CloseItem := InsertInSymbolTable(Which,Ident,TRUE);
@@ -796,6 +934,8 @@ BEGIN
             NameUC:= Ident;
             Abbrev:= '';
             DT    := NewDT;
+            //       set by       its a     don't    Standard
+            //       compiler     function  list     procedural
             Kind  := [predefined, funckind, refonly, stdPF];
 { add later if hidden procs needed
             If not Visible  then
@@ -952,7 +1092,7 @@ begin
 
 {For thr initialization, we load only the
  identifiers of standard Pascal. Extended,
- Turbo, UCSD, XDPascal, Object, Delphi, or
+ Turbo, Borand, UCSD, XDPascal, Object, Delphi, or
  Free Pascal extensions will be installed
  later. This is another resson to have
  keywords as symbol table entries: I can
@@ -962,143 +1102,36 @@ begin
 }
 
                  // name,         nickname,     type      Visible
-    AddBaseClass('enumerator',       'enum',    EnumGroup,False);  // PLACEHOLDER
-    AddBaseClass('enumerated value', 'econ',    EnumType, False);  // PLACEHOLDER
+    AddBaseClass('enumerator',       'enum',    EnumGroup,False);  // PLCEHLDR
+    AddBaseClass('enumerated value', 'econ',    EnumType, False);  // PLCEHLDR
     AddBaseClass('byte',             'byte',     Bytetype);   // 8-bit integer
     AddBaseClass('boolean',          'bool',     Booltype);   // boolean
     AddBaseClass('char',             'char',     charType);   // 8-bit character
+    AddBaseClass('ansichar',         'ansc',     charType);   // alias for char
     AddBaseClass('word',             'word',     wordType);   // 16-bit integer
     AddBaseClass('widechar',         'wchr',    wcharType);   // 16-bit char
     AddBaseClass('integer',           'int',      intType);   // 32-bit integer
-    AddBaseClass('longint',           'int',      intType);   // alias for integer
+    AddBaseClass('longint',           'int',      intType);   // alias for int
     AddBaseClass('int64',             'I64',    int64Type);   // 64-bit int
     AddBaseClass('pointer',           'ptr',  pointerType);   // address
     AddBaseClass('set',               'set',      setType);   // set
     AddBaseClass('array',             'arr',   ArrayType);    // general array
-    AddBaseClass('string',            'str',   stringType);   // array of char with length
-    AddBaseClass('ansistring',        'ans',   AnsStrType);   // Ansistring
+    AddBaseClass('string',            'str',   stringType);   // array of char
+                                                              // with length
+    AddBaseClass('ansistring',        'anss',   AnsStrType);   // Ansistring
     AddBaseClass('unicodestring',     'uni',   uniStrType);   // unicodeString
     AddBaseClass('record',            'rec',   RecordType);   // record
     AddBaseClass('object',            'obj',   objectType);   // object
     AddBaseClass('class',             'cls',    ClassType);   // class
+    AddBaseClass('template',         'tmpl', TemplateType);   // class
     AddBaseClass('real',              'real',    realtype);   // 32-bit real
     AddBaseClass('single',            'sng',   singleType);   // single
-    AddBaseClass('double',            'Dbl',   DoubleType);   // double precision real
+    AddBaseClass('double',            'Dbl',   DoubleType);   // double
+                                                              // precision real
     AddBaseClass('extended',          'Ext',  ExtendedType);  // 80-bit real
     AddBaseClass('file',             'file',      FileType);  // file
 
-
-// std keywords
-{
-   StateCond = (NoState,         // Not in a state
-                 ProgUnit,        // program or unit found
-                 inInterface,     // Which part (carries to succeeding statements)
-                 inImplementation,
-                 inConst,         // CONST, TYPE, VAR declaration
-                 inType,
-                 inVar,
-                 inProcedure,     // Proc, Func, etc. (carries forward
-                 inFunction,      //                   until closed)
-                 inConstructor,
-                 inDestructor,
-                 inProperty,
-                 inRecord,        // block types
-                 inObject,
-                 inClass,
-                 inOneStmt,       // this affects the next statement
-                 inWith,          // a with statement is in effect (will
-                                  // carry over to block or stmt following
-                 inBegin,         // begin-end block
-                 inRepeat,        // repeat-until block
-                 inIgnore,        // block where we should ignore code (ASM-END)
-                 inCase          // case-end but not record case (that closes with record)
-
-     KeywordType = (NoActDec,        //< words having no action for
-                                     //< our purposes: array, to, of, in, etc
-                                     //< most keywords will have this setting
-                       ElemDec,      //< const, type, or var section, is
-                                     //< released by:
-                                     //<  implementation when interface ends
-                                     //<  procedure, function in open code
-                                     //<  begin in proc/func
-                       ClearElem,    //< This keyword clears ElemDec flag
-
-                      // These all start a block when found ; closed by
-                       progDec,      //< program header ; end
-                       unitDec,      //< Unit clause  ;uses
-                       InterDec,     //< interface declaration  ; implemetation
-                       impDec,       //< implementation declaration ; end
-                       BeginDec,     //< Begin block
-                       UntilDec,     //< Until block
-                       ASMDec,       //< ASM block
-                       CaseDec,      //< Case stmt
-                       structdec,    //< Record, Object or class
-                       nxstmtDec,    //< has next statement effect: probably
-                                     //< "do" as used in for, while, with
-
-                       withDec,      //< with declaratiom
-                       closureDec,   //< This keyword closes some block
-                                     //< or structure
-                       usesDec,      //< uses clause
-                       prepfmod,     //< modifier used before procedural header
-                                     //< proc, func, property or method
-                       postpfmod,    //< modifier used after procedural
-       _            );
-
-
-
-           N,AnsiString;  // name
-           BlockClose: AnsiString = '';  // presumed to require no block closure
-           KW:KeywordType=noactdec;// what kind of keyword
-           SC:StateCond =NoState;
- }
-
-    AddKeyWord('if', '', NoActDec, NoState );  // default
-    AddKeyWord('do', '', nxstmtDec  );
-    AddKeyWord('of' );
-    AddKeyWord('to' );
-    AddKeyWord('in' );
-    AddKeyWord('or' );
-    AddKeyWord('and'  );
-    AddKeyWord('not'  );
-    AddKeyWord('xor'  );
-    AddKeyWord('shl'  );
-    AddKeyWord('shr'  );
-    // END (and any closure) does not have to
-    // say anyrhing; the gentleman calling err
-    // I mean keyword callinf will
-    // announce when it needs her
-//*TEMP*    AddKeyWord('end','', closureDec );
-    AddKeyWord('for'  );
-    AddKeyWord('var','', ElemDec , invar );
-    AddKeyWord('div'  );
-    AddKeyWord('mod'  );
-    AddKeyWord('set'   );
-    AddKeyWord('then','', nxstmtDec  );
-    AddKeyWord('else','', nxstmtDec  );
-    AddKeyWord('with','', BlockDec, inwith );
-    AddKeyWord('goto' );
-    AddKeyWord('case', 'end' , BlockDec, incase );
-    AddKeyWord('type', '', ElemDec,intype  );
-    AddKeyWord('begin', 'end' ,BlockDec, inBegin  );
-    AddKeyWord('until','',closureDec);
-    AddKeyWord('while','',nxstmtDec);
-    AddKeyWord('array'  );
-    AddKeyWord('const','',ElemDec, inConst );
-    AddKeyWord('label' );
-    AddKeyWord('repeat','until' ,BlockDec,  inRepeat );
-    AddKeyWord('record', 'end' , structdec, inRecord );
-    AddKeyWord('downto' );
-    AddKeyWord('packed' );
-    AddKeyWord('forward','', postpfmod, inForward );
-    AddKeyWord('program','end',unitprogDec, inProgram );
-    AddKeyWord('external', '',postpfmod, inExternal );
-    AddKeyWord('function','',pfdec,inFunction );
-    AddKeyWord('procedure', '' ,pfdec, inProcedure );
-
-    // extended
-    AddKeyWord('unit','end',unitprogDec, inunit );
-
+// Std functions and procedures
 
     AddStdConst('false',       Booltype);
     AddStdConst('true',        Booltype);
@@ -1126,7 +1159,52 @@ begin
     AddStdFunc('ln',     realtype);
     AddStdFunc('arctan', realtype);
 
-    AddStdUnit('system');
+
+// std keywords
+
+
+    AddKeyWord('and');
+    AddKeyWord('do','', nxstmtDec  );
+    // END (and any closure) does not have to
+    // say anything; the gentleman calling err
+    // I mean keyword calling will
+    // announce when it needs her
+    AddKeyWord('end','', closureDec );
+    AddKeyWord('if','', NoActDec, NoState );  // default
+    AddKeyWord('in' );
+    AddKeyWord('not');
+    AddKeyWord('of' );
+    AddKeyWord('or' );
+    AddKeyWord('to' );
+    AddKeyWord('shl');
+    AddKeyWord('shr');
+    AddKeyWord('xor');
+    AddKeyWord('for'  );
+    AddKeyWord('var','', ElemDec , invar );
+    AddKeyWord('div'  );
+    AddKeyWord('mod'  );
+    AddKeyWord('set'   );
+    AddKeyWord('then','', nxstmtDec  );
+    AddKeyWord('else','', nxstmtDec , inCase ); // also used on case
+    AddKeyWord('with','', BlockDec, inwith );
+    AddKeyWord('goto' );
+    AddKeyWord('case', 'end' , BlockDec, incase );
+    AddKeyWord('type', '', ElemDec,intype  );
+    AddKeyWord('begin', 'end' ,BlockDec, inBegin  );
+    AddKeyWord('until','',closureDec);
+    AddKeyWord('while','',nxstmtDec);
+    AddKeyWord('array'  );
+    AddKeyWord('const','',ElemDec, inConst );
+    AddKeyWord('label' );
+    AddKeyWord('repeat','until' ,BlockDec,  inRepeat );
+    AddKeyWord('record', 'end' , structdec, inRecord );
+    AddKeyWord('downto' );
+    AddKeyWord('packed' );
+    AddKeyWord('forward','', postpfmod, inForward );
+    AddKeyWord('program','',unitprogDec, inProgram );
+    AddKeyWord('external', '',postpfmod, inExternal );
+    AddKeyWord('function','',pfdec,inFunction );
+    AddKeyWord('procedure', '' ,pfdec, inProcedure );
 
     AddStdProc('get');
     AddStdProc('put');
@@ -1154,6 +1232,233 @@ begin
     AddStdFile('stderr');
 
 
+    // extended
+    if Lang_extended then
+    begin
+        AddKeyWord('and_then','', nxstmtDec );
+        AddKeyword('export');
+        AddKeyword('import');
+        AddKeyword('module','end',unitprogDec, inunit );
+        AddKeyword('only');
+        AddKeyword('or_else','', nxstmtDec );
+        // equiv to rlse on case stmt
+        AddKeyword('otherwise', '' , BlockDec, incase );
+        AddKeyword('protected','',genmod);
+        AddKeyword('qualified','',genmod);
+        AddKeyword('restricted','',genmod);
+        AddKeyword('value');
+
+        AddStdFunc('pow',Realtype);
+    end;
+
+
+
+ {   AddKeyword(AnsiString;  // name
+               AnsiString   // presumed to require no block closure
+               KeywordType  // what kind of keyword
+               NoState      // any changes
+
+
+               StateCond = (NoState,         // Not in a state
+                            inProgram,       // program
+                            inUnit,          // unit found
+                            inInterface,     // Which part (carries to succeeding statements)
+                            inImplementation,
+                            inConst,         // CONST, TYPE, VAR declaration
+                            inType,
+                            inVar,
+                            inforward,       // FORWARD
+                            inExternal,      // EXTERNAL
+                            inProcedure,     // Proc, Func, etc. (carries forward
+                            inFunction,      //                   until closed)
+                            inConstructor,
+                            inDestructor,
+                            inProperty,
+                            inRecord,        // block types
+                            inObject,
+                            inClass,
+                            inGeneric,       // defining a generic (template)
+                            inOneStmt,       // this affects the next statement
+                            inWith,          // a with statement
+                            inBegin,         // begin-end block
+                            inRepeat,        // repeat-until block
+                            inTry,           // try-finally block
+                            inIgnore,        // block where we should ignore code (ASM-END)
+                            inCase,          // case-end but
+                            condIf,          // in an $IF directive
+                            condElse         // in the $ELSE part
+                            );
+
+                   KeywordType = (NoActDec,     //< words having no action
+                                  ElemDec,      //< const, type, or var
+                                  ClearElem,    //< clears ElemDec flag
+                                  unitprogDec,  //< unit or program
+                                  InterDec,     //< interface
+                                  impDec,       //< implementation
+                                  pfdec,        //< procedure or funcrion
+                                  BlockDec,     //< any block
+                                  CaseDec,      //< Case stmt
+                                  structdec,    //< Record, Object or class
+                                  nxstmtDec,    //< has next statement effect
+                                  closureDec,   //<  closes some block
+                                  usesDec,      //< uses clause
+                                  genMod,       //< general modifier
+                                  prepfmod,     //< used before procedural
+                                  postpfmod,    //< used after procedural
+                           );
+}
+
+    if lang_turbo then // turbo pascal
+    begin
+        AddKeyword('absolute','',genMod);
+        AddKeyword('asm','',BlockDec,inIgnore);
+        AddKeyword('constructor','',pfDec,inConstructor);
+        AddKeyword('destructor','',pfDec,inDestructor);
+        AddKeyword('implementation','',impDec,inImplementation);
+        AddKeyword('in');
+        AddKeyword('inherited','',genMod);
+        AddKeyword('inline','',pfDec);
+        AddKeyword('interface','',interDec,inInterface);
+        AddKeyword('object','end',structdec,inObject);
+        AddKeyword('operator',,,genMod);
+        AddKeyword('reintroduce');
+        AddKeyword('self');
+        AddKeyWord('unit','end',unitprogDec, inunit );
+*       AddKeyword('uses','',usesDec);
+
+        AddStdUnit('system');
+    end;
+
+    if Lang_XD then  // XDPascal
+    begin
+        AddKeyword('implementation','',impDec,inImplementation);
+        AddKeyword('interface','',interDec,inInterface);
+        AddKeyWord('unit','end',unitprogDec, inunit );
+        AddKeyword('uses','',usesDec);
+
+
+        AddStdUnit('system');
+    end;
+
+    if Lang_Borland then // Borland Pascal
+    begin
+
+
+
+        AddStdUnit('system');
+    end;
+
+    if Lang_object then // Object Pascal
+    begin
+        AddKeyWord('as');
+        AddKeyWord('class','end',structDec, inClass);
+        AddKeyWord('dispinterface');
+        AddKeyWord('except');
+        AddKeyWord('exports');
+        AddKeyWord('finalization');
+        AddKeyWord('finally');
+        AddKeyWord('initialization',unitprogDec, inLibrary);
+        AddKeyWord('inline');
+        AddKeyWord('is');
+        AddKeyWord('library','end',);
+        AddKeyWord('on');
+        AddKeyWord('out');
+        AddKeyWord('packed');
+        AddKeyWord('property','',GenMod, inProperty);
+        AddKeyWord('raise');
+        AddKeyWord('resourcestring');
+        AddKeyWord('threadvar');
+        AddKeyWord('try','',blockDec, inTry);
+
+        // these are not reserved words, but it's
+        // orobably not a good idea to rdefine them
+        AddStdProc('exit');
+        AddStdProc('halt');
+// these are considered modifiers
+//        AddSysProc('break');
+//        AddSysProc('continue');
+
+        // modifiers
+        AddKeyword('absolute','',genmod);
+        AddKeyword('abstract','',genmod);
+        AddKeyword('alias','',genmod);
+        AddKeyword('assembler','',genmod);
+        AddKeyword('bitpacked','',genmod);
+        AddKeyword('break','',genmod);
+        AddKeyword('cdecl','',genmod);
+        AddKeyword('continue','',genmod);
+        AddKeyword('cppdecl','',genmod);
+        AddKeyword('cvar','',genmod);
+        AddKeyword('default','',genmod);
+        AddKeyword('deprecated','',genmod);
+        AddKeyword('dynamic','',genmod);
+        AddKeyword('enumerator','',genmod);
+        AddKeyword('experimental','',genmod);
+        AddKeyword('export','',genmod);
+        AddKeyword('external','',genmod);
+        AddKeyword('far','',genmod);
+        AddKeyword('far16','',genmod);
+//        forward  -this is std
+        AddKeyword('helper','',genmod);
+        AddKeyword('implements','',genmod);
+        AddKeyword('index','',genmod);
+        AddKeyword('interrupt','',genmod);
+        AddKeyword('iocheck','',genmod);
+        AddKeyword('local','',genmod);
+        AddKeyword('message','',genmod);
+        AddKeyword('name','',genmod);
+        AddKeyword('near','',genmod);
+        AddKeyword('nodefault','',genmod);
+        AddKeyword('noreturn','',genmod);
+        AddKeyword('nostackframe','',genmod);
+        AddKeyword('oldfpccall','',genmod);
+        AddKeyword('otherwise','',genmod);
+        AddKeyword('overload','',genmod);
+        AddKeyword('override','',genmod);
+        AddKeyword('pascal','',genmod);
+        AddKeyword('platform','',genmod);
+        AddKeyword('private','',genmod);
+        AddKeyword('protected','',genmod);
+        AddKeyword('public','',genmod);
+        AddKeyword('published','',genmod);
+        AddKeyword('read','',genmod);     // both a mod and a proc
+        AddKeyword('register','',genmod);
+        AddKeyword('reintroduce','',genmod);
+        AddKeyword('result','',genmod);   // teyurn val of proc
+        AddKeyword('safecall','',genmod);
+        AddKeyword('saveregisters','',genmod);
+        AddKeyword('softfloat','',genmod);
+        AddKeyword('specialize','',genmod);
+        AddKeyword('static','',genmod);
+        AddKeyword('stdcall','',genmod);
+        AddKeyword('stored','',genmod);
+        AddKeyword('strict','',genmod);
+        AddKeyword('unaligned','',genmod);
+        AddKeyword('unimplemented','',genmod);
+        AddKeyword('varargs','',genmod);
+        AddKeyword('virtual','',genmod);
+        AddKeyword('winapi','',genmod);
+        AddKeyword('write','',genmod);   // both std proc and mod
+
+        AddStdUnit('system');
+    end;
+
+    if Lang_Delphi then  // Delphi
+    begin
+
+        AddStdUnit('system');
+    end;
+
+    if Lang_FreePascal then
+    begin
+
+        AddStdUnit('system');
+    end;
+
+
+
+
+
 
 
 
@@ -1161,78 +1466,6 @@ begin
     dumpSymbolTable;
  end;
 
-
-Function SearchSymbolTable(Which:Integer;             //< letter index #
-                           Ident: AnsiString): ItemP; //< uppercase identifier
-
-Var
-NextItem,
-PriorItem: ItemP;
-
-begin
-
-    If SymbolTable[Which] = NIL then
-    begin     // first entry this "letter"
-        SearchResult := TableEmpty;
-        Writeln('** Table empty');
-        Result :=  NIL;
-        exit
-     end;
-     If Ident <= SymbolTable[Which]^.NameUC then // is before beginning
-     begin
-         if (Ident = SymbolTable[Which]^.NameUC) then
-         Begin
-             write('&& Match ');
-             SearChResult := SearchMatch;
-             Result := SymbolTable[Which]  // return item found
-         End
-         else
-         begin
-             Writeln('** Top of table');
-             SearchResult := SearchLow;
-             Result := NIL;
-
-         end;
-         exit
-     end;
-     PriorItem := SymbolTable[Which];
-     NextItem := SymbolTable[Which]^.NextTotal;
-
-     repeat
-            If NextItem = NIL then
-            begin  // we're at bottom of top-to-bottom chain
-                writeln('** Item before found');
-                SearchResult := SearchLow;
-                Result := PriorItem;
-                exit
-             end;
-             if Ident = NextItem^.NameUC then
-             begin  // "you know it takes some time,
-                    // in the middle, in the middle"
-                 Writeln('** Match');
-                 SearchResult :=  SearchMatch;
-                 Result := NextItem ;   // return item found
-                 exit;
-             end;
-             If Ident < NextItem^.NameUC then
-             begin
-                 // it goes before this one, after previous
-                 Writeln('*** Item before found');
-                 SearchResult :=  LowerRecord;
-                 Result := PriorItem;
-                 exit;
-             end;
-
-             // "But I still haven't found, what I'm looking for."
-             // Follow the chain and keep looking
-
-             // "rotate" the two items, prior item points here
-             PriorItem := NextItem;
-             // move to next item
-             NextItem  := NextItem^.NextTotal;
-     until  false;   // keep going forever (or more likely, until we
-                     // reach the  correct insertion point)end;
-END;
 
 Procedure DumpSymbolTable;
 Var

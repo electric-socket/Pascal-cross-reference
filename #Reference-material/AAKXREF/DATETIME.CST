@@ -1,0 +1,8 @@
+CONST
+      MinYear           =  00  ;
+      MaxYear           = 3200 ;
+      MinAbsDay         = 1.0  ;
+      MaxAbsDay         = 803916.0 ; (* 366 + MAXYEAR * 365.25 *)
+      MaxWeekDayNumber  = 7    ;
+      MaxMonthNumber    = 12   ;
+

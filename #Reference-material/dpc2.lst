@@ -1,0 +1,240 @@
+
+     Page   1-  1   [FPCross   ]                                        
+
+                     1                   PROGRAM ross(input, output) ;
+                     2                      (* $+       ***********
+                     3                        is a cross-referencing program for  source files,
+                     4                       useful also to reformat programs (indentation, upper-lower case)
+                     5                       and to find omitted or excessive 	 and .
+                     6
+                     7                       comments, gripes and bugs to .
+                     8
+                     9                       subtopics:
+                    10                       	  
+                    11                          	
+                    12                       	
+                    13                       	  
+                    14                       <	  >
+                    15                       	:
+                    16                       -----
+                    17                       through the file , a  source program file.
+                    18
+                    19                       :
+                    20                       ------
+                    21                       through :
+                    22                       a copy of your input file, unnumbered, prettyprinted
+                    23                       (proper indentation according to the statement nesting,
+                    24                       newline on standard places in the program, management of upper
+                    25                       and lower case according to the list of reserved words, etc.)
+                    26
+                    27                       and trough  	:
+                    28                       (a) a prettyprinted version of the program, showing in the left
+                    29                       margin the relations between 	.. pairs,..
+                    30                       pairs, etc.
+                    31                       (b) a cross reference of all the identifiers
+                    32                       (c) a report of procedure and function declaration nesting.
+                    33
+                    34                       y default,  will change all reserved words and strings to upper
+                    35                       case, comments and everything else to lower case. here are switches
+                    36                       available to change this condition.
+                    37                       <   	>
+                    38                       ou can:
+                    39                       (a) use the / switch when @ing your program
+                    40                       or calling @, or
+                    41                       (b) call it directly by typing @.
+                    42
+                    43                       	n the first case,  will be called immediately after compilation;
+                    44                       ou will have to type the file names, though. e are working to fix
+                    45                       that detail soon. wo sample calls are:
+                    46
+                    47                       @pcross                              @exec myprog/cref
+                    48                       = myprog.pas/nocross             (*	  *)
+                    49                       = myprog.pas                   = myprog.pas
+                    50                       	=                              =
+                    51                       	=
+                    52
+                    53                       he left one calls it directly. he effect is the prettyprinting of the
+                    54                       program file itself. he right one is a call through the compiler, which
+                    55                       will use the default options.
+
+     Page   1-  2   [FPCross   ]                                        
+
+                    56
+                    57                       he program parameters all have dafault values, but they can be modified
+                    58                       if desired, by the use of switches. ee the subtopic 	.
+                    59                       ee the subtopic 	.
+                    60                       <	>
+                    61                       rackets indicate optional.
+                    62                       <n> stands for an integer number.
+                    63                       <> stands for a letter.
+                    64
+                    65                       witch          eaning                                      efault.
+                    66
+                    67                       	.
+                    68                       <n> is the sum of:
+                    69                       1   source program listing
+                    70                       2   listing of identifiers
+                    71                       4   listing of proc-func
+                    72                       declaration nesting.
+                    73                       8   listing of proc-func call nesting.
+                    74
+                    75                         	 
+                    76                       margin every fifth line                        on
+                    77
+                    78                        
+                    79                       begin..end block is indented n spaces further.
+                    80                       if it is there, the block will not be indented,
+                    81                       but the begin and end statements will be
+                    82                       exdented n spaces.                           0
+                    83                       after begin, end, then, else, repeat, etc.)   off
+                    84                       comment from old standards to
+                    85                       '('-'*' and '*'-')'                           on
+                    86
+                    87                          
+                    88                       note: the possible values for <l> are:
+                    89                       u means upper case
+                    90                       l means lower case.
+                    91
+                    92                       <	  >
+                    93
+                    94                       he cross-reference file 	 contains 4 parts:
+                    95
+                    96                       1.   		:
+                    97                       the letters and numbers in the left margin indicate the presence
+                    98                       of reserved words which have to match. (	-, etc.) he two
+                    99                       words that match accorde with the scope rules will have the
+                   100                       same number. he first one (e. g., 	) will appear at left, and
+                   101                       the second one (e.g., ) at right, inside the margin. he meaning
+                   102                       of the letters is:
+                   103                         egin         end
+                   104                       	  	f             hen          lse
+                   105                         oop           xit          nd
+                   106                         ase           nd
+                   107                         epeat         ntil
+                   108
+                   109                       2.    		  			:
+                   110                       	t is ordered alphabetically. or each identifier it contains:
+
+     Page   1-  3   [FPCross   ]                                        
+
+                   111                       a.  '' or '' if it is a procedure or function, respectively.
+                   112                       b. he name of the identifier, up to 10 symbols.
+                   113                       c. he line numbers in which it occur. hose lines in which
+                   114                       it is declared are marked with a ; those in which it
+                   115                       occurs more than once are marked with an  (ultiple).
+                   116
+                   117                       3.  	  -	 	:
+                   118                       	t describes the static links. he scope is shown by indentation.
+                   119                       ach line describes a procedure or function and contains:
+                   120                       a. he name.
+                   121                       b. an (), () or () if it is the main program, a procedure
+                   122                       or a function, respectively.
+                   123                       c. 	f there are more than one procedure-function with the same
+                   124                       name (in different scopes, which is perfectly valid, but
+                   125                       a horrible thing to do), a   (for ) appears next,
+                   126                       and the rest of the information in this and the next part
+                   127                       of the listing contains data on both (or all of them, if
+                   128                       there are more than one.).
+                   129                       d. 	f it is an external procedure, an  will appear next.
+                   130                       e. he line number where the header appeared.
+                   131                       f. he line number of the 	 statement.
+                   132                       g. he line number of the  statement.
+                   133
+                   134                       4.  	  -	 :
+                   135                       	t describes the dynamic links. alling depth is indicated by
+                   136                       indenting. he format of each line is the same as in the previous
+                   137                       report, except for the following:
+                   138                       a. ines are numbered.
+                   139                       b.  procedure can be called from more than one place. o avoid
+                   140                       repeating the list of proc-funcs called by it,an asterisk
+                   141                       is printed after the name to indicate that it has already
+                   142                       been 'described'. 	nstead of the line numbers for its
+                   143                       appearence in the program, that for its appearence in this
+                   144                       part of the listing is given, so that you can refer to it.
+                   145                       *************)
+                   146
+                   147
+                   148
+                   149                       (******************************************************************************)
+                   150
+                   151
+                   152
+                   153                       (* $-,100   *)
+                   154                       (* 	     		 	 	
+                   155                        	    .       	   .*)
+                   156
+                   157
+                   158
+                   159
+                   160                       (*          	           *)
+                   161
+                   162
+                   163
+                   164                       (**) (*	*)
+                   165                       (**)     (*		*)
+
+     Page   1-  4   [FPCross   ]                                        
+
+                   166                       (**)     (*	[*) (*	*)
+                   167                       (**)     (*  	 *) (**) (**) (*	*)
+                   168                       (**)     (*[*) (* :*) (**) (*		[*) (**)
+                   169                       (*]*) (**)
+                   170                       (**)        (*	 :*) (*	[*) (**)
+                   171                       (**)            (**) (*	*) (**)
+                   172                       (**)            (**) (*]	*)
+                   173                       (**)        (*"	" :*) (*[*) (**) (**) (*]
+                   174                                                                                    *)
+                   175                       (**)        (*[*) (* 	 *) (*]*)
+                   176                       (**)     (*]*)
+                   177                       (**)     (*	__	[*) (**) (*	*) (*		*) (*
+                   178                                                                                     *)
+                   179                       (**)     (*]	__	*)
+                   180                       (**) (*	 *)
+                   181                       (*	*)
+                   182
+                   183                       (**********************************************************************
+                   184                        *
+                   185                        *
+                   186                        *        	     		
+                   187                        *         ,  	    .
+                   188                        *
+                   189                        *       	:    	.
+                   190                        *       :    	 
+                   191                        *               - 		.
+                   192                        *
+                   193                        *       :   (1974).
+                   194                        *
+                   195                        *       		   		   .
+                   196                        *                       +     	.
+                   197                        *                       +       .
+                   198                        *
+                   199                        *       		   		   . 	. 24--78.
+                   200                        *                       +     	 	.
+                   201                        *                       +     .
+                   202                        *
+                   203                        *          	   	 	.
+                   204                        *
+                   205                        *       		   		   . 	. 6-
+-88.
+                   206                        *               +    '%'      '/*
+                   207                        '  '*/'.
+                   208                        *               +  ''  '' 	    - .
+                   209                        *               +  ''  	  ''  	 
+                   210                        .
+                   211                        *               + 	 /  	 .
+                   212                        *               + 		  -  	.
+                   213                        *               +   	   	      
+                   214                        .
+                   215                        *          	   	,  :
+                   216                        *                  + 	     	  , 	 	 .
+                   217                        *                  + 	    	     , 	 	  
+                   218                        *                          -	.
+                   219                        *                  +  	    	 	 
+                   220                        *                       '  ,   	  15.
+
+     Page   1-  5   [FPCross   ]                                        
+
+                   221                        *                  +  	   	 . ( 		 	/).
+                   222                        *
+                   223                        *
+                   224                        *********************************************

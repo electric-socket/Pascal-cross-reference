@@ -1,0 +1,23 @@
+CONST
+      WeekDayNames     : Week_Day_Name = ('SUNDAY','MONDAY','TUESDAY','WEDENSDAY','THURSDAY','FRIDAY','SATURDAY');
+      MonthNames       : Month_Name = ('JANUARY','FEBUARY','MARCH','APRILL','MAY','JUNE',
+                                      'JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER');
+      MaxDaysPerMonth  : Max_Day_Number = ( 31 , 28 , 31 , 30 , 31 , 30 , 31 , 31 , 30 , 31 , 30 , 31 ) ;
+
+VAR
+       Cur_Date_Time   : Date_Time_Rec ;
+       CurHundredth    : Hundredths ;
+       CurSecond       : Second_Number ;
+       CurMinute       : Minute_Number ;
+       CurHour         : Hour_Number ;
+       CurDayNum       : day_Number ;
+       CurWeekDayNum   : Week_Day_Number ;
+       CurWeekDayNam   : Paragraph ;
+       CurMonthNum     : month_number ;
+       CurMonthNam     : Paragraph ;
+       CurYearNum      : Year_Number ;
+       CurJulianNum    : Julian_Number ;
+       CurAbsDayNum    : REAL ;
+       CurDate0        : Date0 ;
+
+

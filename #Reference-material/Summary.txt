@@ -1,0 +1,67 @@
+Summary of the cross-refeence program
+
+I am writing a cross-refernce program that handles expanded pascal (where
+UNITs are available) among other eatures of Object Pascal. Now, there have
+been cross refernce programs for Pascal snce the 1980s; even Nicklaus Worth
+wrote one. But, they were all written for "monolithic" programs where one
+file was used or perhaps some include file, but the concept of the UNIT had
+not been thought of at the time. With programmers doing ever larger progams
+I think a cross-refernce tool is something most programmers don't even know
+they need. Remebering where variables, procedures and functions are used
+would be important. But more than that, one thing a cross-refernce tool can
+do is procedure (and unit) tracing, such as
+
+  Procedure DF4
+    is defined on line 103
+    it is called by
+        procedurr ZagAT on line  201
+        function next on lines 714,720
+   it calls
+        procedure Bee on line 116
+        function trill on lines 125, 128, 129
+
+  The same thing can be done for UNITs, listing a dependency tree;
+  units it uses, units it is used by, etc. (At this oint we cue in
+  Annie Lennox  "Sweet Dreams (Are Made Of This)": "Some of them
+  want to use you, some of them want to get used by you.")
+
+  So to allow this to work seamlessly, I'd like someone submitting the
+  source of their program to the cross-reference tool to beable to embed
+  instruction to the cross-reference tool in the same manner  as compiler
+  directives/ Using a directive like {$CREF arguments} or (*$cref Argumnts*)
+  they can pass parameters to the cross-refernce tool. Now, I could use a
+  configuration file except for simple uses one shouldn't have to write a
+  separate file, since the cross-reference tool reads their program anyway,
+  they should be able to just pass instructions in the source code. The
+  only problem is Free Pascal throws a warning if it sees a compiler
+  directive it doesn't recognnize.
+
+  Therefore, I wold like to reuest that Free Pascal's compiler directives
+  scanner be programmed to ignor a directive beginning with $cref
+  (regardless of case, of course).
+
+  Thank you for your attention
+  Paul  Robinson
+
+---------------------
+
+While they turned this down, they mentioned how Pasdoc uses certain
+symbols in a comment, like //< , {< , or (*< to tell it that this
+comment applies to the code before it (like when a comment is on
+the end of a line or after a procedural mdeclaration.
+
+Now, I plan to use a modified insertion by using 39 slots for
+identifiers. an identifier must start with A-Z (case insensitive) and _
+some compilers allow $ as am additional identifier, in which case it
+can't be a hex number indicator. So that's 27. This gives 12 additional
+single characters to use for identifiers, that the user can add to the
+optional identifier table.  The table is an alpabetical list sorted by
+the identifier. Using separate lists for each letter means the search
+time is reduced as you're not going through, say, hundreds or thousands
+of items to get to the one you want.
+
+
+
+
+
+

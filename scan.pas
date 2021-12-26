@@ -34,20 +34,22 @@ var
 
    Procedure Catastrophic(Msg:UnicodeString);
    procedure SplitPath(const Path: UnicodeString; var Folder, Name, Ext: UnicodeString);
+   Procedure ProcessUnitName(UnitName: UnicodeString);
 //   Procedure OpenFile(Name:String);
 //   procedure ScanFile;
 
 
 
 implementation
+
 Const
    FileLimit = 20;   // maximum number of simultaneously open files
 
-
-
 type
-
+    BufferP = ^TBuffer;
     TBuffer = record
+       Next: BufferP;              // previous buffer
+       unitname,                   // declared name of unit
        Line,                       // line being read
        FileName: UnicodeString;    // name of this file
        LineNumbet,                 // line number we're at
@@ -60,8 +62,16 @@ type
 
 var
   CrLf: String[2];
-  buffer: Array[1..filelimit] of TBuffer;
+  buffer: TBuffer;
   CurrentFile: 1..Filelimit ;
+
+// Given a unit name, construct its file name
+Procedure ProcessUnitName(UnitName: UnicodeString);
+begin
+
+
+
+end;
 
 
   Procedure Catastrophic(Msg:UnicodeString);

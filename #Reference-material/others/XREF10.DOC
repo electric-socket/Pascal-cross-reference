@@ -1,0 +1,182 @@
+
+                              XREF 1.0
+                          (August 5, 1992)
+
+       Simple program for cross-referencing the procedures
+             and functions in Turbo Pascal program.
+
+
+
+                       by Jacques B.M. Guy
+
+                  Telecom Research Laboratories
+                PO Box 249 Clayton 3168 AUSTRALIA
+
+
+FIRST
+-----
+
+For U.S. readers, legal matters first and foremost. You get the
+source code, what more do you want? All right, all right, so
+here: if compiling it causes your screen to implode, running it
+causes you to lose 18 Gigabytes of your accounting archives, your
+lifetime savings, and why not, your life, I am not to be held
+responsible. Further, if it brews a mean cup of coffee instead of
+producing a cross-referenced index as it promises to in the
+opening blurb, well, tough, podners, I ain't taking no lawyers'
+calls.
+
+
+SECOND: WHY DID I WRITE XREF?
+-----------------------------
+
+Bitter experience has taught me that object-oriented programming
+is not the panacea some think it is. It will not magically keep
+you from writing messy code. All too often have I sat down to
+plan ahead objects, their methods, their descendents, only to
+find, a few hundred lines of TP 5.5 later, that the processes I
+had visualized in my mind's eye were not quite those I needed
+to solve the problems I had in mind, elegantly and as simply as
+possible.
+
+At that stage, the temptation to tamper with what you have
+written so far, rather than starting afresh, is strong. Surrender
+to it, and you'll end up, more often than not, with an
+unmanageable mess. But if you resist it, and do start once again
+from scratch, only equipped with a better grasp of what your code
+*really* ought to do, there is little to help you, beyond pencil,
+paper, and patience.
+
+I was rewriting from scratch an algorithm to compute the word and
+character entropy of texts, generate text randomly, and produce
+on-screen concordances, when, after 800 tightly packed lines, I
+now longer knew which procedure did precisely what and called
+upon which other procedures. The cross-referencing programs I
+downloaded from Timo Salmi's garbo, and the "oak" shadow site at
+archie did things I did not need, and did not do those things I
+wanted.
+
+The first version of XREF, dated
+
+
+THIRD: WHAT DOES XREF DO?
+-------------------------
+
+It produces an index of the functions and procedures in a Turbo
+Pascal program, provided that you did not use objects (OO-Pascal
+syntax will confuse XREF beyond your wildest dreams).
+
+Let us look at an index, with some explanatory notes thrown in,
+produced from a real program, which you you probably recognize if
+you are a Turbo Pascal veteran.
+
+FIRST-ED.PAS <--- the program name, the old TP Editor Toolbox
+
+Advance PROCEDURE in CMD.ED (348..363)
+     EditRightWord in CMD.ED: 387 398 407
+(** Meaning:
+    procedure Advance is declared in file CMD.ED, from
+    lines 348 to 363, and called by
+    the procedure or function EditRightWord in files CMD.ED
+    on lines 387, 398, and 407 **)
+
+Class FUNCTION in CMD.ED (717..725)
+     EditRightWord in CMD.ED: 397 398
+     EditDeleteRightWord in CMD.ED: 748 750
+(** Meaning:
+    function Class is declared in file CMD.ED, from lines 717 to
+    725, and called by EditRightWord in file CMD.ED, on lines
+    397 and 398, and by EditDeleteRightWord in file CMD.ED,
+    linese 748 and 750 ***)
+
+EditBackground PROCEDURE in TASK.ED (41..57) forward in USER.ED (14)
+     EditAskfor in USER.ED: 205
+     EditSchedule in TASK.ED: 69
+(** Meaning:
+    procedure EditBackGround is declared in file TASK.ED, lines
+    41 to 57, and has forward declaration in USER.ED, line 14.
+    It is called by EditAskFor in USER.ED, line 205 and by
+    EditSchedule in TASK.ED, line 69 **)
+
+
+
+... and so on and so on.
+
+Following Len Dorfman's naming conventions, the first substring
+in a procedure or function identifier to appear between
+underscores is interpreted as a class name.
+
+The listing starts with classless functions and procedures,
+listed alphabetically, then continues with classes, again
+in alphabetical order.
+
+Within each class, function and procedures are listed
+alphabetically, with the class part disregarded. That is why, in
+the example above, _Char_Generated appears in-between
+Find_Char_StringAt and Read_Char_CorpusFrom; they were
+alphabetized as if they read: FindStringAt, Generated, and
+ReadCorpusFrom. Why did I decide on that alphabetizing scheme?
+Because, if and when I rewrite that program in object-oriented
+Pascal, "FindStringAt", "Generated", "ReadCorpusFrom", etc.
+would be the identifiers I would normally choose for the methods
+of the object type "Character".
+
+
+NAMING CONVENTIONS
+------------------
+
+Len Dorfman proposes this syntax for variable and procedure or
+function identifiers:
+
+<Action Message>_<Class Name>_<Behavior Modifier(s)>
+
+<Action Message> is a null string or any valid identifier that
+does *not* contain an underscore (_)
+
+<Behaviour Modifier(s)> is a null string or any valid identifier
+(which may or may not contain underscores).
+
+I found that convention extremely clear and easy to use. Just
+consider these few macros, taken straight out of his book:
+
+get_cursor_info
+set_cursor_info
+get_cursor_location
+get_cursor_shape
+set_cursor_shape
+set_cursor_up_one
+save_cursor_info
+restore_cursor_info
+
+Those macro names read like plain English, and what they do is
+obvious. At the same time, it is quite transparent how they could
+be translated into an object-oriented high-level language: define
+an object type "Cursor" with methods "GetInfo", "SetInfo",
+"GetLocation", etc.
+
+
+LASTLY
+------
+
+How do you run XREF? If you are worried about viruses, compile the
+source code provided in XREF.PAS first. Then type: XREF and hit
+the much bashed RETURN key. You can also pass the names of the
+input program file and the output index file on the command line,
+like this:
+
+   XREF MYPROG MYPROG.IDX
+
+By default, XREF writes 70 columns per line, and puts in a form
+feed every 60 lines in the index file. You can change those
+defaults when you pass the file names on the command line, like
+this:
+
+   XREF MYPROG MYPROG.IDX C80 L55
+
+That makes it 80 columns per line, and 55 lines per page. To do
+away with form feeds, ask for 0 lines per page:
+
+   XREF MYPROG MYPROG.IDX L0
+
+And, as you have noticed, you need not type the .PAS extension.
+

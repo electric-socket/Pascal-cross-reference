@@ -1,0 +1,95 @@
+Cross-reference points:
+* We count BEGIN/END blocks to know where functions/procedures are
+* We must watch the statement sequence after a WITH, because while
+  it is, varibles have to be cheked first under that record before
+  checking further up the symbol table
+
+
+Special Notes:
+* Have a "With table" or "With linked list" (the latter sounds better) you
+  pick up the record definition from its type, then we can reference
+  those fields, e.g. when a variable is referenced in a WITH statement, we
+  can follow it to get its parent record.
+
+
+Symbol Table items:
+* Name
+* A type, const, or var
+* If it a record or object or type, add the fields chained to it abd they
+  are back chained.
+* If Item is record, object, or class
+* Type of definition: 
+  UG - Unit Global, the item is defined in the
+  implementation part of as unit (or any non-procedural part of Main).
+  UL - Unit Local, defined "below the line" in a non-procedural part 
+  of a unit
+  PL - Procedure Local, defined and used in a procedure
+  FL - Function local
+  Secondary
+  VS - Var scalar
+  VA - Var Array
+  VR - Var Record (connect to it)
+  RF - Record Field (connect to it)
+  RT - Record definition, links to its fields
+  Any entry that is a record had link to it
+  We will have multiple tables
+  Each unit has a pointer to its vars, gloval and local
+  Each var/const/type has a NIL back pointer if a global var, or it points back to
+       the procedure, function, method, or property it's within.
+  Indicator: Global (above the line) or Local (below the line)
+	could be enumerated type (unknown,  PlainVar, Arrayvar, RecordVar, RecordType,
+        Enumeration (the value), Enumerator (the type naming them), ObjectVar, ObjectType,
+        RecordField, ObjectVarPublic, ObjectVarPrivate, Procedure, Function, Method, Property,
+        Then indication if Unit Global, Unit Local, Main, ProcLocal, FuncLocal
+   Procedural types: Declaration (above the line, implies FORWARD), DefinitionAsGlobal (below the line)
+         Definition as Non-Public, Forward declaration, Exteral Declaration, 
+   Search Order: If in a with, search with table first
+         next search current procedual definitions, follow nested procedures
+         next search current unit, either local or global
+         next in reverse order of declaration, search the global identifiers of all known units
+         if all fails, give identifier as unknowm
+    Have several independent identifier chains
+         The current procedural type's internal ident
+         The current unit's idents
+         Each unit's public declarations
+    Might be simpler to just say where used and where defined. May have to do that with objects
+    Each Unit has a reference map, which units it uses
+	at the end
+    Each procedure has a used by and uses for that unit. 
+    End listing will show
+        Each unit, a reference map, which units it uses and which use it.And what pages it is on
+        Procedurasl list, where it's located and where it is used.
+	Delineated by page and line
+        Master reference shows every identifier, unit or unit.procedural that uses it
+           where there is more than one, we don't try to figure out who used whom, just list all
+           declarations and all uses
+	Location can be integer. Line number is added to page*100, can use div/mod to get page and line
+
+	Procedure or function names
+        GetSymbolTableRecord - returns a new symbol table entry, with the reference already set up
+	AddToUnitGlobal - puts a link to this item in the current unit's gobal idents
+        AddToUnitLocal - for a "below the line" ident
+        AddToProcLocal - put on the list of items defined for this procedural type
+        ClearProcTable - This procedual has ended, reclaim this table
+	AddToWithTable - puts a with identifier to be used when fields are referenced
+        DropFromWithTable - scope of a with statement has ended
+	A WITH pushes the current one. This lasts only one statement unless it is a
+            loop statement, then one more. If the loop statement was a block, then the WITH
+            continues until the block is finished. this clearly calls for recursion
+        Comma with adds multiple entries, but is one statement
+
+	"every cross-reference program is a compiler at heart" At least if it wants to do 
+           interconnecions, I.E procedure maps.
+         options: list only global vars, give list of keywords used and counts, 
+             set numbr of lines per page, give list of compiler options and conditionals
+             ignore conditional compilation, set colors
+           
+
+        
+ Local Proc, Local Func, 
+  
+  
+
+
+  
+  

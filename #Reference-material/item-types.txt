@@ -1,0 +1,123 @@
+identifier declaration
+           const, type, var
+type
+           scalar,                    simple type
+           record,object, class,      group
+           field,                     member of record
+           method,                    procedure member of object/class
+           proc,                      procedure
+           func,                      function
+           property,                  function member of object/class
+           enumerator,                declares a group of values
+           enum,                      calue in enumerator
+           pointer                    address location
+location   abovetheline / belowtheline,  abpve the line in interface, below the line in implementation
+           procarg,                   in signature of procedure
+           funcarg,                   in signature of function
+           methodarg,                 in signature of method
+           proparg,                   in signature of property
+           nameresult,                when assigned to name of function
+           result,                    when assigned to result
+           private,public             as declared
+
+list implementation items in crossref master list
+don't list
+
+// base types
+// this only concerns identifier vslues;
+// procedutal types ate encapsulated elsewhere
+sizetype= (enumGroup.  // name of enumerator list
+           EnuumType,  // enumerated value,
+           bytetype,   // 8-bit integer
+           charType,   // 8-bit character
+           wordYype,   // 16-bit integer
+           wcharType,  // 16-bit char
+           intYype,    // 32-bit integer
+           int64Yype,  // 64-bit int
+           pointerYype,// address
+           setType,    // set
+           Arraytype,  // general array
+           stringtype, // array of char with length
+           AnsStrType  // Ansistring
+           uniStrType, // unicodeString
+           tecordType  // record
+           objectType, // object
+           ClassType); // class
+
+
+        UnitP = ^UnitRecord;
+        usaP= ^UserUsed;     // list of user and used
+        UserUsed = record
+                       this: unitp;  // this unit'a pointer
+                       next: UseP;   // next usage pointer
+                   end;
+        UnitRecord = record
+                     Name,                 // irs name
+                     FileName: ansistring; // file used
+                     isDeclared,           // someone refeenced it
+                     isfinished: boolean;  // we've read it through
+                     usedby,               // units used by
+                     User: UserUsed;       // uses other units
+                     GlobalTable,          // interface items
+                     LocalTable:ItemP;     // implementation items
+                     end;
+
+                   // info bits
+         MajorKind: (prockind,             //< procedure
+                     Funckind,             //< dunction
+                     constKind,            //> in code or signature
+                     varKind,                                      
+                     typeKind,                                 
+                     valueKind,             //< unspecified arg in signature
+                     SignatureKind,         //< arg of proc/func
+                     fieldKind,             //< field of record, object or class
+                     recordKind,
+                     ObjectKind,
+                     ClassKind,
+                     ConstrKind,            //< constructor
+                     DestrKind,             //< Destructor
+                     AboveTheLine.          //< in interface pstt
+                     inLocal,               //< identifier declared in p/f
+                     inProgtam,             //< in main program                     ;
+                     inUnit);               //< is a unit
+
+         IdentType = (ptocedualType. SignatureType, ElementType, UnitType);
+
+         ItemP = ^Item; // symbol table item
+         TupeP = ^TypeKind;
+         signatureP = ^Signature;   // proc/func arge
+         Item = record              // identifier record  "Symbol Table"
+                      Name: ansistring;     // irs name
+                      UnitIn: UnitP;        // Unit it's in
+                      NextinUnit,           // next item in this units items
+                      NextLocal,            // Next item in implementation this unit
+                      NextTotal: ItemP;     // Next item in globsal item list
+                      size: sizetype;       // what it uses
+                      Kind: set of Majotkind;      // statistics
+                      case Usage: identType of      // what it is
+                        proceduralType:
+                          ( SigCount: integer;     // number of signatures
+                            SignatureList: SignatureP; // signature items
+                            ResultType: TypeP;     // type if function or nil
+                            ProcFunc: PFType);     // type of procedutal
+
+                        SignatureType,
+                        elementType:        // elements: const, type. var
+                           ( NextSignature: SignatureP; // next arg of p/f
+                             NexrField,            // if a field in record.
+                                                   // class, or object
+                             Owner: ItemP);        // If in record, class of
+                                                   // obhect, whom
+
+                        UnitType:
+                           ( Status: UnitP  );     // Unit
+                 end;
+           Signature: record
+                        BaseType: typeP;        // tyoe of this arg
+                        Next:  = Signature;    // next arg
+                      end;
+
+
+
+
+

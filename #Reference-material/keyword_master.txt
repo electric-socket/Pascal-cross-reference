@@ -1,0 +1,287 @@
+// The following keywords exist in Turbo Pascal mode
+absolute  
+and  
+array  
+asm  
+begin  
+case  
+const  
+constructor  
+destructor  
+div  
+do  
+downto  
+else  
+end  
+file  
+for  
+function  
+goto  
+if  
+implementation  
+in  
+inherited  
+inline  
+interface  
+label  
+mod  
+nil  
+not  
+object  
+of  
+operator  
+or  
+packed  
+procedure  
+program  
+record  
+reintroduce  
+repeat  
+self  
+set  
+shl  
+shr  
+string  
+then  
+to  
+type  
+unit  
+until  
+uses  
+var  
+while  
+with  
+xor
+
+--
+
+// The reserved words of Object Pascal (used in Delphi or
+//  Objfpc mode) are the same as the Turbo Pascal ones,
+// with the following additional keywords:
+as  
+class  
+dispinterface  
+except  
+exports  
+finalization  
+finally  
+initialization  
+inline  
+is  
+library  
+on  
+out  
+packed  
+property  
+raise  
+resourcestring  
+threadvar  
+try
+
+// Assigned words (you probably don't want to override
+// them, as it might be confusing
+exit
+halt
+break
+continue
+
+// List of modifiers:
+absolute  
+abstract  
+alias  
+assembler  
+bitpacked  
+break  
+cdecl  
+continue  
+cppdecl  
+cvar  
+default  
+deprecated  
+dynamic  
+enumerator  
+experimental  
+export  
+external  
+far  
+far16  
+forward  
+generic  
+helper  
+implements  
+index  
+interrupt  
+iocheck  
+local  
+message  
+name  
+near  
+nodefault  
+noreturn  
+nostackframe  
+oldfpccall  
+otherwise  
+overload  
+override  
+pascal  
+platform  
+private  
+protected  
+public  
+published  
+read  
+register  
+reintroduce  
+result  
+safecall  
+saveregisters  
+softfloat  
+specialize  
+static  
+stdcall  
+stored  
+strict  
+unaligned  
+unimplemented  
+varargs  
+virtual  
+winapi  
+write
+
+// Types:
+array
+char
+boolean
+integer
+real
+set
+file
+
+// Optional types:
+word
+byte
+long
+int64
+double
+string
+ansistring
+unicodetring
+
+
+
+
+
+//     CDC Pascal (CD)
+//    ISO 7185 Pascal (CP)
+//   ISO 10206 Extended Pascal (EP)
+//    ANSI draft Object Pascal (OP)
+//    UCSD Pascal (UCSD)
+//    Borland Pascal 7.0 (BP)
+//    Borland Delphi (BD)
+//    Free Pascal (FP)
+//    Pascal-SC (PXSC, Pascal eXtensions for Scientific Calculations)
+//    VAX Pascal (VP)
+//    Sun Pascal (SP)
+//    Traditional Macintosh Pascal (MP)
+//    GNU Pascal extensions (GPC)
+//    AAEC pascal 8000 (AA)
+//    XDPascal (XD)
+
+absolute (BP, BD) (see absolute)
+abstract (OP) (see abstract)
+all (all) (see all)
+and (any) (see and)
+and_then (EP, OP) (see and_then)
+array (any) (see array)
+as (OP, BD) (see as)
+asm (BP, BD) (see asm)
+asmname (GPC) (see asmname)
+attribute (GPC) (see attribute)
+begin (any) (see begin)
+bindable (EP, OP) (see bindable)
+* bteak
+c (GPC) (see c)
+case (any) (see case)
+c_language (GPC) (see c_language)
+class (OP, BD) (see class)
+const (any) (see const)
+constructor (OP, BP, BD) (see constructor)
+* continue
+destructor (OP, BP, BD) (see destructor)
+div (any) (see div)
+do (any) (see do)
+downto (any) (see downto)
+else (any) (see else)
+end (any) (see end)
+* exit (FP,XD,AA,BP.BD)
+export (export) (see export)
+exports (BP, BD) (see exports)
+external (UCSD, BP, BD, MP) (see external)
+far (BP, BD) (see far)
+file (any) (see file)
+finalization (BD) (see finalization)
+for (any) (see for)
+forward (any) (see forward)
+fortran (alias for external) (AA, CD)
+function (any) (see function)
+goto (any) (see goto)
+if (any) (see if)
+implementation (all except CP) (see implementation)
+import (EP, OP) (see import)
+in (any) (see in)
+inherited (OP, BP, BD, MP) (see inherited)
+initialization (BD) (see initialization)
+interface (interface) (see interface)
+interrupt (BP, BD) (see interrupt)
+is (OP, BD) (see is)
+label (any) (see label)
+library (BP, BD) (see library)
+loop (AA)
+mod (any) (see mod)
+module (module) (see module)     EP style or PXSC style module
+name (name) (see name)     linker name
+near (BP, BD) (see near)
+nil (any) (see nil)
+not (any) (see not)
+object (BP, BD, MP) (see object)
+of (any) (see of)
+only (EP, OP) (see only)
+operator (PXSC) (see operator)
+or (any) (see or)
+or_else (EP, OP) (see or_else)
+otherwise (EP, OP, MP) (see otherwise)
+packed (any) (see packed)
+pow (EP, OP) (see pow)
+private (private) (see private)
+procedure (any) (see procedure)
+program (any) (see program)
+property (OP, BD) (see property)
+protected (protected) (see protected)
+public (public) (see public)
+published (published) (see published)
+qualified (EP, OP) (see qualified)
+record (any) (see record)
+repeat (any) (see repeat)
+resident (BP, BD) (see resident)
+restricted (EP, OP) (see restricted)
+segment (UCSD) (see segment)
+set (any) (see set)
+shl (BP, BD, MP) (see shl)
+shr (BP, BD, MP) (see shr)
+then (any) (see then)
+to (any) (see to)
+type (any) (see type)
+unit (UCSD, BP, BD, MP) (see unit)
+until (any) (see until)
+uses (UCSD, BP, BD, MP) (see uses)
+value (EP, OP) (see value)
+var (any) (see var)
+view (OP) (see view)
+virtual (OP, BP, BD, MP) (see virtual)
+while (any) (see while)
+with (any) (see with)
+xor (BP, BD, MP) (see xor)
+
+// Pascal grammars might be useful here
+
+

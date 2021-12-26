@@ -1,0 +1,9 @@
+CONST
+   Min_Memory     = 3 ; { Lowest acceptable amount of free memory during run }
+   ch_per_word    = 34 ;               { characters per word }
+   Ref_Per_Line   = 7 ;               { line numbers per printed reference line }
+   linenum_size   =  5 ;               { size of displayed line numbers }
+   reserved_count = 208 ;              { number of reserved words }
+   Lines_Per_Page : INTEGER = 84 ;
+   Chars_Per_Line : INTEGER = 136 ;
+   diag           : boolean = true ;

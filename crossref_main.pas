@@ -12,11 +12,13 @@ uses
   // Main toutine of program
   Procedure Main;
 
+
 implementation
 var
 
     StartTime,               //< time program started
-    EndTime: SystemTime;     //< for elapsed time1
+    EndTime: SystemTime;     //< for elapsed time
+
 
 Procedure Usage;
 begin
@@ -93,7 +95,9 @@ begin
 
 end;
 
-// handle --x
+
+
+// handle --xxx-xxx or --xx=
 Procedure ProcessDoubleArgument(const Arg:UnicodeString);
 Var
    UCArg:UnicodeString;
