@@ -336,7 +336,7 @@ Datatype= (notype,     // not a base type
 
                                   // if a child unit, next one on chain
                              }
-                             ChildUnit ItemP);
+                             ChildUnit: ItemP);
                       end;
 
            LineTable = record
@@ -699,7 +699,7 @@ Function SearchSymbolTable(Which:Integer;             //< letter index #
         repeat
                 If NextItem = NIL then
                 begin  // we're at bottom of top-to-bottom chain
-                    SearchResult := LowerItem;    // we're returning prior rec
+                    SearchResult := LowerRecord;    // we're returning prior rec
                     Result := PriorItem;
                     exit
                  end;
@@ -802,7 +802,7 @@ BEGIN
         //    same name as a modifier, make the modifier later in the
         //    in the stack so the identifier is found first
 
-        if name <> '' then  // don't reinitialize
+        if  NewItem^.name <> '' then  // don't reinitialize
         With NewItem^ do
         begin
             Name  := N;
@@ -1320,11 +1320,11 @@ begin
         AddKeyword('inline','',pfDec);
         AddKeyword('interface','',interDec,inInterface);
         AddKeyword('object','end',structdec,inObject);
-        AddKeyword('operator',,,genMod);
+        AddKeyword('operator','',genMod);
         AddKeyword('reintroduce');
         AddKeyword('self');
         AddKeyWord('unit','end',unitprogDec, inunit );
-*       AddKeyword('uses','',usesDec);
+        AddKeyword('uses','',usesDec);
 
         AddStdUnit('system');
     end;
@@ -1357,10 +1357,10 @@ begin
         AddKeyWord('exports');
         AddKeyWord('finalization');
         AddKeyWord('finally');
-        AddKeyWord('initialization',unitprogDec, inLibrary);
+        AddKeyWord('initialization');
         AddKeyWord('inline');
         AddKeyWord('is');
-        AddKeyWord('library','end',);
+        AddKeyWord('library','end',unitprogDec, inLibrary);
         AddKeyWord('on');
         AddKeyWord('out');
         AddKeyWord('packed');
