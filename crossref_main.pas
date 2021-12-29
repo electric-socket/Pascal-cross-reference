@@ -1,3 +1,12 @@
+{$I CrossrefPrefixCode.inc}  // STD definitions
+// Crossref - Pascal Cross reference
+// Version 0.01
+// January 9, 2021
+// Copyright 2021 Paul Robinson
+// Licensed under GPL v2
+
+// Ctossref_Main - Defacto main program used for modularization
+// Main Program - starts everything
 unit Crossref_Main;
 
 {$mode ObjFPC}{$H+}
@@ -58,7 +67,14 @@ begin
       Writeln;
       Writeln('For a list of switches, use /sw -sw or --switches');
       writeln('switches are not case senitive.');
-      Halt(1)
+      Halt(1);
+          // The following DEAD CODE is used to eliminate
+          // spurious compiler warning messages
+      Starttime.Year:=0;
+      EndTime.Year:=0;
+      Starttime.Year := EndTime.Year;
+      EndTime.Year := Starttime.Year ;
+
   end
 end;
 
@@ -67,7 +83,6 @@ Begin
     Writeln(ProgramName,' - Create cross-reference listing of ',
                           'a Pascal program', Version);
     Writeln(Copyright,' - Released under GPL ver. 2');
-    Starttime.Year:=0; EndTime.Year:=0;    // eliminate uninitialized warning
     GetLocalTime(StartTime);
     Write('Good ');
     If StartTime.Hour <12 then
@@ -161,15 +176,14 @@ Procedure GetArgs;
 var
     I: Integer;
     Param,
-    Parm1,
     Test1,
-    Test2: AnsiString;
+    Test2: UnicodeString;
 
 begin
 
      For I := 1 to Paramcount do
        begin
-          Param := ParamStr(I);  // collect each argument
+          Param := UnicodeString( ParamStr(I));  // collect each argument
           Test1 := Copy(Param,1,1);  // used for all other switches
           Test2 := Copy(Paspath,1,2);  // used for -- switches
 
@@ -188,7 +202,7 @@ end;
 
 Procedure Main;
 begin
-    PasPath := ParamStr(0);
+    PasPath := UnicodeString(ParamStr(0));
     SplitPath(PasPath,PasFolder,PasName,PasExt);
 
 {

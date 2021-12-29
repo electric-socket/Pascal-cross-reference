@@ -18,8 +18,8 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
-      <RevisionNr Value="1"/>
-      <BuildNr Value="6"/>
+      <RevisionNr Value="2"/>
+      <BuildNr Value="9"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable FileDescription="Cross Reference of Pascal Programs" InternalName="CrossRef" LegalCopyright="Copyright 2021 Paul Robinson" ProductVersion="0.0.1 Trv 16"/>
     </VersionInfo>
@@ -52,12 +52,13 @@
         <UnitName Value="Crossref_Main"/>
       </Unit3>
       <Unit4>
-        <Filename Value="specials.inc"/>
+        <Filename Value="readme.MD"/>
         <IsPartOfProject Value="True"/>
       </Unit4>
       <Unit5>
-        <Filename Value="keyword.inc"/>
+        <Filename Value="tables.pas"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="Tables"/>
       </Unit5>
     </Units>
   </ProjectOptions>

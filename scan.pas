@@ -1,156 +1,62 @@
+{$I CrossrefPrefixCode.inc}  // STD definitions
 // Crossref - Pascal Cross reference
 // Version 0.01
 // January 9, 2021
 // Copyright 2021 Paul Robinson
-
 // Licensed under GPL v2
 
-// Scan unit
+// Scan.pas - Scan unit
 // Scan the source file, processing it for keywords and identifiers,
 // responding to both, then copying the file to the output file
-
-
-
-unit scan;
-
+unit scan; 
 interface
-type
-       String2= String[2];
-
+uses Sysutils, Tables;
 var
+
+
+
+        LocalListing,          // Separate Text listing of unit
+        LocalHTML,             // Separate HTML list of unit
+        LocalPDF,              // Separate PDF of unit
+        LocalCREF,             // Local Ctoss-reference of unit
+        NoLocalBTL,            // Don't cross-reference implementation items
+        NoLocalProc,           // Don't cross-reference procedure idenmtifiers
+        NoGlobalProcCREF,      // don't include procedure-level identifiers
+                               // in Global cross-reference
+        NoGlobalBTLCREF,       // dont include implementation items in
+                               // global cross-reference
+        GlobalCREF,            // Cross-reference of project
+        GlobalListing,         // Text listing of project
+        GlobalHTML,            // HTML listing of project
+        GlobalPDF: Boolean;    // PDF of complete project
 
         StartTime,                      // time when program began
         EndTime:String;
         // file descriptor for this program
-        ProgramPath,                    // FQFN of nsme up to folder
+
+        ProgramPath,                    // FQFN of name up to folder
         ProgramFolder,                  // folser it's in, null if root
         ProgramName,                    // name excluding extension
         ProgramExt,                     // This program's extension if any
         PasPath,                        // filename being processed
         PasFolder,
         PasName,
-        PasExt,
-        ErrorMessage: UnicodeString;    // error message text
+        PasExt: UnicodeString;
 
-   Procedure Catastrophic(Msg:UnicodeString);
+
    procedure SplitPath(const Path: UnicodeString; var Folder, Name, Ext: UnicodeString);
-   Procedure ProcessUnitName(UnitName: UnicodeString);
-//   Procedure OpenFile(Name:String);
-//   procedure ScanFile;
+   // open a file where all we have is the name w/o path or extension
+   Procedure OpenUnitFile(FName:UnicodeString);
+   // this time we have a full file name
+   procedure OpenInputFile(Name:UnicodeString);
+   Procedure GetLine;
+
+   Procedure InitPrintLine;                // process printing
 
 
 
 implementation
 
-Const
-   FileLimit = 20;   // maximum number of simultaneously open files
-
-type
-    BufferP = ^TBuffer;
-    TBuffer = record
-       Next: BufferP;              // previous buffer
-       unitname,                   // declared name of unit
-       Line,                       // line being read
-       FileName: UnicodeString;    // name of this file
-       LineNumbet,                 // line number we're at
-       LinePosition: Integer;      // current position on line
-       Size: Int64;                // file size
-       F: Text;                    // file pointer
-    end;
-
-
-
-var
-  CrLf: String[2];
-  buffer: TBuffer;
-  CurrentFile: 1..Filelimit ;
-
-// Given a unit name, construct its file name
-Procedure ProcessUnitName(UnitName: UnicodeString);
-begin
-
-
-
-end;
-
-
-  Procedure Catastrophic(Msg:UnicodeString);
-  begin
-      Writeln;
-      Writeln(Msg);
-      halt(16);
-  end;
-
-{
-  Procedure OpenFile(Name:String);
-  VAR
-      E,
-      IR,
-      ActualSize: Integer;
-      Found: Boolean;
-
-  begin // we need to use file folders per unitpath
-      if currentFile < Filelimit then
-      begin
-// this needs to be replacwd with a folder search
-          inc(CurrentFile);
-          Assign(Buffer[CurrentFile].F, Name );
-          {$I-}
-          Reset(Buffer[CurrentFile].F);
-          {$I+}
-          IR := IOResult
-          if IR <> 0 then
-          begin
-//     here, we'll move to next folder unless we run out of folders
-//     ro search
-          end;
-// if we still have a failure, bsil
-          if IR <>9 then
-          begin
-              Writeln('?Cannot open ',Name);
-              writeln('** Skipping file');
-              Dec(CurrentFile);
-              Exit;
-          end;
-          with Buffer[Currentfile) do
-          begin
-              Size := FileSize(F);
-              if size = 0 then
-              begin
-                  Writeln('** Skipping empty file ',Name);
-                  Close(F);
-                  Dec(CurrentFile);
-                  exit;
-              end;
-              LineNumber := 1;
-              LinePosition := 1;
-              Line := '';
-         end;
-      end;
-  end;
-
-  Procedure Writefile;
-  Var
-      K,W: Integer;
-  begin
-     Writeln('Writing: ',PasFolder+PasName+'.lst');
-     Assign(F,PasFolder+PasName+'.lst');
-     Rewrite(F);
-     K := IOResult;
-     W := WinIOResult;
-     if (k<>0) or (W<>0)  then
-      begin
-      writeln('Error ',K,' or ',W);
-      halt(99);
-      end;
-
-     with buffer do
-          BlockWrite(F, OutPtr^,OutPos);
-     Close(F);
-     Writeln('Completed.');
-  end;
-
-  }
 
 procedure SplitPath(const Path: UnicodeString; var Folder, Name, Ext: UnicodeString);
 var
@@ -182,6 +88,509 @@ begin
     end;
 
 end;
+
+
+// we have a whole file name, try to open
+procedure OpenInputFile(Name:UnicodeString);
+Var
+
+     FolderIndex: NameRange;
+    NoFolder: boolean;
+
+begin
+
+
+    // First search the source folder, then the folders specified in $UNITPATH
+    // or other specified places
+
+    FolderIndex := 1;
+    FileMode := 0; // force read-only in case file is read only
+
+    with Buffer^ do
+    repeat
+         if folderindex = 0 then // can't read if none there
+            NoFolder := TRUE
+         Else
+            Folder := FolderTable[FolderIndex];
+
+         If Pos(Slashchar,Name )>0 then // if it's altrady marked with a path
+         begin                          // don't add one
+             Buffer^.FullName :=  Name;
+             NoFolder := TRUE;
+         end
+         else
+         begin
+             if Folder <> '' then   // add path
+                Folder := Folder + SlashChar;
+             FullName := Folder + Name ;
+         end;
+         Assign(Buffer^.F,Buffer^.FullName );
+         {$I-} Reset(Buffer^.F); {$I+}
+         Buffer^.Error :=  IOResult;  // IOResult is lost once read, so save it
+         if  Buffer^.Error = 0 then Exit;
+         {$ifndef mswindows}
+         // Additional attemptss for non-windows
+
+         // repeat using all lower case
+         Buffer^.FullName := LowerCase(Buffer^.FullName);
+         Assign(Buffer^.F, Buffer^.FullName);
+         {$I-} Reset(Buffer^.F); {$I+}
+         if IOResult = 0 then Exit;
+
+         // repeat using all Upper Case
+         Buffer^.FullName := UpperCase(Buffer^.FullName);
+         Assign(Buffer^.F, Buffer^.FullName);
+         {$I-} Reset(Buffer^.F); {$I+}
+         if IOResult = 0 then Exit;
+         {$endif}
+         if nofolder then exit;
+         Inc(FolderIndex);
+         Folder := FolderTable[FolderIndex];
+     until FolderIndex < TopFolder ;
+end;
+
+// we're handed a unit name, try matching it to a file
+Procedure OpenUnitFile(FName:UnicodeString);
+Var
+    ExtensionIndex,
+    FolderIndex: NameRange;
+
+
+begin
+with Buffer^ do
+    begin
+    // First search the source folder, then the folders specified in $UNITPATH
+    // or other specified places
+
+    FolderIndex := 1;
+    ExtensionIndex := 1;
+    FileMode := 0; // force read-only in case file is read only
+
+        repeat
+            Folder := FolderTable[FolderIndex];
+            Name := FName;
+
+        // Do not use a FOR loop; we need to have extensiions exceed count
+        // to know to move to the next folder
+            repeat
+                Ext := Extensions[ExtensionIndex];
+                FullName :=  Folder;
+                if FullName <> '' then
+                   FullName := FullName + SlashChar;
+                FullName := FullName + Name + '.' + Ext;
+                Assign(F, FullName );
+                {$I-} Reset(F); {$I+}
+                Error :=  IOResult;  // IOResult is lost once read, so save it
+                if Error = 0 then exit;
+                {$ifdef mswindows}
+                Inc(ExtensionIndex);
+                {$else}
+                // Additional attempts for non-windows
+
+                // repeat using all lower case
+                Folder := LowerCase(Folder);
+                Ext    := LowerCase(Ext);
+                Name   := LowerCase(Name);
+                FullName := LowerCase(FullName);
+                Assign(F, FullName);
+                {$I-} Reset(F); {$I+}
+                Error := IOResult;
+                if Error = 0 then Exit;
+
+                // repeat using all Upper Case
+                Folder := UpperCase(Folder);
+                Ext    := UpperCase(Ext);
+                Name   := UpperCase(Name);
+                FullName := UpperCase(FullName);
+                Assign(F, FullName);
+                {$I-} Reset(F); {$I+}
+                Error := IOResult;
+                if Error = 0 then Exit;
+
+            // We're out of ideas, try again
+                Inc(ExtensionIndex);
+                {$endif}
+            // try the next extension
+        until ExtensionIndex > TopExtension;
+        If ExtensionIndex <= TopExtension then EXIT;
+        // try the next folder
+        inc(FolderIndex);
+        Folder := FolderTable[FolderIndex];
+        until FolderIndex > TopFolder;
+    end
+end;
+
+
+    Procedure InitUnit;    //   Initialize this unit
+    Begin //*Procedure InitUnit
+        With Buffer^ do
+        begin
+     //      General initializarion
+
+
+     //  as desired, open local
+     //    listing file
+     //    HTML file
+     //    PDF file
+     // Increment Master page numbers and set line numbers to 1
+     // eject page on each
+     // If we are doing a complete listing, prepare to
+     //    Start new page in master output listing file
+     //    Start new "page" in master HTML, if paging desired
+     //    start new page in master PDF
+     //  Set up page headers
+
+        end;
+    end;
+
+    Procedure InitPrintLine;
+    Begin //*Procedure InitPrintLine
+    // Convert the text in Buffer^.TextLine into output
+    // if necessary, fold lines that won't fit, and output to
+    // various file formats
+
+    end; // Procedure Print
+
+    Procedure CompletePrintLine;
+    begin
+        // finish moving the rest of the line to output
+        With Buffer^ do
+        begin
+
+        end;
+    end;
+
+    Procedure SkipSpaces;
+    Begin        // bypass whitespace
+        With Buffer^ Do
+        Begin
+            While (Inindex <= Len) and (TextUC[InIndex] =' ') do
+                Inc(Inindex);
+        end;
+    end;
+
+    Procedure HandleCompilerDirective;
+    begin
+        // finish moving the rest of the line to output
+        With Buffer^ do
+        begin
+
+        end;
+    end;
+
+    // follow through to end of block comment then resume
+    PROCEDURE CheckComment(C:UnicodeString; Len:integer);
+    Var
+        Done: Boolean = False;
+
+    begin
+       With Buffer^ do
+       begin
+           If TextUC[Inindex] = '$' then
+              HandleCompilerDirective
+           else
+           repeat
+               Inc(InIndex);
+               if InIndex > Len then
+               begin  // comment continues on next line
+
+
+
+               end;
+               if TextUC[Inindex] = C[1] then
+                 if Len = 1 then
+                 begin
+                     Inc(InIndex);
+                     exit;  // step over closure
+                 end
+                 else
+                 begin  // we don't advance now in case of something
+                        // like (* **) the first * does match, but the
+                        // second does not, if we had advanced here, we'd
+                        // skip two chars, thus missing the actual
+                        // closure
+                     if TextUC[Inindex+1] = C[2] then
+                     begin
+                         Inc(InIndex,2);
+                         exit;  // step over closure
+                     end;
+                 end;
+
+           until done or eof(F);
+       end;
+    end;
+
+    Procedure GetLine;
+    begin
+       With Buffer^ do
+       begin
+       Repeat
+         Inc(LineNumber);
+         Inindex := 0;
+         If EOF(F) then exit;
+         {$I-} Readln(F,TextLine); {$I+}
+         Error := IOResult;
+         if Error<> 0 then
+         begin
+             Writeln('?Error reading file ',FullName,' at line ',LineNumber);
+             Exit;
+         end;
+         InitPrintLine;                  // start of printing
+         Len := Length(TextLine);
+         if trim(TextLine)='' then   // Don't bother scanning
+            Len := 0;                // all blank lines
+         If Len < 1  then
+             CompletePrintLine;          // finish line
+         Until len > 0 ;             // keep skipping blank lines
+       InIndex := 1;                     // start scanning here
+       TextLine := TextLine + ' '+#0; // ensure line has 2 extra chars
+       TextUC := UpperCase(TextLine);
+
+       // at this point we know there is at least one non-blank char
+       While (TextUC[Inindex] = ' ') do // move to it
+           Inc(Inindex);
+       end
+    end;
+
+    Procedure EatNum; // discard a number, decimal, or hex
+    begin
+        With Buffer^ do
+        begin
+        Inc(InIndex);
+        While TextUC[Inindex] in ['0','1','2','3','4','5',
+              '6','7','8','9','A','B','C','D','E','F',
+              '+','-','.'] DO
+            INC(InIndex);
+        end;
+    end;
+
+    // eject page on ^L if ok
+    Procedure NewPage;
+    begin
+        with buffer^ do
+        begin
+
+        end;
+    end;
+
+    Procedure GetToken(Var Token: TokenType; Ident: UnicodeString);
+    // Scan the source code, looking for symbols, keywords or identifiers
+    Var
+         Done: Boolean = False;
+         CH,
+         NextCH: WideChar;
+
+         Procedure NewToken(T: TokenType);
+         begin
+             Token := T;
+             Done := True;
+
+         end;
+
+         
+     // collect an identifier
+     Procedure MakeIdent;
+     begin
+         With Buffer^ do
+         begin
+            Ident := textUC[InIndex];
+            Inc(InIndex);
+             while TextUC[Inindex] in ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
+                  'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
+                  'Y', 'Z','_','0','1','2','3','4','5','6','7','8','9']  do
+             begin
+                 Ident := Ident + TextUC[Inindex];
+                 Inc(InIndex);
+             end;
+         end
+     end;
+
+
+
+    Begin //*Procedure GetToken
+     With Buffer^ do
+     Repeat
+         // when going thru line looking for a token,
+         // we might run out of line, so we'd need to
+         // read in the next line
+         if InIndex > Len then
+         begin
+            CompletePrintLine;
+            GetLine;
+         end;
+         CH := TextUC[InIndex];
+         NextCh := TextUC[InIndex+1];
+         IF CH in ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
+                  'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
+                  'Y', 'Z','_'] then
+            begin
+                Token := IDENTTOK;
+                MakeIdent;
+                done := True;
+            end
+         else
+        // just scan for chars we're interested in
+          Case CH of
+            ' ', #0..#11,#13..#31: Continue;
+            #12:  NewPage;  // Form Feed
+            ')' : NewToken( CPARENTOK );
+          //  '*’ : NewToken( MULTOK );
+          //  '+' : NewToken( PLUSTOK );
+            ',' : NewToken( COMMATOK );
+          //  '-' : NewToken( MINUSTOK );
+            '&': // octal number or protected ident
+                  if Nextch in ['0','1','2','3','4','5','6','7'] then
+                    begin
+                        Inc(InIndex); // Step over &
+                        EatNum;
+                    end
+                    else
+                     if  Nextch in ['A', 'B', 'C', 'D', 'E', 'F',
+                                    'G', 'H', 'I', 'J', 'K', 'L',
+                                    'M', 'N', 'O', 'P', 'Q', 'R',
+                                    'S', 'T', 'U', 'V', 'W', 'X',
+                                    'Y', 'Z','_'] then
+                     begin
+                          Inc(InIndex); // Step over &
+                          MakeIdent;    // collect ident
+                          Token := NONKEYWORD;  // protect from mistake as kw
+                          Done := TRUE;      // exit loop
+                     end;
+            '/' : if NextCH='/' then // ignore / unless //
+                     Begin
+                         Inc(InIndex); // Step over /
+                         NewToken( ENDOFLINETOK );
+                     end;
+            '#','0','1','2','3','4','5','6','7','8','9',
+               '$' :  EatNum;
+            ':' : IF NextCH <> '=' then
+                     NewToken( COLONTOK )         //  :
+                  ELSE
+                     begin
+                         Inc(InIndex);
+                         NewToken( BECOMESTOK );  // :=
+                     end;
+            ';' : NewToken( SEMICOLONTOK );
+        //  '@' : NewToken( ADDRESSTOK );
+        //  '[' : NewToken( OBRACKETTOK );
+        //  ']' : NewToken( CBRACKETTOK );
+            '^' : NewToken( DEREFERENCETOK );
+            '=' : NewToken( EQTOK );
+            '(' : begin
+                      if NextCH='.' then
+                            Inc(InIndex)    // (. is old school [ ; ignore
+                      else
+                      if NextCH='*' then // opening of (* comment
+                      begin
+                           Inc(InIndex);
+                           CheckComment('*)',2);
+                      end
+                      else
+                           NewToken( OPARENTOK )
+                  end;
+            '.' : if NextCH='.' then
+                      // begin
+                     Inc(InIndex)   // skip first dot and ignore ..
+                      // NewToken( RANGETOK );
+                      // end
+                  else
+                     if NextCH=')' then  // .) is old school ]
+                         Inc(InIndex)   // skip first dot and ignore
+                     else
+                         NewToken( PERIODTOK );
+
+             '{' : begin
+                       Inc(InIndex);
+                           CheckComment('}',1);
+                   end;
+             '<' :  // swallow other symbols
+                  if (NextCH = '>') or    // GT
+                     (NextCH = '<') or       // SHL
+                     (NextCH = '=') then     // LE
+                          Inc(InIndex)
+                  else
+                     NewToken( LTTOK );
+
+             '>' :  if  (NextCH = '>') or // SHR
+                        (NextCH = '=') then // GE
+                          Inc(InIndex)
+                  else
+                      NewToken( GTTOK );
+        end; // end case
+        Inc(InIndex);    // skip to next char
+
+     until done or eof(F);
+    end;  //*Procedure GetToken
+
+
+   Procedure CloseUnit;
+   Var
+       Temp: InPtr;
+
+   Begin //*Procedure CloseUnit
+       with Buffer^ do
+       begin
+
+           Close(F);     // Close input file
+
+            // close page in local lisring
+            // close page in HTML
+            // close page in PDF
+            // if dezired, emit unit statistics
+            // if desired, close page after statistics
+            // if desired, begin local cross-reference
+            // close local listing, HTML, PDF files
+
+            // Finally, release Buffer and rollback
+           Temp := Buffer;
+           Buffer := Buffer^.Next;
+           Dispose(Temp);
+
+
+       end; // Procedure CloseUnit
+   end;
+
+// Given a unit name, begin processing
+Function ProcessUnit(UnitName: UnicodeString):integer;
+Var
+
+    Temp: InPtr;
+
+begin  //*Function ProcessUnit;
+    If Buffer = NIL then // if this is the first unit
+       New(Buffer)
+    else
+    begin // this is another unit
+        New(Temp);
+        Temp^.Next := Buffer;  // save the prior Buffer
+        Buffer := Temp;
+    end;
+    Buffer^.Error := 0;
+    OpenUnitFile(UnitName);
+
+    if Buffer^.Error <> 0 then
+    begin
+        Writeln('? Unit ',UnitName,' not found');
+        Result := -2;
+        Exit;     // caller will release buffer
+    end
+    else
+    With Buffer^ do
+    begin // Start the process
+        If EOF( F ) then
+        begin   // empty file
+            Writeln('? Unit ',UnitName,' empty');
+            Close(F);
+            Result := -1;
+            Exit;
+        end;
+        InitUnit;    //   Initialize this unit
+    end;
+    Result := 1; // Syccess
+end ;
+
+
+
 
 
 end.

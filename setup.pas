@@ -1,5 +1,11 @@
-// Pascal Cross-Reference Program
+{$I CrossrefPrefixCode.inc}  // STD definitions
+// Crossref - Pascal Cross reference
+// Version 0.01
+// January 9, 2021
 // Copyright 2021 Paul Robinson
+// Licensed under GPL v2
+
+// Setup.pas - Intended to initialize the application
 // 2021-12-17
 
 Unit setup;
@@ -8,7 +14,7 @@ Unit setup;
 interface
 
 
-Uses Scan,sysutils;
+Uses Scan, sysutils, Tables;
 
 Const
        VERSION_MAJOR             = 0;
@@ -22,397 +28,6 @@ Const
 // as PROGRAM UPD does an auto-upddate on every compile
 
        VERSION_REV               = '1';
-
-
-Months: array[1..12] of string[9]=
-        ('January','February','March',   'April',   'May','     June',
-         'July',    'August', 'September','October','November', 'December');
-Days: Array[0..6] of string[9]=
-        ('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
-
-SlashChar = '\'; // Your system's directory separator,
-                 // \ on windows; / on unix, linux, etc
-
-
-//  ** Identifier group **
-
-// These are the characters allowed as the firsr (and subsequrnt)
-// characters allowed for an identifier. If your compilrt allows
-// additiona;characters (likr $) to start an identifier, either
-// add it like underscore, or if, like digits, it's allowed as
-// the second and subsequent characyers, attach it to digits. The
-// result being the character set in 'identifier' represents the
-// legal leading character, and alphanums the ones legal for the
-// remainder of an identifier.
-
-Identmax  = 31;
-upcase = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
-              'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
-              'Y', 'Z'];
-locase = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
-              'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
-              'y', 'z'];
- alphabet = upcase + locase;
- Underscore =  ['_'];
- Identifier =   alphabet + Underscore ;
- digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
- alphanums = Identifier + digits + Underscore + Underscore +
-            (* 4 spares *)  Underscore + Underscore ;
- type
-     IdentSize = 1..Identmax;     // 26 letters + _ + 4 spares
- const
-  ValidIdent: array[IdentSize] of Char = (
-            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
-            'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
-            'Y', 'Z', '_', (* and 4 spares *) '_','_','_','_');
-
-
-type
-// base types
-
-// this only concerns identifier vslues;
-// procedutal types are encapsulated elsewhere
-Datatype= (notype,     // not a base type
-           enumGroup,  // name of enumerator list
-           EnumType,   // enumerated value,
-           boolType,   // boolean
-           bytetype,   // 8-bit integer
-           charType,   // 8-bit character
-           wordType,   // 16-bit integer
-          wcharType,   // 16-bit char
-            intType,   // 32-bit integer
-           realtype,   // 32-bit real
-         singleType,   // single
-         DoubleType,   // double precision real
-          int64Type,   // 64-bit int
-        ExtendedType,  // 80-bit real
-           pointerType,// address
-           setType,    // set
-           ArrayType,  // general array
-           stringType, // array of char with length
-           AnsStrType, // Ansistring
-           uniStrType, // unicodeString
-           RecordType, // record
-           objectType, // object
-            ClassType, // class
-         TemplateType, // template
-            FileType); // file
-
-
-        UnitP = ^UnitRecord;
-        useP= ^UserUsed;     // list of user and used
-        ItemP = ^Item; // symbol table item
-        UserUsed = record
-                       this: unitp;  // this unit's pointer
-                       next: UseP;   // next usage pointer
-                   end;
-        UnitRecord = record
-                     Name,                 // its name
-                     FileName: ansistring; // file used
-                     isDeclared,           // someone refeenced it
-                     isfinished: boolean;  // we've read it through
-                     usedby,               // units used by
-                     UserOf: UserUsed;     // uses other units
-                     GlobalTable,          // interface items
-                     LocalTable:ItemP;     // implementation items
-                     end;
-
-
-    StateCond = (NoState,         // Not in a state
-                 inProgram,       // program
-                 inUnit,          // unit found
-                 inLibrary,       // library
-                 inInterface,     // Which part (carries to succeeding statements)
-                 inImplementation,
-                 inConst,         // CONST, TYPE, VAR declaration
-                 inType,
-                 inVar,
-                 inforward,       // FORWARD
-                 inExternal,      // EXTERNAL
-                 inProcedure,     // Proc, Func, etc. (carries forward
-                 inFunction,      //                   until closed)
-                 inConstructor,
-                 inDestructor,
-                 inProperty,
-                 inRecord,        // block types
-                 inObject,
-                 inClass,
-                 inGeneric,       // defining a generic (template)
-                 inOneStmt,       // this affects the next statement
-                 inWith,          // a with statement is in effect (will
-                                  // carry over to block or stmt following
-                 inBegin,         // begin-end block
-                 inRepeat,        // repeat-until block
-                 inTry,           // try-finally block
-                 inIgnore,        // block where we should ignore code (ASM-END)
-                 inCase,          // case-end but not record case (that is
-                                  // closed with the end statement on record)
-                 condIf,          // we are currently in a
-                                  // successful {@IF ditective
-                 condElse         // we are currently in the {$ELSE part
-                                  // of a no-match {$IF directive
-                 );
-
-        KeywordType = (NoActDec,     //< words having no action for
-                                     //< our purposes: array, to, of, in, etc
-                                     //< most keywords will have this setting
-                       ElemDec,      //< const, type, or var section, is
-                                     //< released by:
-                                     //<  implementation when interface ends
-                                     //<  procedure, function in open code
-                                     //<  begin in proc/func
-                       ClearElem,    //< This keyword clears ElemDec flag
-
-                      // These all start a block when found ; closed by
-                       unitprogDec,  //< unit, module, libtary, or
-                                     //< program header ; end
-                       InterDec,     //< interface declaration  ; implemetation
-                       impDec,       //< implementation declaration ; end
-                       pfdec,        //< procedure or funcrion
-                       BlockDec,     //< any block
-                       CaseDec,      //< Case stmt
-                       structdec,    //< Record, Object or class
-                       nxstmtDec,    //< has next statement effect: probably
-                                     //< "do" as used in for, while, with
-                       closureDec,   //< This keyword closes some block or structure
-                       usesDec,      //< uses clause
-                       genMod,       //< general modifier
-                       prepfmod,     //< modifier used before procedural header
-                                     //< proc, func, property or method
-                       postpfmod     //< modifier used after procedural
-                  );
-
-                   // info bits 
-        MajorKind= ( inVisible,            //< not visible in cross-reference
-                                           //< used for placeholder or
-                                           //< "dummy" items
-                     BaseType,             //< base type: char, integer etc.
-                     refonly,              //< list only if requested to
-                                           //< show usage of standard items
-                                           //< used (for predefined items)
-
-                     stdPF,                //< standard procedure/funcrion
-                                           //< as opposed to a const/type/var
-                     predefined,           //< stystem or user predefined
-                                           //< has no definition location
-                     compilerdefined,      //< predefined by compiler
-                                           //< or by this program
-                     AboveTheLine,         //< in interface
-                     isLocal,              //< identifier declared within p/f 
-                     selector,             //< selector in record CASE stmt   
-                     SignatureKind,        //< args of proc/func 
-                     temporary,            //< temporary item for search
-                                           //< purposes (usually for WITH stmt
-                     declared,             //< forward declaraation (forward or
-                                           //< interface p/f  or pointer)
-                     defined,              //< Actual definition (resolution of
-                                           //< pointer reference or p/f after
-                                           //< interface or forward)
-
-                     // these indicate actual identifiers
-                     prockind,             //< procedure
-                     Funckind,             //< function
-                     constKind,            //< CONST dec in code or signature
-                     typeKind,             //< TYPE declaration
-                     varKind,              //< VAR declaration in code or sig
-                     valueKind,            //< unspecified arg in signature
-                     fieldKind,            //< field of record, object or class
-                     // record, object and class are in SizeType
-                     ConstrKind,            //< constructor
-                     DestrKind,             //< Destructor
-                     isUnit);               //< is a unit
-
-         IdentType = (proceduralType,       //< proc, func, method, prop, cons, destr
-                      SignatureType,        //< argument of procedural type
-                      ElementType,          //< const, type, var
-                      UnitType,             //< unit or program
-                      PreUnit,              //< predefined unit
-                      StructureType,        //< structure: template, class,
-                                            //< object, record etc.
-                      isKeywordType,        //< action
-                      ModifierType,         //< modifies keyword
-                      PredefinedType);      //< predefined by system or other units
-
-         LineP = ^LineTable;                //< list of line number usage
-
-         signatureP = ^Signature;           //< proc/func arge
-
-         StateP = ^State;
-         State  = Record            //< Our running state
-                Cond: StateCond;    //< condition
-                closer: string;     //< if in block, symbol we watch for
-                                    //< to close it
-                BlockCount:integer; //< If in a block, how deep.
-                WithCount: byte;    // if the with stmt had multiple records,
-                                    // (or multiple With statements) number
-                prev: StateP;       // if we are in a block, pointer to
-                                    // state to return to
-         end;
-
-
-
-         Item = record                      //< identifier record  "Symbol Table"
-                      Abbrev,               //< optional Short name
-                      NameUC,               //< Upper case copy of Name
-                      Name: ansistring;     //< its name as given
-                      Index,                //< Identifier Serial Number
-                      Count,                //< Usage count
-                      DefPage,              //< page where it's defined
-                      DefLine: Integer;     //< Line # or line # in Defpage
-                      Usage: LineP;         //< Places where it's used
-                      UnitIn: UnitP;        //< Unit it's in
-                      Owner,                //< If in record, class of
-                                            //< object, which one
-                      LPS,                  //< chain of "lastProcStanding"
-                                            //< links for nested procedures
-                                            //< (see comment on that variable)
-
-                      {  Note: here I have 4 pointers:
-                         Prev/Next + inunit + ATL/Local, to indicate the list
-                         of procedures declared/defined in a unit, both
-                         "above the line" and those in implementation. Now, I
-                         did a reconsideration. If it's in one of these places
-                         do I need both? Well, for public procedures we need
-                         to show where declared, and where defined. However,
-                         we already have a setting for that in KIND. So,
-                         because I might need two lists, I'll dike these out
-                         for now so I can restore then later if I find I
-                         do need differentiated list.
-                      PrevinUnitATL,        //< prior item in this units interface
-                      NextinUnitATL,        //< next item in interface
-                      PrevinUnitLocal,      //< Prior item in implementation this unit
-                      NextinUnitLocal,      //< Next item in implementation this unit
-                      }
-                      PrevInUnit,           //< prior itrm in unit
-                      NextinUnit,           //< next item in unit
-
-                      // enclosure: immediate container: record, object,
-                      // class or procedural
-                      PrevInPlace,          //< Prior item this enclosure
-                      NextInPlace,          //< Next item this enclosure
-                      PrevTotal,            //> Prior item in global symbol list
-                      NextTotal: ItemP;     //< Next item in global symbol list
-                      DT: Datatype;       //< what it uses
-                      Kind: set of Majorkind;      //< statistics
-                      case What: identType of      //< what it is
-                        proceduralType:
-                          ( SigCount: integer;     //< number of signatures
-                            SignatureList: SignatureP; //< signature items
-                            LocalTable,             //< List of local vars
-                            ResultType: ItemP);     //< type if function or nil
-
-                        SignatureType:
-                           ( NextSignature: SignatureP;); //< next arg of p/f
-
-                        ElementType:                    //< elements: const, type. var
-                           ( NextField: ItemP);         //< if a field in record
-                                                        //< class, or object next one
-                                                        //< Our "owner" points to record
-
-                        StructureType:                  //< structure: templ, obj, rec
-                          ( Child: ItemP);              //< Structure it encapsulates
-                                                        //< this is pointed back thru
-                                                        //< "owner" field
-
-                        isKeywordType, ModifierType:    //< Keywords and modifiers
-                        (    Closedby:ItemP;            //< If this starts a block
-                                                        //< what closes it
-                             KW: KeywordType;           //< what it does
-                             StateChange: StateCond;    //< if it chnages
-                                                        //< our state
-                             KeyWordClass,              //< What class of
-                                                        //< keyword is it
-                             Specials: word);           //< Special instrucrions
-
-                        PreUnit, UnitType:              //< Unit details
-                           ( Status: UnitP;             //< what has happened
-                             Dotted: boolean;           //< is this a "dotted"
-                                    //< unit (effectively a subunit or "record"
-                                    //< of the parenr unit
-                             ParentUnit,                //< if we are a
-                                                        //< dotted unit
-                            { Don't need this; use "owner" field
-                             SiblingUnit,              //< If regular unit, nil
-
-                                  // if a child unit, next one on chain
-                             }
-                             ChildUnit: ItemP);
-                      end;
-
-           LineTable = record
-                          UsePage,              // page where it's used
-                          UseLine: Integer;     // Line # or line # in Defpage
-
-                          Next: LineP;
-                       end;
-
-           Signature= record
-                        BaseType: ItemP;        // type of this arg
-                        Next: SignatureP;    // next arg
-                      end;
-
-    WithP = ^WithRec;
-    // used for WITH statements
-    WithRec = record
-          ThisWith: Itemp;
-          Prev: WithP;
-    end;
-
-    SearchType = (NoSearch,    // not started
-                  TableEmpty,  // This particulae letter
-                               // of table has no entries
-                  SearchLow,   // This record precedes the
-                               // lowest record
-                  LowerRecord,   // Record not found, returning
-                               // highest record found that
-                               // is less than the search term
-                  SearchMatch);// Matching record; if more
-                               // than one, this is the first
-
-
-VAR
-    SearchResult: SearchType;
-
-{ In order to make searches faster, I divide up the symbol table
-  into 27 segments, consisting of the first letter of the identifier
-  A-Z plus _ (underline). It is a double-liked list, SymbolTable is
-  organized A-Z while SymbolBottom is organized Z-A. Basically I
-  know how to do automatic sorting on a double-linked list, so
-  that's what I used.
-}
-   SymbolBottom,                           //< in reverse order
-   Symboltable: Array[IdentSize] of ItemP; //< alphabetical order
-
-   // When a procedural declaration occurs, we save its entry, for various
-   // purposes: (1) in case it will be modified (Forward or external);
-   // (2) we see a const/type/var/declaration not in interface, we know
-   // to whom this element belongs to
-   // (3) we see a BEGIN statement, to know where references are
-   // This is a "push down" list, if a new proc/func is defined
-   // in IMPLEMENTATION, or in the case of a nested p/f, an intervening
-   // p/f, we attach the prior one
-   LastProcStanding: ItemP;
-
-   // if in WITH, which one
-   WithTable: WithP;
-
-   // what we are doing - this is also a oush-down list
-   StateTable: StateP;
-
-   // this program's file name
-   PasPath,PasFolder,PasName,PasExt: UnicodeString;
-
-   // Bookkeeping
-   IdentifierCount: Integer = 0;
-
-   // pascal language variants
-   Lang_extended,            // extended Pascal
-   Lang_turbo,               // turbo Pascal
-   Lang_XD,                  // XDPascal
-   Lang_Borland,             // Borland Pascal
-   Lang_object,              // object Pascal
-   Lang_Delphi,              // Delphi
-   Lang_FreePascal: boolean; // Free Pascal
 
 
 
@@ -430,10 +45,10 @@ VAR
               NewDT:DataType;   // what it is
               Visible: Boolean = TRUE); // hide item if false
     // installs keywords
-    Procedure AddKeyword(const N:AnsiString;  // name
+    Procedure AddKeyword(const N:AnsiString;                 // name
                                BlockClose: AnsiString = '';  // presumed to require no block closure
-                               KW:KeywordType=noactdec;// what kind of keyword
-                               SC:StateCond =NoState);  // any changes
+                               Key:KeywordType=noactdec;      // what kind of keyword
+                               SC:StateCond =NoState);       // any changes
 
     // general Utility funcyions
     Function Plural(N:Int64; Plu:AnsiString; Sng: AnsiString): Ansistring;
@@ -475,49 +90,42 @@ end;
 // obtains memory, then initializes it, retutning
 // the address of  the memotu available
 Procedure InitEntry(Var NewItem:ItemP);
+var
+    K: Integer;
+
 Begin
-  New(NewItem);
-  inc(IdentifierCount);
-  With NewItem^ do
-  begin
-      // don't init Ident because we want to
-      // leave the key alone
-      Name      := '';
-      Abbrev    := '';
-      NameUC    := '';
-      NextTotal := NIL;
-      PrevTotal := NIL;
-      NextField := NIL;
-      Count     := 0;
-      Index     := IdentifierCount; // Serial Number
+    New(NewItem);
+    inc(IdentifierCount);
 
-      // to prevent errors, null *all* pointers
-      Usage              := NIL;
-      UnitIn             := NIL;
-      Owner              := NIL;
-      LPS                := NIL;
-      {
-      PrevinUnitATL      := NIL;
-      NextinUnitATL      := NIL;
-      PrevinUnitLocal    := NIL;
-      NextinUnitLocal    := NIL;
-      }
-      DefPage            := 0;
-      DefLine            := 0;
-      // Zero the largest variant and
-      // you zero all others
-      SigCount           := 0;
-      SignatureList      := Nil;
-      LocalTable         := Nil;
-      ResultType         := Nil;
+    // initialize everything to prevent subtle bugs
+    With NewItem^ do
+    begin
+    Abbrev       := '';
+    NameUC       := '';
+    Name         := '';
+    Index        := IdentifierCount;   // Serial number
+    Count        := 0;
+    DefPage      := 0;
+    DefLine      := 0;
+    Usage        := NIL;
+    UnitIn       := NIL;
+    Owner        := NIL;
+    LPS          := NIL;
+    PrevInPlace  := NIL;
+    NextInPlace  := NIL;
+    PrevTotal    := NIL;
+    NextTotal    := NIL;
+    DT           := NoType;
+    Kind         := [NothingAtAll];
+    What         := UnusedType;
+    For K := 1 to Dummymax do
+       Dummy[K] := 0;
 
-      PrevinUnit         := NIL;
-      NextinUnit         := NIL;
-      PrevInPlace        := NIL;
-      NextInPlace        := NIL;
-      PrevTotal          := NIL;
-      NextTotal          := NIL;
-  end;
+
+        Name      := '';
+        Abbrev    := '';
+        NameUC    := '';
+    end;
 End;
 
 
@@ -550,10 +158,10 @@ End;
                                             // to initialise structure
             SymbolTable[Which]^.NameUC := Ident;
 
-{       Not needed here because initentry will zero these anyway
+            {  Not needed here because initentry will zero these anyway
             SymbolTable[Which]^.PrevTotal := NIl;
             SymbolTable[Which]^.NextTotal := NIL;
-}
+            }
             // top and bottom now point to same entry
             SymbolBottom[Which] := SymbolTable[Which];
 
@@ -569,9 +177,9 @@ End;
              begin
                  InitEntry(AddItem);  // replaces new() to initialise structure
                  AddItem^.NameUC :=Ident;
-{                Not needed here because initentry will zero this anyway
+                 { Not needed here because initentry will zero this anyway
                  Additem^.PrevTotal := NIL;
-}
+                 }
                  // attach this entry to first item
                  AddItem^.NextTotal := SymbolTable[Which];
 
@@ -729,6 +337,24 @@ Function SearchSymbolTable(Which:Integer;             //< letter index #
                          // reach the  correct insertion point)
 END;
 
+//*FIXME This is not finished
+Procedure SearchSymbolTableByWhat(Which:Integer;  //< letter index #
+                           Ident: AnsiString;     //< uppercase identifier
+                           Wha: IdentType;        //< What kind of idetifier
+                           NewItem: ItemP);       //< Returned space
+begin
+    NewItem := SearchSymbolTable(Which,Ident);
+    if NewItem = NIL then // find out why
+       if SearchResult = TableEmpty then
+       begin
+           InitEntry(SymbolTable[Which]);
+           SymbolBottom[Which] := SymbolTable[Which];  // both pointers same
+           NewItem := SymbolTable[Which];
+           exit;
+       end;
+
+
+end;
 
 
 // adds a base class, i.e. int, char, etc. to stmbol table
@@ -767,20 +393,98 @@ begin
 end;
 
 // adds keywords and modifiers
-Procedure AddKeyword(const N:AnsiString;                 // name
-                           BlockClose: AnsiString = '';  // presumed to require no block closure
-                           KW:KeywordType=noactdec;      // what kind of keyword
-                           SC:StateCond =NoState);       // any changes
-var
-      Which: integer;
-      Ident,
-      CW: ansistring;
-      CloseItem,      // keyword belonging to blockclose
-      NewItem: ItemP;
-                        
+Procedure AddKeyorMod(const N:AnsiString;                 // name
+                           BlockClose: AnsiString = '';   // presumed to need
+                                                          // no corresponding
+                                                          // keyword for a
+                                                          // block closure
+                           Key:KeywordType=noactdec;      // what kind
+                                                          // of keyword
+                           SC:StateCond =NoState;         // any changes
+                                                          // in state
+                           ID:IdentType= isKeywordType);      // what type
+ var
+      Which: integer; //< Index subscript entry in symbol tble
+      Ident,          //< Identifier in ALL CAPS
+      CW: ansistring; //< First char of identifier
 
-BEGIN
-      // standard initialization
+      TempItem,
+      CloseItem,      //< keyword belonging to blockclose
+      PriorItem,     //< for searching the symbol table
+      NextItem,
+      NewItem: ItemP; //< Item retrieved
+
+      Procedure ItemInit;
+      begin
+          With NewItem^ do
+          begin
+              Name        := N;
+              DT          := NoType;
+              Kind        := [ refonly ,CompilerDefined ]; // remove temporary bit
+              What        := ID;
+              Closedby    := NIL;
+              KW          := Key;
+              StateChange := SC;
+          end;
+      end;
+
+      // Install this keyword last, when there are other
+      // identifiers with the same name
+      Procedure AddLast(Setup: boolean=true);
+      Begin
+          PriorItem := NewItem;
+          NextItem := NewItem^.NextTotal;
+
+          repeat
+              if NextItem = nil then
+              begin
+                  // attach to prioritem and update SymbolBottom
+                  // We don't need newitem as that was something else
+                  // create ours
+
+                  InitEntry(NewItem);
+                  if setup then    // initialize out keyword
+                      ItemInit
+                  else
+                  with NewItem^ do
+                      begin  // initialize for closing keyword
+                          NameUC   := Ident;
+                          DT       := NoType;
+                          Kind     := [ refonly ,CompilerDefined, temporary ]; // use as debugging tool
+                          What     := ID;
+                          Closedby := NIL;
+                          Inc(Count);
+                      end;
+                  PriorItem^.NextTotal := NewItem;
+                  NewItem^.PrevTotal := PriorItem;
+                  SymbolBottom[Which] := NewItem;
+                  exit;
+              end
+              else
+                  If Nextitem^.NameUC = Ident then
+                  begin
+                      if NextItem^.What = ID then
+                          Exit;        // this keyword/modifier already
+                                       // registered; we're done, bail
+                      PriorItem := nextitem;
+                      NextItem := nextItem^.nextTotal;
+                  end
+                  else
+                  begin // attach before nextitem
+                      InitEntry(NewItem);
+                      PriorItem^.NextTotal := NewItem;
+                      NewItem^.PrevTotal := PriorItem;
+                      NewItem^.NextTotal := NextItem;
+                      NextItem^.PrevTotal := NewItem;
+                      ItemInit;
+                      exit;
+                  end;
+          until false;
+      end;
+
+BEGIN //*Procedure AddKeyorMod
+
+      // standard initialization - find what symbol table to use
         Ident := UpperCase(N);
         CW := Copy(Ident,1,1);
         For Which := 1 to IdentMax do
@@ -794,27 +498,40 @@ BEGIN
 
         // tight now we have one of three things:
         // 1. A new blank record, which we created now, initialize it
-        // 2. A previously called "closer" kryword which
+        // 2. A previously declared "closer" kryword which
         //    is now appearing to pick up its initialization
         // 3. A duplicate keyword because different dialects of Pascal
         //    have additional keywords and modifiers. Since modifiers
-        //    can be the same as identifiers, make sure if one has the
-        //    same name as a modifier, make the modifier later in the
-        //    in the stack so the identifier is found first
+        //    can be the same as refular identifiers, make sure if one
+        //    has the same name as a modifier, make the modifier later
+        //    in the  stack so the identifier is found first.
 
-        if  NewItem^.name <> '' then  // don't reinitialize
-        With NewItem^ do
-        begin
-            Name  := N;
-            DT    := NoType;
-            Kind  := [ refonly ,CompilerDefined ];
+       if  NewItem^.name <> '' then  // don't initialize just yet
 
-            StateChange := SC;
-                  Count := 0;
-        END;
+        // The returned item is already initialized; we might not
+        // nrrd to do anything
 
-        // If this keyword requires a "closer" find it. If it has not yet
-        // been defined, create it. When it shows up, we'll fully initialize it
+        // Here we have a hit on the same identifier which may be a
+        // duplicate because of multiple add requesrs (different
+        // Pascal language dialects each adding their keywords, or
+        // it's a keyword or modifier with the same name as another
+        // identifier (WRITE comes to mind as both a standard
+        // procedure and a modifier)). So, if this is he same type,
+        // (keyword) it's a duplicate and we can ignore it/ If not,
+        // move this new one to after any others. stopping and discarding
+        // if we/find a keyword along the way.
+
+           if NewItem^.What = ID then  // Keyword already installed
+              Exit
+           else
+            // it's not a keyword, place this one after any others
+           Addlast
+       else
+           ItemInit;      // initialize
+
+        // If this keyword requires a "closer" find it. If it has
+        // not yet been defined, create it. When it shows up, we'll
+        // fully initialize it
         if BlockClose <> '' then
         begin // Oksy, go look for it
             Ident := UpperCase(BlockClose);
@@ -830,19 +547,61 @@ BEGIN
             // we want the previous one.
 
             // if it's already there, take it
-            CloseItem := InsertInSymbolTable(Which,Ident,TRUE);
-            NewItem^.Closedby := CloseItem;    // this will never be nil
 
-            if CloseItem^.Name ='' then  // it doesn't exist,
-                                         // this is a new entry
-            with CloseItem^ do
-            begin
-                 Kind  := [ temporary ]; // use as debugging tool
-                 What  :=  isKeywordType;
-                 Inc(Count);
-            end;
+            CloseItem := InsertInSymbolTable(Which,Ident,TRUE);
+
+            If CloseItem^.What <> unusedType then
+            begin // that's not blank, find or create it
+                if closeitem^.What <> ID then
+                begin
+                    tempItem := newitem;
+                    NewItem  := CloseItem;
+                    AddLast(false);
+                    TempItem^.Closedby := Newitem;
+                    exit;
+                end
+                else
+                   NewItem^.Closedby := CloseItem;    // this will never be nil
+            end
+            else    // this is a new closing entry
+                with CloseItem^ do
+                begin
+                     DT       := NoType;
+                     Kind     := [ refonly ,CompilerDefined, temporary ]; // use as debugging tool
+                     What     :=  ID;
+                     Closedby :=  NIL;
+                     Inc(Count);
+                end;
         end;
-END;
+
+end; //*Procedure AddKeyorMod
+
+Procedure AddKeyword(const N:AnsiString;                 // name
+                           BlockClose: AnsiString = '';  // presumed to require
+                                                         // no corresponding
+                                                         // keyword for a
+                                                         // block closure
+                           Key:KeywordType=noactdec;     // what kind
+                                                         // of keyword
+                           SC:StateCond =NoState);
+
+begin
+    AddKeyorMod(N, BlockClose,Key,SC)
+end;
+
+
+Procedure AddModifier(const N:AnsiString;                // name
+                            BlockClose: AnsiString = ''; // presumed to require
+                                                         // no corresponding
+                                                         // keyword for a
+                                                         // block closure
+                           Key:KeywordType=noactdec;     // what kind
+                                                         // of keyword
+                           SC:StateCond =NoState);
+
+begin
+    AddKeyorMod(N, BlockClose,Key,SC, ModifierType);
+end;
 
 
 Procedure AddStdVar(N:Ansistring; NewDT:DataType);
@@ -1076,6 +835,9 @@ Var
     I: Integer;
 
 begin
+
+    writeln;    writeln;Writeln('** Start **'); writeln;
+
     New(StateTable);
     With StateTable^ Do
     Begin
@@ -1090,15 +852,20 @@ begin
     For I := 1 to IdentMax do
        SymbolTable[I] := Nil;
 
-{For thr initialization, we load only the
- identifiers of standard Pascal. Extended,
- Turbo, Borand, UCSD, XDPascal, Object, Delphi, or
- Free Pascal extensions will be installed
- later. This is another resson to have
- keywords as symbol table entries: I can
- add or remove them as needed, but standard
- Pascal items can't be removed. (Can't
- examine a program if Begin is dropped!)
+    TopExtension := 2;
+    Extensions[1] :='pas';
+    Extensions[2] :='pp';
+
+    TopFolder := 1;
+    FolderTable[1] := UnicodeString(GetCurrentDir);
+
+
+{For thr initialization, we load only the identifiers of standard Pascal.
+ Extended, Turbo, Borand, UCSD, XDPascal, Object, Delphi, or Free Pascal
+ extensions will be installed later as needed. This is another resson to
+ have keywords as symbol table entries: I can add or remove them as
+ needed, but standard Pascal items can't be removed. (Can't  examine a
+ program if 'Begin' is dropped!)
 }
 
                  // name,         nickname,     type      Visible
@@ -1126,9 +893,9 @@ begin
     AddBaseClass('template',         'tmpl', TemplateType);   // class
     AddBaseClass('real',              'real',    realtype);   // 32-bit real
     AddBaseClass('single',            'sng',   singleType);   // single
-    AddBaseClass('double',            'Dbl',   DoubleType);   // double
+    AddBaseClass('double',            'dbl',   DoubleType);   // double
                                                               // precision real
-    AddBaseClass('extended',          'Ext',  ExtendedType);  // 80-bit real
+    AddBaseClass('extended',          'ext',  ExtendedType);  // 80-bit real
     AddBaseClass('file',             'file',      FileType);  // file
 
 // Std functions and procedures
@@ -1165,11 +932,6 @@ begin
 
     AddKeyWord('and');
     AddKeyWord('do','', nxstmtDec  );
-    // END (and any closure) does not have to
-    // say anything; the gentleman calling err
-    // I mean keyword calling will
-    // announce when it needs her
-    AddKeyWord('end','', closureDec );
     AddKeyWord('if','', NoActDec, NoState );  // default
     AddKeyWord('in' );
     AddKeyWord('not');
@@ -1197,6 +959,11 @@ begin
     AddKeyWord('const','',ElemDec, inConst );
     AddKeyWord('label' );
     AddKeyWord('repeat','until' ,BlockDec,  inRepeat );
+    // END (and any closure) does not have to
+    // say anything; the gentleman calling err
+    // I mean keyword calling will
+    // announce when it needs her
+    AddKeyWord('end','', closureDec );
     AddKeyWord('record', 'end' , structdec, inRecord );
     AddKeyWord('downto' );
     AddKeyWord('packed' );
@@ -1250,63 +1017,6 @@ begin
 
         AddStdFunc('pow',Realtype);
     end;
-
-
-
- {   AddKeyword(AnsiString;  // name
-               AnsiString   // presumed to require no block closure
-               KeywordType  // what kind of keyword
-               NoState      // any changes
-
-
-               StateCond = (NoState,         // Not in a state
-                            inProgram,       // program
-                            inUnit,          // unit found
-                            inInterface,     // Which part (carries to succeeding statements)
-                            inImplementation,
-                            inConst,         // CONST, TYPE, VAR declaration
-                            inType,
-                            inVar,
-                            inforward,       // FORWARD
-                            inExternal,      // EXTERNAL
-                            inProcedure,     // Proc, Func, etc. (carries forward
-                            inFunction,      //                   until closed)
-                            inConstructor,
-                            inDestructor,
-                            inProperty,
-                            inRecord,        // block types
-                            inObject,
-                            inClass,
-                            inGeneric,       // defining a generic (template)
-                            inOneStmt,       // this affects the next statement
-                            inWith,          // a with statement
-                            inBegin,         // begin-end block
-                            inRepeat,        // repeat-until block
-                            inTry,           // try-finally block
-                            inIgnore,        // block where we should ignore code (ASM-END)
-                            inCase,          // case-end but
-                            condIf,          // in an $IF directive
-                            condElse         // in the $ELSE part
-                            );
-
-                   KeywordType = (NoActDec,     //< words having no action
-                                  ElemDec,      //< const, type, or var
-                                  ClearElem,    //< clears ElemDec flag
-                                  unitprogDec,  //< unit or program
-                                  InterDec,     //< interface
-                                  impDec,       //< implementation
-                                  pfdec,        //< procedure or funcrion
-                                  BlockDec,     //< any block
-                                  CaseDec,      //< Case stmt
-                                  structdec,    //< Record, Object or class
-                                  nxstmtDec,    //< has next statement effect
-                                  closureDec,   //<  closes some block
-                                  usesDec,      //< uses clause
-                                  genMod,       //< general modifier
-                                  prepfmod,     //< used before procedural
-                                  postpfmod,    //< used after procedural
-                           );
-}
 
     if lang_turbo then // turbo pascal
     begin
