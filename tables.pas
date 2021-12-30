@@ -10,6 +10,7 @@ unit Tables;
 
 {$mode ObjFPC}{$H+}
 interface
+Uses Windows;
 Const
     Months: array[1..12] of string[9]=
         ('January','February','March',   'April',   'May','     June',
@@ -54,8 +55,17 @@ const
                 'Y', 'Z', '_', (* and 4 spares *) '_','_','_','_');
 
      NameMax = 10;  // max number of folders or extensions
+     {$IFDEF windows}
      SlashChar = '\'; // Your system's directory separator,
                       // \ on windows; / on unix, linux, etc
+     QuoteChar = '"'; // what commands or file names containing
+                      // spaces are quotrd with
+     {$ELSE}
+     SlashChar = '/'; // Your system's directory separator,
+                      // \ on windows; / on unix, linux, etc
+     QuoteChar = ''''; // what commands or file names containing
+                      // spaces are quotrd with
+     {$ENDIF}
 
      // Size of largest variant in Item in 32/64-bit words
      {$IFDEF Bits32}
@@ -559,9 +569,6 @@ VAR
      // what we are doing - this is also a oush-down list
      StateTable: StateP;
 
-     // this program's file name
-     PasPath,PasFolder,PasName,PasExt: UnicodeString;
-
      // Bookkeeping
      IdentifierCount: Integer = 0;
 
@@ -611,6 +618,19 @@ VAR
 
 
        Buffer: InPtr;
+
+       TaskStart,               //> Start Time of a particular task
+       RaskEnd,                 //< Used to determine how long it took
+       StartTime,               //< time program started
+       EndTime: SystemTime;     //< for elapsed time
+
+               // file descriptor for this program
+
+
+        PasPath,                        // filename being processed
+        PasFolder,
+        PasName,
+        PasExt: UnicodeString;
 
 
 implementation

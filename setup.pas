@@ -16,20 +16,6 @@ interface
 
 Uses Scan, sysutils, Tables;
 
-Const
-       VERSION_MAJOR             = 0;
-       VERSION_RELEASE           = 0;
-       VERSION_PATCH             = 0;
-       VERSION_FULL              = VERSION_MAJOR*1000+
-                                   VERSION_RELEASE *10+
-                                   VERSION_PATCH;
-
-// note, the folowing MUST be a string of digits in quotes
-// as PROGRAM UPD does an auto-upddate on every compile
-
-       VERSION_REV               = '1';
-
-
 
    // General initialization
     Procedure Init;
@@ -50,40 +36,9 @@ Const
                                Key:KeywordType=noactdec;      // what kind of keyword
                                SC:StateCond =NoState);       // any changes
 
-    // general Utility funcyions
-    Function Plural(N:Int64; Plu:AnsiString; Sng: AnsiString): Ansistring;
-    Function Version:String ;
-    Function CopyRight:String ;
-
 
 
 implementation
-
-
-
-  Function Plural(N:Int64; Plu:AnsiString; Sng: AnsiString): Ansistring;
-  Begin
-      Result := IntToStr(N);
-      Result := ' '+Result+' ';
-      If n<>1 Then
-          Result:= Result+ Plu
-       Else
-          Result := Result + Sng;
-  End;
-
-Function CopyRight:String;
-begin
-    Result := 'Copytight 2021 Paul Robinson';
-end;
-
-Function Version:String;
-begin
-     Result := 'Version '+IntToStr( VERSION_MAJOR )+'.' +
-               IntToStr( VERSION_RELEASE )+'.' +
-               IntToStr( VERSION_PATCH)+' Rev. ' +
-                         VERSION_REV ;
-
-end;
 
 
 // This routine accepts the pointer passed to it

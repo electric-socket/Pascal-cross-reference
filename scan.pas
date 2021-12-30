@@ -30,18 +30,6 @@ var
         GlobalHTML,            // HTML listing of project
         GlobalPDF: Boolean;    // PDF of complete project
 
-        StartTime,                      // time when program began
-        EndTime:String;
-        // file descriptor for this program
-
-        ProgramPath,                    // FQFN of name up to folder
-        ProgramFolder,                  // folser it's in, null if root
-        ProgramName,                    // name excluding extension
-        ProgramExt,                     // This program's extension if any
-        PasPath,                        // filename being processed
-        PasFolder,
-        PasName,
-        PasExt: UnicodeString;
 
 
    procedure SplitPath(const Path: UnicodeString; var Folder, Name, Ext: UnicodeString);
