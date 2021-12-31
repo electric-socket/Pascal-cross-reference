@@ -18,10 +18,10 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
-      <RevisionNr Value="2"/>
+      <RevisionNr Value="6"/>
       <BuildNr Value="9"/>
       <Attributes pvaPreRelease="True"/>
-      <StringTable FileDescription="Cross Reference of Pascal Programs" InternalName="CrossRef" LegalCopyright="Copyright 2021 Paul Robinson" ProductVersion="0.0.1 Trv 16"/>
+      <StringTable Comments="Licensed under ver. 2 of the GPL" FileDescription="Cross Reference of Pascal Programs" InternalName="CrossRef" LegalCopyright="Copyright 2021 Paul Robinson" ProductVersion="0.0.1 Trv 16"/>
     </VersionInfo>
     <BuildModes Count="1">
       <Item1 Name="Default" Default="True"/>
@@ -33,7 +33,7 @@
     <RunParams>
       <FormatVersion Value="2"/>
     </RunParams>
-    <Units Count="6">
+    <Units Count="9">
       <Unit0>
         <Filename Value="Crossref.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -60,6 +60,21 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="Tables"/>
       </Unit5>
+      <Unit6>
+        <Filename Value="command.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="Command"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="notice.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="Notice"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="..\unit_evaluator.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="unit_Evaluator"/>
+      </Unit8>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

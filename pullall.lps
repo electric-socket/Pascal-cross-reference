@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="12"/>
+    <BuildModes Active="Default"/>
+    <Units>
+      <Unit>
+        <Filename Value="pullall.pas"/>
+        <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="257"/>
+        <CursorPos X="43" Y="299"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="object_Pascal_Grammar .txt"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="3"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="None"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Noisy\noisyadd.lps"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="XML"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Noisy\noisyadd.pas"/>
+        <UnitName Value="NoisyAdd"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="517"/>
+        <CursorPos X="19" Y="561"/>
+        <UsageCount Value="10"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\objpas\sysutils\filutilh.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="190"/>
+        <CursorPos X="20" Y="227"/>
+        <UsageCount Value="10"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Noisy\NoisyPrefixCode.inc"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos Y="2"/>
+        <UsageCount Value="10"/>
+      </Unit>
+      <Unit>
+        <Filename Value="CrossrefPrefixCode.inc"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="27" Y="9"/>
+        <UsageCount Value="10"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\fpcbuild-3.2.2\pullcond.lst"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="280"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="None"/>
+      </Unit>
+    </Units>
+    <JumpHistory HistoryIndex="-1"/>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes ActiveMode=""/>
+    </RunParams>
+  </ProjectSession>
+</CONFIG>

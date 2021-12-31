@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="12"/>
+    <BuildModes Active="Default"/>
+    <Units>
+      <Unit>
+        <Filename Value="imreg.pas"/>
+        <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="330"/>
+        <CursorPos X="16" Y="354"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Noisy\noisyadd.lps"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="XML"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Noisy\noisyadd.pas"/>
+        <UnitName Value="NoisyAdd"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="517"/>
+        <CursorPos X="19" Y="561"/>
+        <UsageCount Value="10"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\objpas\sysutils\filutilh.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="190"/>
+        <CursorPos X="20" Y="227"/>
+        <UsageCount Value="10"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Noisy\NoisyPrefixCode.inc"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos Y="2"/>
+        <UsageCount Value="10"/>
+      </Unit>
+      <Unit>
+        <Filename Value="CrossrefPrefixCode.inc"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="27" Y="9"/>
+        <UsageCount Value="10"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\fpcbuild-3.2.2\pullcond.lst"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="205"/>
+        <CursorPos X="29" Y="218"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="None"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\fpcbuild-3.2.2\fpcsrc\compiler\ncgcal.pas"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="7" Y="29"/>
+        <UsageCount Value="10"/>
+      </Unit>
+      <Unit>
+        <Filename Value="conditional_compilation_rules.txt"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="14"/>
+        <CursorPos X="24" Y="58"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="None"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\fpcbuild-3.2.2\imreg.lst"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="51"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="None"/>
+      </Unit>
+    </Units>
+    <JumpHistory HistoryIndex="2">
+      <Position>
+        <Filename Value="imreg.pas"/>
+        <Caret Line="350" Column="28" TopLine="185"/>
+      </Position>
+      <Position>
+        <Filename Value="imreg.pas"/>
+        <Caret Line="354" Column="16" TopLine="329"/>
+      </Position>
+      <Position>
+        <Filename Value="imreg.pas"/>
+        <Caret Line="298" Column="33" TopLine="267"/>
+      </Position>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes ActiveMode=""/>
+    </RunParams>
+  </ProjectSession>
+</CONFIG>

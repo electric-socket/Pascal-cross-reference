@@ -4,10 +4,9 @@ program pullcond;
 
 
   // Simple, quick program to scan pascal programs for
-  // compiler declarations and conditional statrments
-  // any line containing either {$ or (*$ is captured
+  // conditional statrments - any line containing "{{$IF " or "(*$IF " is captured
   //
-  // Paul Robinson 2021-12-30
+  // Paul Robinson 2021-12-31
 
   {$mode ObjFPC}{$H+}
   uses
@@ -176,6 +175,7 @@ program pullcond;
        LineCount: Integer;
        FullName,     //< Full name of input file
 
+       L,            //< Upper Case of line
        Line,         //< A line read from the input file
        TheFilePath,  //< File name split into path
        TheNameOnly,  //< File Name w/o extenion
@@ -238,8 +238,9 @@ program pullcond;
                        begin
                            Readln(Infile, Line);
                            inc(LineCount);
-                           if (Pos('{$',Line)>0) or
-                              (Pos('(*$',Line)>0) then
+                           L := UpperCase(Line);
+                           if (Pos('{$IF ',L )>0) or
+                              (Pos('(*$IF ',L )>0) then
                            begin
                                If not wasfound then
                                begin
@@ -269,8 +270,9 @@ program pullcond;
   begin
 
      Writeln('Pullcond - Examine Pascal source files for compiler conditionals');
-     writeln('Preparing to read all .pas. .pp, and .inc files in this ');
-     Writeln('directory and all subdirectories for a $ comment.');
+     writeln('Preparing to read all .pas. .pp, and .inc files in this ',
+             'directory and all subdirectories');
+     Writeln('for a "$if " comment, e.g.  containing "{$IF " ot "(*$IF ".');
      Writeln('Output sent to Pullcond.lst');
      writeln('Started: ',TimeStamp,', please wait...');
      Assign(Outfile,'pullcond.lst');

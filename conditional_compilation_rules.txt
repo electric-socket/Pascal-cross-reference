@@ -1,0 +1,59 @@
+In addition to the regular Turbo Pascal constructs for conditional compilation, the Free Pascal compiler also supports a stronger conditional compile mechanism: The {$IF} construct, which can be used to evaluate compile-time expressions.
+
+The prototype of this construct is as follows:
+{$if expr}
+  CompileTheseLines;
+{$else}
+  BetterCompileTheseLines;
+{$endif}
+
+The content of an expression is restricted to what can be evaluated at compile-time:
+
+    Constants (strings, numbers)
+    Macros
+    Compile time variables (mode MacPas only)
+    Pascal constant expressions (mode Delphi only)
+
+The symbols are replaced with their value. For macros recursive substitution might occur.
+
+The following boolean operators are available:
+=,  <>,  >,  <,  >=,  <=, AND,  NOT,  OR,  IN
+
+The IN operator tests for presence of a compile-time variable in a set.
+
+The following functions are also available:
+
+TRUE
+    Defined in MacPas mode only, it evaluates to True. In other modes, 1 can be used.
+FALSE
+    Defined in MacPas mode only, it evaluates to False. In other modes, 0 can be used.
+DEFINED(sym)
+    will evaluate to TRUE if a compile time symbol is defined. In MacPas mode, the parentheses are optional, i.e.
+    {$IF DEFINED(MySym)}
+
+    is equivalent to
+    {$IF DEFINED MySym}
+
+UNDEFINED sym
+    will evaluate to TRUE if a compile time symbol is not defined, and FALSE otherwise (mode MacPas only).
+OPTION(opt)
+    evaluates to TRUE if a compiler option is set (mode MacPas only). It is equivalent to the {$IFOPT } directive.
+SIZEOF(passym)
+    Evaluates to the size of a pascal type, variable or constant.
+DECLARED(passym)
+    Evaluates to TRUE if the pascal symbol is declared at this point in the sources, or FALSE if it is not yet defined.
+
+In expressions, the following rules are used for evaluation:
+
+    If all parts of the expression can be evaluated as booleans (with 1 and 0 representing TRUE and FALSE), the expression is evaluated using booleans.
+    If all parts of the expression can be evaluated as numbers, then the expression is evaluated using numbers.
+    In all other cases, the expression is evaluated using strings.
+
+If the complete expression evaluates to ’0’, then it is considered False and rejected. Otherwise it is considered True and accepted. This may have unexpected consequences:
+{$if 0}
+
+will evaluate to False and be rejected, while
+{$if 00}
+
+will evaluate to True.
+

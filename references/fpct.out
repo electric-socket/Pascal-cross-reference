@@ -1,227 +1,0 @@
-                       PROGRAM ross(input, output) ;
-                          (* $+       ***********
-                            is a cross-referencing program for  source files,
-                           useful also to reformat programs (indentation, upper-lower case)
-                           and to find omitted or excessive 	 and .
-     
-                           comments, gripes and bugs to .
-     
-                           subtopics:
-                           	  
-                              	
-                           	
-                           	  
-                           <	  >
-                           	:
-                           -----
-                           through the file , a  source program file.
-     
-                           :
-                           ------
-                           through :
-                           a copy of your input file, unnumbered, prettyprinted
-                           (proper indentation according to the statement nesting,
-                           newline on standard places in the program, management of upper
-                           and lower case according to the list of reserved words, etc.)
-     
-                           and trough  	:
-                           (a) a prettyprinted version of the program, showing in the left
-                           margin the relations between 	.. pairs,..
-                           pairs, etc.
-                           (b) a cross reference of all the identifiers
-                           (c) a report of procedure and function declaration nesting.
-     
-                           y default,  will change all reserved words and strings to upper
-                           case, comments and everything else to lower case. here are switches
-                           available to change this condition.
-                           <   	>
-                           ou can:
-                           (a) use the / switch when @ing your program
-                           or calling @, or
-                           (b) call it directly by typing @.
-     
-                           	n the first case,  will be called immediately after compilation;
-                           ou will have to type the file names, though. e are working to fix
-                           that detail soon. wo sample calls are:
-     
-                           @pcross                              @exec myprog/cref
-                           = myprog.pas/nocross             (*	  *)
-                           = myprog.pas                   = myprog.pas
-                           	=                              =
-                           	=
-     
-                           he left one calls it directly. he effect is the prettyprinting of the
-                           program file itself. he right one is a call through the compiler, which
-                           will use the default options.
-     
-                           he program parameters all have dafault values, but they can be modified
-                           if desired, by the use of switches. ee the subtopic 	.
-                           ee the subtopic 	.
-                           <	>
-                           rackets indicate optional.
-                           <n> stands for an integer number.
-                           <> stands for a letter.
-     
-                           witch          eaning                                      efault.
-     
-                           	.
-                           <n> is the sum of:
-                           1   source program listing
-                           2   listing of identifiers
-                           4   listing of proc-func
-                           declaration nesting.
-                           8   listing of proc-func call nesting.
-     
-                             	 
-                           margin every fifth line                        on
-     
-                            
-                           begin..end block is indented n spaces further.
-                           if it is there, the block will not be indented,
-                           but the begin and end statements will be
-                           exdented n spaces.                           0
-                           after begin, end, then, else, repeat, etc.)   off
-                           comment from old standards to
-                           '('-'*' and '*'-')'                           on
-     
-                              
-                           note: the possible values for <l> are:
-                           u means upper case
-                           l means lower case.
-     
-                           <	  >
-     
-                           he cross-reference file 	 contains 4 parts:
-     
-                           1.   		:
-                           the letters and numbers in the left margin indicate the presence
-                           of reserved words which have to match. (	-, etc.) he two
-                           words that match accorde with the scope rules will have the
-                           same number. he first one (e. g., 	) will appear at left, and
-                           the second one (e.g., ) at right, inside the margin. he meaning
-                           of the letters is:
-                             egin         end
-                           	  	f             hen          lse
-                             oop           xit          nd
-                             ase           nd
-                             epeat         ntil
-     
-                           2.    		  			:
-                           	t is ordered alphabetically. or each identifier it contains:
-                           a.  '' or '' if it is a procedure or function, respectively.
-                           b. he name of the identifier, up to 10 symbols.
-                           c. he line numbers in which it occur. hose lines in which
-                           it is declared are marked with a ; those in which it
-                           occurs more than once are marked with an  (ultiple).
-     
-                           3.  	  -	 	:
-                           	t describes the static links. he scope is shown by indentation.
-                           ach line describes a procedure or function and contains:
-                           a. he name.
-                           b. an (), () or () if it is the main program, a procedure
-                           or a function, respectively.
-                           c. 	f there are more than one procedure-function with the same
-                           name (in different scopes, which is perfectly valid, but
-                           a horrible thing to do), a   (for ) appears next,
-                           and the rest of the information in this and the next part
-                           of the listing contains data on both (or all of them, if
-                           there are more than one.).
-                           d. 	f it is an external procedure, an  will appear next.
-                           e. he line number where the header appeared.
-                           f. he line number of the 	 statement.
-                           g. he line number of the  statement.
-     
-                           4.  	  -	 :
-                           	t describes the dynamic links. alling depth is indicated by
-                           indenting. he format of each line is the same as in the previous
-                           report, except for the following:
-                           a. ines are numbered.
-                           b.  procedure can be called from more than one place. o avoid
-                           repeating the list of proc-funcs called by it,an asterisk
-                           is printed after the name to indicate that it has already
-                           been 'described'. 	nstead of the line numbers for its
-                           appearence in the program, that for its appearence in this
-                           part of the listing is given, so that you can refer to it.
-                           *************)
-     
-     
-     
-                           (******************************************************************************)
-     
-     
-     
-                           (* $-,100   *)
-                           (* 	     		 	 	
-                            	    .       	   .*)
-     
-     
-     
-     
-                           (*          	           *)
-     
-     
-     
-                           (**) (*	*)
-                           (**)     (*		*)
-                           (**)     (*	[*) (*	*)
-                           (**)     (*  	 *) (**) (**) (*	*)
-                           (**)     (*[*) (* :*) (**) (*		[*) (**)
-                           (*]*) (**)
-                           (**)        (*	 :*) (*	[*) (**)
-                           (**)            (**) (*	*) (**)
-                           (**)            (**) (*]	*)
-                           (**)        (*"	" :*) (*[*) (**) (**) (*]
-                                                                                        *)
-                           (**)        (*[*) (* 	 *) (*]*)
-                           (**)     (*]*)
-                           (**)     (*	__	[*) (**) (*	*) (*		*) (*
-                                                                                         *)
-                           (**)     (*]	__	*)
-                           (**) (*	 *)
-                           (*	*)
-     
-                           (**********************************************************************
-                            *
-                            *
-                            *        	     		
-                            *         ,  	    .
-                            *
-                            *       	:    	.
-                            *       :    	 
-                            *               - 		.
-                            *
-                            *       :   (1974).
-                            *
-                            *       		   		   .
-                            *                       +     	.
-                            *                       +       .
-                            *
-                            *       		   		   . 	. 24--78.
-                            *                       +     	 	.
-                            *                       +     .
-                            *
-                            *          	   	 	.
-                            *
-                            *       		   		   . 	. 6-
--88.
-                            *               +    '%'      '/*
-                            '  '*/'.
-                            *               +  ''  '' 	    - .
-                            *               +  ''  	  ''  	 
-                            .
-                            *               + 	 /  	 .
-                            *               + 		  -  	.
-                            *               +   	   	      
-                            .
-                            *          	   	,  :
-                            *                  + 	     	  , 	 	 .
-                            *                  + 	    	     , 	 	  
-                            *                          -	.
-                            *                  +  	    	 	 
-                            *                       '  ,   	  15.
-                            *                  +  	   	 . ( 		 	/).
-                            *
-                            *
-                            ***********************************************************************)
-     
-     

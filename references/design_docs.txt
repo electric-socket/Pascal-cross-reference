@@ -4,17 +4,18 @@
 Listing   format
 if by line number it's 000,000
 else  page-line
-Line    N B  I Line
+  Line  N B  I Line
 0000-00 0 00   -----
 Line - Page number and line number
 Count number of lines in total program. If more than 10,000 oages, push
 page number width to 6 digits
-N - proc/func Nesting level 0-9 then A-Z then *
+N - proc/func Nesting level blank or 0-9 then A-Z then *
 B - block level (begin depth) First digit is start of line
     second digit is block level at end of line
     If begin/end on same line, both will have same number
+    Procedure /func header shows 0 then 1 at first begin
     number only shows if change is -- before procedures
-I  - Include depth, 1-9 then +
+I - Include depth, 1-Z then +
 
 If we do not list non-executed code (conditional fail) show part on same line
 either in strike-out or gray. If list but not count, show " SKIPPED " for the
@@ -25,13 +26,16 @@ in conditional-non execute, strike out until that ends, or no list if it
 starts and ends non-execute and no change. On text listing, show blanks?
 
 
-Might be virtual generation. HTML would have page cross-refernce of every
-item to its definition. Class to base class, etc. Could save each unit's
-generation in a work file until final output. Especially if they want the
-lisitng in alphabetical order. Has to be created in find order as some units
-depend on other units and so on
+Might be virtual generation (meaning we don't actully create a print out,
+but instead save the information until we need to generate it.) HTML would
+have page/line cross-reference of every item to its definition, i.e. link to the
+definition location (means adding position on page. Class either has a
+base class or it has no base. Could save each unit's generation in a work
+file (if not kept in mrmotu) until final output. Especially if they want the
+listing in alphabetical order. Has to be created in find order as some units
+depend on other units and so on.
 
-If we have TOC in advance, we would have to generate pages after TOC
+If we have TOC in advance, we would have to generate pages after TOC.
 
 Design considerations for Pascal Cross-Reference
 
@@ -39,35 +43,47 @@ Design considerations for Pascal Cross-Reference
 *    Display message and exit
 * Read command line for options
 * Switches are NOT case sensitive
+
+On Windows, commands may start with /
+Filenames or arguments eith spaces must be quoted
+
 *   @filename - equiv to -cf=filename
-*   -ac (AC)
-*   -cc/--cmd=character - single character appearing after opening
+*   -ac /  --allow-commands (see command AC)
+*   -cc=/--cmd=character - single character appearing after opening
                    of block comment to indicate a command
-                   to this program (default .)
+                   to this program (default ., may not be $ or space)
 *   -cf/--config=filename - alternate configuration file
-*   -dc/--disable-commands - program files will have no commands / ignore commands
+*   -dc/--disable-commands - program files will
+          have no . commands / ignore . commands
+*   --dd/ --disable-directives - ignore {$ and (*$
+*   -dry  --dryrun/--dry-run - test all commands but don't do anything
+*   -e / -error-redireect -- send statistics to stderr
 *   -h or --help  - show help and exit
-*   -id/--inc/--include-dir=directory - additional directory where files are located (include)
-*   -ll --listline --list-line  - list/cross-reference program by line number (overrides -lp)
-*   -lp --listpage --list-page  - list/cross-reference program by page line number (default, switch by -ll)
-*   -lua --listalpha --list-alpha - list units in alphabetical order, main program last  (overrides -lup)
+*   -id=/--inc/--include-dir=directory - additional directory where include
+             files are located (include)
+*   -la --listalpha --list-alpha - list units in alphabetical order,
+          main program last  (overrides -lup)
+*   -ll --listline --list-line  - list/cross-reference program by line
+          number (overrides -lp)
+*   -lp --listpage --list-page - list ctoss-rederences by page and line`
+          (default, flipped by -ll)
 *   -nb --noblock --no-block - don't list block depth
-*   -nn --nonest --no-nest - Don'y list procedure nesting depth
 *   -nh --nohtml --no-html - Don't produce HTML listing
 *   -nl --nolist --no-list - Don't produce text listing
+*   -nn --nonest --no-nest - Don'y list procedure nesting depth
 *   -np --nopdf --no-pdf - Don't produce pdf listing
-*   -nu --nounit --no-unit -- don't produce individual unit cross reference
 *   -ns --nostats --no-stats -- don't produce statistics page
 *   -nta --no-trace --no trace-all -- no dependency traces
 *   -ntp --no-trace-proc  -- no dependency trace for procedures and functions
 *   -ntu --no-trace-units -- no dependency trace for units
-*   -s/--source=filename - Main (source) program (or if filename is only argument)
-*   -sw or --switches  - show all switches and exit
-*   -test/--test - run sample to view how output looksl.
-*   -u/--unit/--unitpath=directory - additional unit directory - equivalent to "unitpath" command or {$UNITPATH}
-
-On Windows, commands may start with /
-Filenames may be quoted with " or '; the same one can't be in a file name
+*   -nu --nounit --no-unit -- don't produce individual unit cross reference
+*   -s=/--source=filename - Main (source) program (or if filename is only argument)
+*   -se/--settings - displzy settings before starting (included in /dry)
+*   -st/--stat -- dump statistics
+*   -sw or --switches -  show all switches and exit
+*   -test/--test - run sample to view how output looks.
+*   -u=/--unitpath= directory - additional unit directory, similar to
+      $UNITPATH
 
 Configuration file parameters  OR command switches
 long use --, short - or /
@@ -79,8 +95,9 @@ long use --, short - or /
   U(NTIL) block not raising count
   I(GNORE)  Ignore everythng between them
 * AC - allow . commands in programs (default, flipped by DC) [File]
-* ALLCR[EF] (CR)
-* ALLOW C[OMMANDS] (AC)
+* ALLCR[EF] (see CA)
+* ALL CREF (see CA)
+* ALLOW C[OMMANDS] (see AC)
 * CA - Generate combined cross-reference
   listing for all files (default)  {flipped by NC)+-
 * CN (NC)
@@ -94,39 +111,44 @@ long use --, short - or /
 * DC  - don't allow . commands (flips AC)
 * I[NCLUDE] filename - include this file (should be a unit) [File]      
 * DEF/DEFINE symbol [,|= [value]] - Define a compile-time symbol
-* DIS[ALLOW] [COMMANDS]  (DC)
-* IP / PATH name - add a search directory [File]
-* LIST P[AGE] (PN) Identifier numbering
+* DIS[ALLOW] [COMMANDS]  (see DC)
+* E  - sends statistics to stderr
+* ERROR REDIRECT (see E)
+* IP / PATH name - add name as a search directory [File]
+* LIST P[AGE] (PN) Identifier numbering by page (default)
 * LL - Number references by line number (flips PN)
-* LN (LL)
+* LN (-LL)
 * LP - Number references by page and line (default. flipped by LN)   Identifier numbering
 * LI[ST] - List program (default)
-* LIST L[INE] (LN)
-* MAXW[IDTH] (W)
-* MW (W)
+* LIST L[INE] (-LL)
+* MAXW[IDTH] (-W)
+* MW (-W)
 * NB / --no-block - (don't increase block count. flips B
 * NC -  Don't generate cross reference (flips CA)
-* NL - Don't list program (flips LI)
+* NL name - ctoss ref buy don't lisy unit name (only gives
+             trf to unit but no line or page)
+* NP - Don't list program (flips LI)
 * NO B[LOCK] (NB)
 * NO CO[MMANDS]/NOC[OMMANDS] (DC)
-* NOCREF (NC)
+* NO S[ORTUNIT] (NS)
+* NOCREF (see NC)
 * NOL[IST] (NL)
-* NOS[ORTUNIT]
-* NOUNITSORT (NS)
+* NOS[ORTUNIT] (NS)
 * NS  - Do not sort units (default, flipped by SU)
+* NU NOUNIT/ /CREF NOU[NIT]- Don't generate unit cross-reference
 * PN (LP)
 * RK / REM[OVE] keuword - list keyord usage in cross reference (still opertates)
 
 * ST - Count reserved word usage, file lines, file sizes
                        number of identifiers, consts, vars, objects, classes
-* STATS (ST)
-* STATISICS (ST)
+* STATS (-ST)
+* STATISICS (-ST)
 * SU /SORT[UNIT] - List units in aphabetical order (flips NU)
 * UN directory - add search path for units
 * UNITSO[RT]
 * UP  - unit path
 * UND[EF] symbol - Delete a symbol
-* UNI[T PATH] (UN)
+* UNI[T PATH] name (UN)
 * W[IDTH] n - Width of listing (minimum 40) default 150   0 for no limit
   oversize lines will fold at last delimiter
 
@@ -135,7 +157,6 @@ long use --, short - or /
 
 
 
-* NOUNIT/NU /CREF NOU[NIT]- Don't generate unit cross-reference
 * NOST[ATS] = dont show statistice; inverts ST
 * ADD KEY[WORD]/KEY[WORD] ident - Add a keyword not in our list
 * PRE/PREDEF/PREDEFINE ident - Presume this is defined
@@ -164,11 +185,10 @@ will automatically become keywords
                                              prior semicolon to this keyword
 * Mf/MO[DIFIER] F[OLLOWS] keyword,modifier  - Can be anywhere from this keyword
                                                 to next semicolon
-* IB/BLOCK/IG[NORE] B[LOCK] start,finish  - ignore everything betwee these
+* IB/BLOCK/IG[NORE] B[LOCK] start,finish  - ignore everything between these
                                     keywords (ASM blocks)
-* AA/A[LLOW] A[SSEMBLY] - Include assembly code (option)
-* CREF ASM
-* NOCREF ASM
+* AA/A[LLOW] A[SSEMBLY] - Include assembly code in cref (option)
+* NOCREF ASM  -- same as NA
 
 For code not compiled because of conditionals
 
@@ -177,14 +197,14 @@ For code not compiled because of conditionals
 * XC /E[XCLUDE] C[ONDITIONALS] -    Don't list skipped code (default,
   COND NOP[RINT]                                    flip by PC.IC)
 * IC / I[NCLUDE] C[ONDITIONALS] -   List AND CREF skipped code (INVERSE XC)
-Skipped code on the same line as visible code is listed in strike-out
-When Included, it is in slightly lighter print
-Skipped code should have 3 choices:
-1. Skip code without notice, next line number is wherr code starts again
-2. Skip code and count missing lines, showing a linr numbrt change (or
-   an indication that so many lines were askipped
+  Skipped code on the same line as visible code is listed in strike-out
+  When Included, it is in slightly lighter print
+  Skipped code should have 3 choices:
+   1. Skip code without notice, next line number is wherr code starts again
+   2. Skip code and count missing lines, showing a linr numbrt change (or
+      an indication that so many lines were askipped
    3  . List it anywat, showing it in different colors, or
-        dimmed/strikeouy
+        dimmed/strikeout
 
 
 
