@@ -8,9 +8,8 @@
       <Unit>
         <Filename Value="imreg.pas"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
-        <TopLine Value="330"/>
-        <CursorPos X="16" Y="354"/>
+        <TopLine Value="153"/>
+        <CursorPos X="51" Y="244"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
       </Unit>
@@ -50,8 +49,8 @@
       <Unit>
         <Filename Value="..\fpcbuild-3.2.2\pullcond.lst"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="205"/>
-        <CursorPos X="29" Y="218"/>
+        <TopLine Value="40"/>
+        <CursorPos Y="217"/>
         <UsageCount Value="10"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="None"/>
@@ -65,22 +64,23 @@
       <Unit>
         <Filename Value="conditional_compilation_rules.txt"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="2"/>
-        <TopLine Value="14"/>
-        <CursorPos X="24" Y="58"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos Y="59"/>
         <UsageCount Value="20"/>
-        <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="None"/>
       </Unit>
       <Unit>
         <Filename Value="..\fpcbuild-3.2.2\imreg.lst"/>
-        <EditorIndex Value="-1"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="2"/>
         <TopLine Value="51"/>
+        <CursorPos X="22" Y="50"/>
         <UsageCount Value="10"/>
+        <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="None"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="2">
+    <JumpHistory HistoryIndex="5">
       <Position>
         <Filename Value="imreg.pas"/>
         <Caret Line="350" Column="28" TopLine="185"/>
@@ -92,6 +92,17 @@
       <Position>
         <Filename Value="imreg.pas"/>
         <Caret Line="298" Column="33" TopLine="267"/>
+      </Position>
+      <Position>
+        <Filename Value="..\fpcbuild-3.2.2\pullcond.lst"/>
+        <Caret Line="218" Column="29" TopLine="49"/>
+      </Position>
+      <Position>
+        <Filename Value="..\fpcbuild-3.2.2\pullcond.lst"/>
+        <Caret Line="241" Column="29" TopLine="186"/>
+      </Position>
+      <Position>
+        <Filename Value="..\fpcbuild-3.2.2\pullcond.lst"/>
       </Position>
     </JumpHistory>
     <RunParams>

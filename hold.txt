@@ -1,0 +1,169 @@
+This is a copy of the archives in the collection "Lazarus Code and Component Repository"
+posted to SourceForge, except for three points:
+1. All of the endless directory structure has been peeled away, leaving only the atchived files. The
+execption being collections and demos have been kept together, are marked with * and the files are listed after it
+2. Only the latest versions of these archives were used.
+3. The version of Free Pascal and Lazarus included was over 13 years old; you can download
+a more recent version of both from https://www.lazarus-ide.org/
+
+For those who want to acquire the entire repository, you no longer have to follow link after link,
+file after file to do so, I've saved you the trouble.
+
+Here are the files:
+
+<table><thead><tr>
+   <th>Description</th><th>Date</th><th>File Name</th></tr></thead>
+<tbody>
+<tr><td>jvcllaz</td>        <td>2021-12-02</td><td>jvcllaz-1.0.7.zip</td></tr>
+<tr><td>Captcha</td>        <td>2021-10-01</td><td>captcha-v0.1.0.zip</td></tr>
+<tr><td>zmsql</td>          <td>2021-09-13</td><td>TZMSQL-0.1.22.zip
+<tr><td>SpkToolbar</td>     <td>2021-06-12</td><td>spktoolbar-0.1.4.zip
+<tr><td>Jujiboutils</td>    <td>2021-05-09</td><td>jujiboutils-2.4.zip
+<tr><td>chemtext</td>       <td>2021-01-03</td><td>chemtext-0.1.4.zip
+<tr><td>LazRGBGraphics</td> <td>2020-12-21</td><td>rgbgraphics-v1.0.zip
+<tr><td>LazMapViewer</td>   <td>2020-12-02</td><td>lazmapviewer-v0.2.2.1.zip
+<tr><td>PowerPDF</td>       <td>2020-08-14</td><td>powerpdf_0.9.16_20200814.tar.gz
+<tr><td>Paradox DataSet</td><td>2020-07-19</td><td>tparadoxdataset-v0.2.1.zip
+<tr><td>FPSpreadsheet</td>  <td>2020-06-02</td><td>fpspreadsheet-1.12.zip
+<tr><td>industrialstuff</td><td>2020-01-21</td><td>industrialstuff-0.4.0.zip
+<tr><td>HistoryFiles</td>   <td>2019-12-19</td><td>HistoryFiles.zip
+<tr><td>PospoLite</td>      <td>2019-08-10</td><td>PospoLite-1.0.0.zip
+<tr><td>LazBarcodes</td>    <td>2019-02-19</td><td>lazbarcodes-1.0.4.zip
+<tr><td>tvplanit</td>       <td>2019-01-15</td><td>tvplanit-1.4.0.zip
+<tr><td>mbcolorlib</td>     <td>2018-03-27</td><td>mbColorLib-2.2.1.zip
+<tr><td>PascalTZ</td>       <td>2018-02-21</td><td>PascalTZ-2.1.1.zip
+<tr><td>Flag Component</td> <td>2018-02-19</td><td>flagcomponent-0.1.1.zip
+<tr><td>systools</td>       <td>2018-01-30</td><td>systools-404.zip
+<tr><td>orpheus</td>        <td>2018-01-09</td><td>orpheus-0.3.zip
+<tr><td>ColorPalette</td>   <td>2017-03-02</td><td>LazColorPalette-0.2.4.zip
+<tr><td>atcomponents  *</td><td>2016-10-29</td><td>
+<tr><td colspan="2"></td>                      <td>atcomponents\ATScrollBar-20160410.zip
+<tr><td colspan="2"></td>                      <td>atcomponents\ATScrollBar-20160410.zip
+<tr><td colspan="2"></td>                      <td>atcomponents\ATStatus-20160715.zip
+<tr><td colspan="2"></td>                      <td>atcomponents\ATTabs-20160906.zip
+<tr><td colspan="2"></td>                      <td>atcomponents\ATTabs-wiki-20140314.zip
+<tr><td colspan="2"></td>                      <td>atcomponents\EControl-20150930.zip
+<tr><td colspan="2"></td>                      <td>atcomponents\Python-for-Lazarus-20160717.zip
+<tr><td colspan="2"></td>                      <td>atcomponents\ATBinHex-20160210.zip
+<tr><td colspan="2"></td>                      <td>atcomponents\ATBinHex-20160210.zip
+<tr><td colspan="2"></td>                      <td>atcomponents\ATButtons-20161028.zip
+<tr><td colspan="2"></td>                      <td>atcomponents\ATFileNotif-20150914.zip
+<tr><td colspan="2"></td>                      <td>atcomponents\ATGauge-20160716.zip
+<tr><td>CmdLine</td>        <td>2014-12-11</td><td>cmdline-0.5.4.zip
+<tr><td>CsvDocument</td>    <td>2014-10-25</td><td>csvdocument-0.5.zip
+<tr><td>documents</td>      <td>2014-01-26</td><td>documents-es\SQLite para principiantes - v1.0.docx
+<tr><td>Bluetooth</td>      <td>2013-04-20</td><td>bluetoothlaz-0.2.zip
+<tr><td>VirtualTreeView (New Pvort)</td><td>2012-10-19</td><td>virtualtreeview-4.8.7_LCL-R2-demos.zip
+<tr></td>                                      <td>virtualtreeview-4.8.7_LCL-R2.zip
+<tr><td>ZlibAr</td>         <td>2012-02-24</td><td>zlibar-0.2.3.tar.gz
+<tr><td>lNet</td>           <td>2011-03-13</td><td>Lnet-0.6.5.zip
+<tr><td>SMNetGradient</td>  <td>2011-01-17</td><td>SMNetGradient2.0.6.zip
+<tr><td>Time and Date</td>  <td>2010-05-15</td><td>ZVDateTimeCtrls-1.4.zip
+<tr><td>BeepFp</td>         <td>2010-04-18</td><td>beepfp-1.1.zip
+<tr><td>DCPcrypt</td>       <td>2010-03-26</td><td>dcpcrypt-2.0.4.1.zip
+<tr><td>DateControls</td>   <td>2010-02-06</td><td>datecontrols-0.9.zip
+<tr><td>Fshcomp</td>        <td>2009-12-18</td><td>fshcomp-2.3.1.1.zip
+<tr><td>bzip2lib</td>       <td>2009-11-26</td><td>bzip2lib-1.tar.gz
+<tr><td>FileMenuHandler</td><td>2009-11-07</td><td>FileMenuHandler.tar.gz
+<tr><td>Demos and examples  *</td><td>2009-09-13</td><td>
+<tr><td colspan="2"></td>                      <td>Demos_and_examples\Contacts-1.0-linux.tar.gz
+<tr><td colspan="2"></td>                      <td>Demos_and_examples\Contacts-1.0-src.tar.gz
+<tr><td colspan="2"></td>                      <td>Demos_and_examples\Contacts-1.0-windows.zip
+<tr><td colspan="2"></td>                      <td>Demos_and_examples\InterBaseDemo-20050328.zip
+<tr><td colspan="2"></td>                      <td>Demos_and_examples\kaldemonia-20060917.tar.bz2
+<tr><td colspan="2"></td>                      <td>Demos_and_examples\kaldemonia2-20061009.zip
+<tr><td colspan="2"></td>                      <td>Demos_and_examples\kaldemonia3_src.tar.gz
+<tr><td colspan="2"></td>                      <td>Demos_and_examples\mainframe-tools-20051612.zip
+<tr><td colspan="2"></td>                      <td>Demos_and_examples\mainframe-tools-src-20051612.zip
+<tr><td colspan="2"></td>                      <td>Demos_and_examples\ManagerWorkerThreadExample-20081221.zip
+<tr><td colspan="2"></td>                      <td>Demos_and_examples\mysql_demo_20050408.tar.gz
+<tr><td colspan="2"></td>                      <td>Demos_and_examples\robot1.7-i386-linux.zip
+<tr><td colspan="2"></td>                      <td>Demos_and_examples\robot1.7-source.zip
+<tr><td colspan="2"></td>                      <td>Demos_and_examples\robot1.7-win32.zip
+<tr><td colspan="2"></td>                      <td>Demos_and_examples\sqlite3-master_detail_example-20090909.tar.gz
+<tr><td colspan="2"></td>                      <td>Demos_and_examples\sudoku_lazarus.zip
+<tr><td colspan="2"></td>                      <td>Demos_and_examples\sysrec-1.0.0.2-src.zip
+<tr><td colspan="2"></td>                      <td>Demos_and_examples\trymysql20050404.tar.gz
+<tr><td>JCSV</td>           <td>2009-09-13</td><td>jCSV-1.0.zip
+<tr><td colspan="2"></td>                      <td>jCSV-1.0-example.zip
+<tr><td>DateLabel</td>      <td>2009-06-23</td><td>datelabel-1.0.zip
+<tr><td>RichMemo</td>       <td>2009-06-21</td><td>richmemo-1.0.zip
+<tr><td>SymScan</td>        <td>2009-05-23</td><td>symscan.zip
+<tr><td>Rack Controls</td>  <td>2009-04-29</td><td>rackctls-1.20.3.zip
+<tr><td>fppkg gui</td>      <td>2009-03-29</td><td>fppkg-gui-0.1.zip
+<tr><td>Log4Delphi</td>     <td>2009-03-29</td><td>log4delphi-0.7.zip
+<tr><td>IDE plug-ins</td>   <td>2009-02-14</td><td>manualdock-1.0.0.1.zip
+<tr><td>PascalSane</td>     <td>2008-11-24</td><td>pascalsane-0.1.tar.gz
+<tr><td>FPC+Lazarus doc-html</td><td>2008-10-15    [NOT INCLUDED] see above
+<tr><td>MultiLog</td>       <td>2008-04-01</td><td>multilog-0.5.zip
+<tr><td>Virtual Treeview</td><td>2008-01-26</td><td>virtualtrees-4.0.17.26.zip
+<tr><td>Firebird Embedded</td><td>2008-01-24</td><td>fb_embedded2_Laz_1_0.zip
+<tr><td>libview</td>        <td>2007-12-16</td><td>libview-0.2.zip
+<tr><td>OnGuard</td>        <td>2007-11-30</td><td>tponguardfpc-1.0.0.1.zip
+<tr><td>Plots</td>          <td>2007-11-22</td><td>plots-0.0.4.zip
+<tr><td>MPICH</td>          <td>2007-11-09</td><td>mpich2-1.0.tgz
+<tr><td>Lui Controls</td>   <td>2007-10-25</td><td>luicontrols-0.2.zip
+<tr><td>JvXPBar</td>        <td>2007-09-25</td><td>jvXP-1.0.0.zip
+<tr><td>rxfpc</td>          <td>2007-09-01</td><td>rxfpc-1.1.5.98.zip
+<tr><td>Web Service Toolkit</td><td>2007-08-15</td><td>WebServiceRoolkit-0.5.zip
+<tr><td>GLScene</td>        <td>2007-07-18</td><td>glscene-1.0.0.2.zip
+<tr><td>Data-Aware SubForm</td><td>2007-04-26</td><td>data-aware-subform-0.1.zip
+<tr><td>RingChart and AnalogWatch</td><td>2007-04-13</td><td>ring-watch-0.3.zip
+<tr><td>TreeViewDialog</td> <td>2007-03-26</td><td>TreeviewDlg.zip
+<tr><td colspan="2"></td>                      <td>TreeviewDlg-Demo.zip
+<tr><td>Code and Component Packages  *</td><td>2007-01-12
+<tr><td colspan="2"></td>                      <td>Code_and_Component_Packages\ColorBox-1.0.zip
+<tr><td colspan="2"></td>                      <td>Code_and_Component_Packages\dxgettext4lazarus-20040224.tgz
+<tr><td colspan="2"></td>                      <td>Code_and_Component_Packages\formstorage-20040507.tar.gz
+<tr><td colspan="2"></td>                      <td>Code_and_Component_Packages\fparchive-0.1.tar.gz
+<tr><td colspan="2"></td>                      <td>Code_and_Component_Packages\fparchive-3.05.zip
+<tr><td colspan="2"></td>                      <td>Code_and_Component_Packages\fpsystools-0.1.tar.gz
+<tr><td colspan="2"></td>                      <td>Code_and_Component_Packages\fpsystools-0.1.tar.gz
+<tr><td colspan="2"></td>                      <td>Code_and_Component_Packages\fpsystools-0.1.tar.gz
+<tr><td colspan="2"></td>                      <td>Code_and_Component_Packages\fpsystools-0.1.tar.gz
+<tr><td colspan="2"></td>                      <td>Code_and_Component_Packages\fpsystools-0.1.tar.gz
+<tr><td colspan="2"></td>                      <td>Code_and_Component_Packages\fpsystools-0.1.tar.gz
+<tr><td colspan="2"></td>                      <td>Code_and_Component_Packages\fpsystools-0.1.tar.gz
+<tr><td colspan="2"></td>                      <td>Code_and_Component_Packages\pascalscript-3.0.3.54.zip
+<tr><td colspan="2"></td>                      <td>Code_and_Component_Packages\psql-laz-package-0.4.6.tar.gz
+<tr><td colspan="2"></td>                      <td>Code_and_Component_Packages\sockets-laz-package-0.2.0.tar.gz
+<tr><td colspan="2"></td>                      <td>Code_and_Component_Packages\audio_components_suite-2.3.zip
+<tr><td>MultiDoc</td>       <td>2007-01-06</td><td>multidoc-0.2.zip
+<tr><td>ZipFile</td>        <td>2006-11-10</td><td>zipfile-0.1.zip
+<tr><td>httpd</td>          <td>2006-10-11</td><td>httpd-0.3.zip
+<tr><td>EpikTimer</td>      <td>2006-10-07</td><td>epiktimer-1.0.zip
+<tr><td>OpenGL Tutorial *</td><td>2006-10-07</td><td>
+<tr><td colspan="2"></td>                      <td>OpenGL_Tutorial\OpenGL-Light-20060910-win32.zip
+<tr><td colspan="2"></td>                      <td>OpenGL_Tutorial\OpenGL-Multitexture-20060910-i386-linux.tar.gz
+<tr><td colspan="2"></td>                      <td>OpenGL_Tutorial\OpenGL-Multitexture-20060910-win32.zip
+<tr><td colspan="2"></td>                      <td>OpenGL_Tutorial\OpenGL-RenderToTexture-20060910-i386-linux.tar.gz
+<tr><td colspan="2"></td>                      <td>OpenGL_Tutorial\OpenGL-RenderToTexture-20060910-win32.zip
+<tr><td colspan="2"></td>                      <td>OpenGL_Tutorial\OpenGL-SimpleShape-20060910-i386-linux.tar.gz
+<tr><td colspan="2"></td>                      <td>OpenGL_Tutorial\OpenGL-SimpleShape-20060910-win32.zip
+<tr><td colspan="2"></td>                      <td>OpenGL_Tutorial\OpenGL-Textures-20060910-i386-linux.tar.gz
+<tr><td colspan="2"></td>                      <td>OpenGL_Tutorial\OpenGL-Textures-20060910-win32.zip
+<tr><td colspan="2"></td>                      <td>OpenGL_Tutorial\OpenGL-Tutorial-20061007-src.zip
+<tr><td colspan="2"></td>                      <td>OpenGL_Tutorial\OpenGL-Tutorial-Windows-20060903.zip
+<tr><td colspan="2"></td>                      <td>OpenGL_Tutorial\OpenGL-VertexArray-20061007-i386-linux.tar.gz
+<tr><td colspan="2"></td>                      <td>OpenGL_Tutorial\OpenGL-VertexArray-20061007-src.zip
+<tr><td colspan="2"></td>                      <td>OpenGL_Tutorial\OpenGL-VertexArray-20061007-win32.zip
+<tr><td colspan="2"></td>                      <td>OpenGL_Tutorial\OpenGL-BitmapFonts-20060910-i386-linux.tar.gz
+<tr><td colspan="2"></td>                      <td>OpenGL_Tutorial\OpenGL-BitmapFonts-20060910-win32.zip
+<tr><td colspan="2"></td>                      <td>OpenGL_Tutorial\OpenGL-DisplayLists-20060910-i386-linux.tar.gz
+<tr><td colspan="2"></td>                      <td>OpenGL_Tutorial\OpenGL-DisplayLists-20060910-win32.zip
+<tr><td colspan="2"></td>                      <td>OpenGL_Tutorial\OpenGL-DisplayLists-20060910-win32.zip
+<tr><td colspan="2"></td>                      <td>OpenGL_Tutorial\OpenGL-FirstProgram-20060910-i386-linux.tar.gz
+<tr><td colspan="2"></td>                      <td>OpenGL_Tutorial\OpenGL-FirstProgram-20060910-win32.zip
+<tr><td colspan="2"></td>                      <td>OpenGL_Tutorial\OpenGL-FullScreenAnimation-20060910-i386-linux.tar.gz
+<tr><td colspan="2"></td>                      <td>OpenGL_Tutorial\OpenGL-FullScreenAnimation-20060910-win32.zip
+<tr><td colspan="2"></td>                      <td>OpenGL_Tutorial\OpenGL-Light-20060910-i386-linux.tar.gz
+<tr><td>LazRichView</td>    <td>2006-09-08</td><td>lazrichview-0.5.2.2.tar.gz
+<tr><td>Spook_s Panel Components</td><td>2006-07-31</td><td>spooks_Panel_Componnts_vcl-0.0.1.1.zip
+<tr><td>PascalMagick</td>   <td>2006-07-12</td><td>PascalMagick-0.4.zip
+</tbody>
+</table>
+
+Thanl ypu for tour attention
+Paul Robinson
+2022-01-03
+

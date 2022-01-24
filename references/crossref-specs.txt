@@ -34,59 +34,59 @@ Unit table,
     ANS / Ansistring
     ASM / assembly
     B / Boolean
-    C / char
-    BEG / begin on - line where first begin appear proc/func
     BCL / base class
+    BGN / begin on - line where first begin appear proc/func
     BY / byte
+    C / char
     CON / const - constant
-    CL / class of
-    CP / class prop = class property
-    DCL / declared - where signature first appeared
-    DEF / defined - where signature is
-    DR - double precision real
+    CLS / class of 
+    CV / class variable
+    DCL / declared on line - where signature first appeared
+    DEF / defined on line - where signature is
+    DBL / double precision real
     EN / enumerator
-    EY / enumerated type of
-    END - line where last end proc/func
-    F / func - function
+    ET / enumerated type of
+    END / ended on line - line where last end proc/func
+    F / function
     FLD / field of
     FWD / forward
-    G / global -  above the line
-    CV / class variable
+    G / global of unit -  above the line
     CM / class method  - method of class
     EF / external func . external function
-    RP / external proc . external procedure
+    EP / external proc . external procedure
     FLD / field - field of record
     I / Integer
-    INV / in var of
+    IN / in var of
     I64 / 64-bit integer
-    LCL / Local - Local (inside procedural)
+    LCL / local to unit - Local (inside procedural)
     M / main program identifier
-    N / nested - procedural inside one
-    NF / nested func
-    NP / nested proc
+    NF / nested function of
+    NP / nested procedure of
     O / object - similar to record
     OM / object method  - method of object
     OP / object property
     OPR / operator - related to special objects
-    OUV / out var of
+    OUT / out var of
     OV / object vatiable
     P / proc - procedure
     PRE / predefined - predefined item (no location)
     PRM / Param - parameter used in procedural signature
+    PRO / Protected -  declaration used in class / object
+    PRP / property of = class property
     PUB / public - public declaration
     PTR / pointer - pointer
     PVT / private - private declaration
-     PY / property
+    PY / property
     R / record
     R80 / 80-bit real
-    RE / real
+    RL / real
     S / string
-    SET
+    SET / set of
     TC / typed const  - typed constsnt
     TYP / type - a type
     U / unicode string
+    UL / unit local - (below the line, not in procedutal)
     UN / unit - unit nsme
-    UL / unit local - (below the line)
     V / virtual
     VAR - variable
     W / word

@@ -1,0 +1,368 @@
+ Pascal keywords and operators supported by GNU Pascal.
+
+This chapter lists all keywords understood by GNU Pascal. The keywords are taken from the following standards and dialects:
+
+    ISO 7185 Pascal (CP)
+    ISO 10206 Extended Pascal (EP)
+    ANSI draft Object Pascal (OP)
+    UCSD Pascal (UCSD)
+    Borland Pascal 7.0 (BP)
+    Borland Delphi (BD)
+    Pascal-SC (PXSC, Pascal eXtensions for Scientific Calculations)
+    VAX Pascal (VP)
+    Sun Pascal (SP)
+    Traditional Macintosh Pascal (MP)
+    GNU Pascal extensions (GPC)
+
+The table below lists all known keywords with short descriptions. The links point to the longer descriptions in the reference.
+
+By default (using GPC extensions) all keywords are enabled. Only those are marked GPC in the table below that are valid only in the GPC extensions.
+
+All keywords that are specific to some dialects (i.e., not marked “any”) can also be used as identifiers (with a few exceptions, see below). Then, however, they generally cannot be used as keywords anymore. So you can compile code from dialects that use them as keywords and code that uses them as identifiers, i.e., you do not have to modify your correct ISO 7185 programs in order to compile them with GPC without any dialect option. Some words can even be used as keywords and identifiers in parallel, including forward (according to ISO 7185 Pascal), and near and far (according to Borland Pascal).
+
+The exceptions are:
+
+    Operator can't be used as a type, untyped constant or exported interface, i.e. when it would be followed by = (unless it's disabled as a keyword explicitly or by dialect options, see below). This is because of a conflict with a definition of the operator =. (It can be used as a typed constant, but it might be confusing if you later decide to make it untyped, so use with care.)
+    The first statement after initialization (Delphi specific unit initialization) must not start with (. (Statements starting with ( are uncommon, anyway, but not impossible.) This does not restrict the usage of Initialization as an identifier.
+    The following keywords can't be used immediately after an import part: uses, implementation, operator, constructor, destructor. Using uses instead of import, or putting some other declaration between import and the problematic keyword helps.
+
+A dialect option turns off all keywords that do not belong to this dialect. Besides, any keyword can be enabled and disabled with the compiler options {$enable-keyword} and {$disable-keyword}.
+
+absolute (BP, BD) (see absolute)
+    overloaded variable declaration
+abstract (OP) (see abstract)
+    abstract object type or method declaration
+all (all) (see all)  [gnu]
+    export (see export) extension (export foo = all)
+and (any) (see and)
+    Boolean or bitwise and operator or part of the and then (see and then) operator
+and_then (EP, OP) (see and_then)
+    short-circuit Boolean and (see and) operator
+array (any) (see array)
+    array type declaration
+as (OP, BD) (see as)
+    object type membership test and conversion
+asm (BP, BD) (see asm)
+    GNU style inline assembler code
+asmname (GPC) (see asmname)
+    DEPRECATED! linker name of routines and variables
+attribute (GPC) (see attribute)
+    attributes of routines and variables
+begin (any) (see begin)
+    begin of a code block, part of a to begin do (see to begin do) module constructor
+bindable (EP, OP) (see bindable)
+    external bindability of files
+c (GPC) (see c)
+    DEPRECATED! declaration of external routine
+case (any) (see case)
+    multi-branch conditional statement or variant record (see record) type
+c_language (GPC) (see c_language)
+    DEPRECATED! declaration of external routine
+class (OP, BD) (see class)
+    OOE/Delphi style object class (not yet implemented)
+const (any) (see const)
+    constant declaration or constant parameter declaration
+constructor (OP, BP, BD) (see constructor)
+    object constructor
+destructor (OP, BP, BD) (see destructor)
+    object destructor
+div (any) (see div)
+    integer division operator
+do (any) (see do)
+    part of a while (see while) or for (see for) loop, a with (see with) statement, or a to begin do (see to begin do) or to end do (see to end do) module constructor or destructor
+downto (any) (see downto)
+    part of a for (see for) loop counting downwards
+else (any) (see else)
+    alternative part of an if (see if) statement, default case (see case) branch, part of the or else (see or else) operator
+end (any) (see end)
+    end of a code block, end of a case (see case) statement, end of a record (see record) or object (see object) declaration, part of a to end do (see to end do) module destructor
+export (export) (see export)
+    module interface export
+exports (BP, BD) (see exports)
+    library export (not yet implemented)
+external (UCSD, BP, BD, MP) (see external)
+    declaration of an external object
+far (BP, BD) (see far)
+    BP directive (ignored)
+file (any) (see file)
+    non-text file type declaration
+finalization (BD) (see finalization)
+    unit finalization
+for (any) (see for)
+    loop statement where the number of loops is known in advance
+forward (any) (see forward)
+    declaration of a routine whose definition follows below
+function (any) (see function)
+    function declaration
+goto (any) (see goto)
+    statement to jump to a label (see label)
+if (any) (see if)
+    conditional statement
+implementation (all except CP) (see implementation)
+    module or unit implementation part
+import (EP, OP) (see import)
+    module interface import
+in (any) (see in)
+    set membership test or part of a for (see for) loop iterating through sets
+inherited (OP, BP, BD, MP) (see inherited)
+    reference to methods of ancestor object types
+initialization (BD) (see initialization)
+    unit initialization
+interface (interface) (see interface)
+    module or unit interface part
+interrupt (BP, BD) (see interrupt)
+    interrupt handler declaration (not yet implemented)
+is (OP, BD) (see is)
+    object type membership test
+label (any) (see label)
+    label declaration for a goto (see goto) statement
+library (BP, BD) (see library)
+    library declaration (not yet implemented)
+mod (any) (see mod)
+    integer remainder operator
+module (module) (see module)
+    EP style or PXSC style module
+name (name) (see name)
+    linker name
+near (BP, BD) (see near)
+    BP directive (ignored)
+nil (any) (see nil)
+    reserved value for unassigned pointers
+not (any) (see not)
+    Boolean or bitwise negation operator
+object (BP, BD, MP) (see object)
+    BP style object declaration
+of (any) (see of)
+    part of an array (see array), set (see set) or typed file (see file) type declaration, a case (see case) statement, a variant record (see record) type or a type of (see type of) type inquiry
+only (EP, OP) (see only)
+    import specification
+operator (PXSC) (see operator)
+    operator declaration
+or (any) (see or)
+    Boolean or bitwise or operator or part of the or else (see or else) operator
+or_else (EP, OP) (see or_else)
+    short-circuit Boolean or (see or) operator
+otherwise (EP, OP, MP) (see otherwise)
+    default case (see case) branch, default value in a structured value of array (see array) type
+packed (any) (see packed)
+    declaration of packed structured types (record (see record), array (see array), set (see set), file (see file)), also packed ordinal subranges
+pow (EP, OP) (see pow)
+    exponentiation operator with integer exponent
+private (private) (see private)
+    private object fields
+procedure (any) (see procedure)
+    procedure declaration
+program (any) (see program)
+    start of a Pascal program
+property (OP, BD) (see property)
+    object properties (not yet implemented)
+protected (protected) (see protected)
+    read-only formal parameters or module export and protected object fields
+public (public) (see public)
+    public object fields
+published (published) (see published)
+    published object fields
+qualified (EP, OP) (see qualified)
+    import specification
+record (any) (see record)
+    record type declaration
+repeat (any) (see repeat)
+    loop statement
+resident (BP, BD) (see resident)
+    library export specification (not yet implemented)
+restricted (EP, OP) (see restricted)
+    restricted type specification
+segment (UCSD) (see segment)
+    segment specification (not yet implemented)
+set (any) (see set)
+    set type declaration
+shl (BP, BD, MP) (see shl)
+    bitwise left shift operator
+shr (BP, BD, MP) (see shr)
+    bitwise right shift operator
+then (any) (see then)
+    part of an if (see if) statement or part of the and then (see and then) operator
+to (any) (see to)
+    part of a for (see for) loop counting upwards or a to begin do (see to begin do) or to end do (see to end do) module constructor or destructor
+type (any) (see type)
+    type declaration or part of a type of (see type of) type inquiry
+unit (UCSD, BP, BD, MP) (see unit)
+    UCSD and BP style unit declaration
+until (any) (see until)
+    end of a repeat (see repeat) statement
+uses (UCSD, BP, BD, MP) (see uses)
+    unit import
+value (EP, OP) (see value)
+    variable/type initializer
+var (any) (see var)
+    variable declaration or reference parameter declaration
+view (OP) (see view)
+    object class view (not yet implemented)
+virtual (OP, BP, BD, MP) (see virtual)
+    virtual object method declaration
+while (any) (see while)
+    loop statement
+with (any) (see with)
+    automatic record (see record) or object field access
+xor (BP, BD, MP) (see xor)
+    Boolean or bitwise exclusive or operator
+
+
+
+absolute (BP, BD) (see absolute)
+    overloaded variable declaration
+abstract (OP) (see abstract)
+    abstract object type or method declaration
+all (all) (see all)  [gnu]
+    export (see export) extension (export foo = all)
+and (any) (see and)
+    Boolean or bitwise and operator or part of the and then (see and then) operator
+and_then (EP, OP) (see and_then)
+    short-circuit Boolean and (see and) operator
+array (any) (see array)
+    array type declaration
+as (OP, BD) (see as)
+    object type membership test and conversion
+asm (BP, BD) (see asm)
+    GNU style inline assembler code
+asmname (GPC) (see asmname)
+    DEPRECATED! linker name of routines and variables
+attribute (GPC) (see attribute)
+    attributes of routines and variables
+begin (any) (see begin)
+    begin of a code block, part of a to begin do (see to begin do) module constructor
+bindable (EP, OP) (see bindable)
+    external bindability of files
+c (GPC) (see c)
+    DEPRECATED! declaration of external routine
+case (any) (see case)
+    multi-branch conditional statement or variant record (see record) type
+c_language (GPC) (see c_language)
+    DEPRECATED! declaration of external routine
+class (OP, BD) (see class)
+    OOE/Delphi style object class (not yet implemented)
+const (any) (see const)
+    constant declaration or constant parameter declaration
+constructor (OP, BP, BD) (see constructor)
+    object constructor
+destructor (OP, BP, BD) (see destructor)
+    object destructor
+div (any) (see div)
+    integer division operator
+do (any) (see do)
+    part of a while (see while) or for (see for) loop, a with (see with) statement, or a to begin do (see to begin do) or to end do (see to end do) module constructor or destructor
+downto (any) (see downto)
+    part of a for (see for) loop counting downwards
+else (any) (see else)
+    alternative part of an if (see if) statement, default case (see case) branch, part of the or else (see or else) operator
+end (any) (see end)
+    end of a code block, end of a case (see case) statement, end of a record (see record) or object (see object) declaration, part of a to end do (see to end do) module destructor
+export (export) (see export)
+    module interface export
+exports (BP, BD) (see exports)
+    library export (not yet implemented)
+external (UCSD, BP, BD, MP) (see external)
+    declaration of an external object
+far (BP, BD) (see far)
+    BP directive (ignored)
+file (any) (see file)
+    non-text file type declaration
+finalization (BD) (see finalization)
+    unit finalization
+for (any) (see for)
+    loop statement where the number of loops is known in advance
+forward (any) (see forward)
+    declaration of a routine whose definition follows below
+function (any) (see function)
+    function declaration
+goto (any) (see goto)
+    statement to jump to a label (see label)
+if (any) (see if)
+    conditional statement
+implementation (all except CP) (see implementation)
+    module or unit implementation part
+import (EP, OP) (see import)
+    module interface import
+in (any) (see in)
+    set membership test or part of a for (see for) loop iterating through sets
+inherited (OP, BP, BD, MP) (see inherited)
+    reference to methods of ancestor object types
+initialization (BD) (see initialization)
+    unit initialization
+interface (interface) (see interface)
+    module or unit interface part
+interrupt (BP, BD) (see interrupt)
+    interrupt handler declaration (not yet implemented)
+is (OP, BD) (see is)
+    object type membership test
+label (any) (see label)
+    label declaration for a goto (see goto) statement
+library (BP, BD) (see library)
+    library declaration (not yet implemented)
+mod (any) (see mod)
+    integer remainder operator
+module (module) (see module)
+    EP style or PXSC style module
+name (name) (see name)
+    linker name
+near (BP, BD) (see near)
+    BP directive (ignored)
+nil (any) (see nil)
+    reserved value for unassigned pointers
+not (any) (see not)
+    Boolean or bitwise negation operator
+object (BP, BD, MP) (see object)
+    BP style object declaration
+of (any) (see of)
+    part of an array (see array), set (see set) or typed file (see file) type declaration, a case (see case) statement, a variant record (see record) type or a type of (see type of) type inquiry
+only (EP, OP) (see only)
+    import specification
+operator (PXSC) (see operator)
+    operator declaration
+or (any) (see or)
+    Boolean or bitwise or operator or part of the or else (see or else) operator
+or_else (EP, OP) (see or_else)
+    short-circuit Boolean or (see or) operator
+otherwise (EP, OP, MP) (see otherwise)
+    default case (see case) branch, default value in a structured value of array (see array) type
+packed (any) (see packed)
+    declaration of packed structured types (record (see record), array (see array), set (see set), file (see file)), also packed ordinal subranges
+pow (EP, OP) (see pow)
+    exponentiation operator with integer exponent
+private (private) (see private)
+    private object fields
+procedure (any) (see procedure)
+    procedure declaration
+program (any) (see program)
+    start of a Pascal program
+property (OP, BD) (see property)
+    object properties (not yet implemented)
+protected (protected) (see protected)
+    read-only formal parameters or module export and protected object fields
+public (public) (see public)
+    public object fields
+published (published) (see published)
+    published object fields
+qualified (EP, OP)
+record
+repeat
+resident (BP, BD)
+restricted (EP, OP)
+segment (UCSD)
+set
+shl (BP, BD, MP)
+shr (BP, BD, MP)
+then to
+type
+unit (UCSD, BP, BD, MP)
+until (any)
+uses (UCSD, BP, BD, MP)
+value (EP, OP) (see value)
+var
+view (OP) (see view)
+virtual (OP, BP, BD, MP)
+while
+with
+xor (BP, BD, MP) (see xor)
+
+

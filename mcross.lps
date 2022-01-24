@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="12"/>
+    <BuildModes Active="Default"/>
+    <Units>
+      <Unit>
+        <Filename Value="mcross.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="Mcross"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="162"/>
+        <CursorPos X="47" Y="66"/>
+        <UsageCount Value="121"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="PDP11-Manuel-Mall-cross.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="124"/>
+        <UsageCount Value="1"/>
+      </Unit>
+      <Unit>
+        <Filename Value="testtest.pas"/>
+        <UnitName Value="Notice"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="3" Y="31"/>
+        <UsageCount Value="1"/>
+      </Unit>
+      <Unit>
+        <Filename Value="i.pas"/>
+        <UnitName Value="ProcTrace"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="38" Y="12"/>
+        <UsageCount Value="9"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\AAEC\compiler.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="953"/>
+        <CursorPos X="12" Y="941"/>
+        <UsageCount Value="1"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\StanfordPascal\comperr\comperr1.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="37"/>
+        <UsageCount Value="1"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\StanfordPascal\src\pascal1.pas"/>
+        <UnitName Value="PASCALCOMPILER"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="3529"/>
+        <CursorPos X="19" Y="3353"/>
+        <UsageCount Value="1"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Delphi&amp;Pascal\stanford\pascal1.pas"/>
+        <UnitName Value="PASCALCOMPILER"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="20325"/>
+        <UsageCount Value="1"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Delphi&amp;Pascal\commonfunctions.pas"/>
+        <UnitName Value="CommonFunctions"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="3778"/>
+        <UsageCount Value="1"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Delphi&amp;Pascal\InstructionCodes.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="50"/>
+        <CursorPos X="42" Y="80"/>
+        <UsageCount Value="1"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\..\..\AppData\Local\Temp\Temp1_FileMapping.zip\FileMapping.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="10"/>
+        <UsageCount Value="1"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Delphi&amp;Pascal\Multiwad_Library.pas"/>
+        <UnitName Value="MultiWad_Library"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1685"/>
+        <CursorPos Y="1750"/>
+        <UsageCount Value="1"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\..\..\AppData\Local\Temp\Temp1_decus-pdp11-pascal.zip\debug.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="16"/>
+        <UsageCount Value="1"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\..\..\AppData\Local\Temp\Temp1_edPas-master.zip\edPas-master\edPas.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="193"/>
+        <UsageCount Value="2"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\$compilers\ppro-master\RTL\DOS32\CRT\CRT.PAS"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="256"/>
+        <UsageCount Value="2"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\$compilers\Mad-Pascal-master\src\mp.pas"/>
+        <UnitName Value="MADPASCAL"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="33666"/>
+        <CursorPos X="11" Y="33675"/>
+        <UsageCount Value="3"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\$compilers\pasdblstrutils-master\src\PasDblStrUtils.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="7823"/>
+        <CursorPos X="5" Y="7875"/>
+        <UsageCount Value="3"/>
+      </Unit>
+      <Unit>
+        <Filename Value="tables.pas"/>
+        <UnitName Value="Tables"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="567"/>
+        <CursorPos X="42" Y="604"/>
+        <UsageCount Value="13"/>
+        <Loaded Value="True"/>
+      </Unit>
+    </Units>
+    <JumpHistory HistoryIndex="13">
+      <Position>
+        <Filename Value="mcross.lpr"/>
+        <Caret Line="927" Column="3" TopLine="901"/>
+      </Position>
+      <Position>
+        <Filename Value="mcross.lpr"/>
+        <Caret Line="889" Column="31" TopLine="868"/>
+      </Position>
+      <Position>
+        <Filename Value="mcross.lpr"/>
+        <Caret Line="861" Column="35" TopLine="843"/>
+      </Position>
+      <Position>
+        <Filename Value="mcross.lpr"/>
+        <Caret Line="913" Column="62" TopLine="881"/>
+      </Position>
+      <Position>
+        <Filename Value="mcross.lpr"/>
+        <Caret Line="918" TopLine="893"/>
+      </Position>
+      <Position>
+        <Filename Value="mcross.lpr"/>
+        <Caret Line="928" Column="18" TopLine="892"/>
+      </Position>
+      <Position>
+        <Filename Value="mcross.lpr"/>
+        <Caret Line="918" TopLine="892"/>
+      </Position>
+      <Position>
+        <Filename Value="mcross.lpr"/>
+        <Caret Line="930" TopLine="896"/>
+      </Position>
+      <Position>
+        <Filename Value="mcross.lpr"/>
+        <Caret Line="917" TopLine="896"/>
+      </Position>
+      <Position>
+        <Filename Value="mcross.lpr"/>
+        <Caret Line="917" Column="47" TopLine="897"/>
+      </Position>
+      <Position>
+        <Filename Value="mcross.lpr"/>
+        <Caret Line="927" TopLine="919"/>
+      </Position>
+      <Position>
+        <Filename Value="mcross.lpr"/>
+        <Caret Line="917" Column="5" TopLine="900"/>
+      </Position>
+      <Position>
+        <Filename Value="mcross.lpr"/>
+        <Caret Line="916" Column="17" TopLine="711"/>
+      </Position>
+      <Position>
+        <Filename Value="tables.pas"/>
+        <Caret Line="568" Column="12" TopLine="539"/>
+      </Position>
+      <Position>
+        <Filename Value="tables.pas"/>
+      </Position>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes ActiveMode=""/>
+    </RunParams>
+  </ProjectSession>
+  <Debugging>
+    <BreakPoints>
+      <Item>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="mcross.lpr"/>
+        <Line Value="1871"/>
+      </Item>
+      <Item>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="mcross.lpr"/>
+        <Line Value="801"/>
+      </Item>
+    </BreakPoints>
+    <Watches>
+      <Item>
+        <Expression Value="CommentNest"/>
+      </Item>
+    </Watches>
+  </Debugging>
+</CONFIG>

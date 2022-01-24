@@ -14,7 +14,7 @@ unit Crossref_Main;
 interface
 
 uses
-  Classes, SysUtils, Notice, Command, scan, setup, tables;
+  Classes, SysUtils, Notice, Command, scan, setup, _symboltable, tables;
 
 
 
@@ -27,6 +27,7 @@ implementation
 Procedure GetArgs;
 var
     I: Integer;
+    PassThru: Boolean;
     Param,
     Param1,
     ParAm2,
@@ -38,7 +39,7 @@ begin
      if ParamCount = 0 then
      begin
             Param := '--help';
-            Passthru "= TRUE;
+            Passthru := TRUE;
      end;
      For I := 1 to Paramcount do
        begin
@@ -52,35 +53,34 @@ begin
           Test2   := Copy(Param,1,2);  // used for -- switches
           Param2  := Copy(Param,3,Length(Param));
 
-          If (Test1 in ['-','/','@']  then
-          Case Test1 of
-          '/',
-          '-':  begin
-                    If test2<>'--' then
-                        ProcessSingleArgument(Param1)  // handle /x or -x
-                    else
-                        ProcessDoubleArgument(Param2);     // handle --x
-                    continue;
-                end;
-          '@':  begin
-                    ProcessCommandFile(Param1);
-                    continue;
-                end;
-          end
+          If (Test1 ='-')  then
+              If test2<>'--' then
+                  ProcessSingleArgument(Param1)  // handle /x or -x
+              else
+                  ProcessDoubleArgument(Param2)     // handle --x
           else
-               ProcessFile(Param);
+          if Test1 ='/' then
+              ProcessSingleArgument(Param1)  // handle /x or -x
+          else if test1='@' then
+              ProcessCommandFile(Param1)
+          else
+              ProcessSourceFile(Param);
      end
 end;
 
 Procedure Main;
 begin
-    ProgramPath := UnicodeString(ParamStr(0));
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ProgramPath := UnicodeString(ParamStr(0));
     SplitPath(ProgramPath,ProgramFolder,ProgramName,ProgramExt);
     writeln('ProgramPath=', ProgramPath);
     writeln('ProgramFolder=', ProgramFolder,' ProgramName=',ProgramName,' ProgramExt=',ProgramExt);
 
     Banner;
     // check for switches ot commands
+
+
+ //   TestMode;
+
 
     GetArgs;
     // if the user issued a command that disallows processing, don't do it!
@@ -89,20 +89,21 @@ begin
     Init;
 
 {    OpenFile(PasPath);
+// scan file and continue
     ScanFile;
-    WriteFile;
-}   end
+
+}   end;
 {$IFDEF Test}
-      ;
-write('Press rnter: ');
+
+     write('*39 Press rnter: ');
      readln;
 {$ELSE}
-      else
-      begin
-          Writeln;
-          Write('Press Enter key to end program;
+     if willHold then
+     begin
+         Writeln;
+         Write('Press Enter key to end program;
 
-      end;
+     end;
 {$ENDIF}
 end;
 

@@ -1,0 +1,2273 @@
+and 	array 	begin 	case 	const
+div 	do 	downto 	else 	end
+file 	for 	function 	goto 	if
+in 	label 	mod 	nil 	not
+of 	or 	packed 	procedure 	program
+record 	repeat 	set 	then 	to
+type 	until 	var 	while 	with
+
+Type 		Minimum 	Maximum 	Format
+Integer 	-2147483648 	2147483647 	signed 32-bit
+Cardinal 	0 		4294967295 	unsigned 32-bit
+Shortint 	-128 		127 		signed 8-bit
+Smallint 	-32768 		32767 		signed 16-bit
+Longint 	-2147483648 	2147483647 	signed 32-bit
+Int64 		-2^63 		2^63 - 1 	signed 64-bit
+Byte 		0 		255 		unsigned 8-bit
+Word 		0 		65535 		unsigned 16-bit
+Longword	0 		4294967295 	unsigned 32-bit
+
+
+Name 		Type & Description
+Character	Typically a single octet (one byte). This is an integer type.
+Integer		The most natural size of integer for the machine.
+Real		A single-precision floating point value.
+Boolean		Specifies true or false logical values. This is also an integer type.
+Enumerated	Specifies a user-defined list.
+Subrange	Represents variables, whose values lie within a range.
+String		Stores an array of characters.
+
+Operator 	Description 				
+and 		Called Boolean AND operator. If both 
+		the operands are true, then condition
+		becomes true. 	
+and_then 	It is similar to the AND operator, 
+		however, it guarantees the order in 
+		which the compiler evaluates the 
+		logical expression. Left to right 
+		and the right operands are evaluated 
+		only when necessary. 	(A and then B) is false.
+or 		Called Boolean OR Operator. If any of 
+		the two operands is true, then condition 
+		becomes true. 	(A or B) is true.
+or_else 	It is similar to Boolean OR, however, it 
+		guarantees the order in which the compiler 
+		evaluates the logical expression. Left to
+		right and the right operands are evaluated 
+		only when necessary. 	(A or else B) is true.
+not 		Called Boolean NOT Operator. Used to reverse 
+		the logical state of its operand. If a condition 
+		is true, then Logical NOT operator will make 
+		it false. 	not (A and B) is true.
+Bit Operators
+
+Bitwise operators work on bits and perform bit-by-bit operation. All these operators work on integer operands and produces integer results. The truth table for bitwise and (&), bitwise or (|), and bitwise not (~) are as follows −
+p 	q 	p & q 	p | q 	~p 	~q
+0 	0 	0 	0 	1 	1
+0 	1 	0 	1 	1 	0
+1 	1 	1 	1 	0 	0
+1 	0 	0 	1 	0 	1
+
+
+--------------------------------------------------------------
+
+
+Karthi Softek
+
+    home Home
+    listTopics
+    webOptions
+
+Delphi, Lazarus reserved words, keywords detailed explanation
+
+Blogs from oranges, in case, and other places
+
+Reserved words: identifiers such as variables can be reused;
+
+Keywords: have specific meaning and cannot be redefined;
+
+Modifiers: functions similar to reserved words, which means that they can be reused;
+
+Data type: The data type is similar to reserved words, and generally do not redefine;
+
+Prompt word: This information is used to prompt the user for platform dependency and other purposes during compilation, and should not be changed.
+
+But try not to redefine reserved words, such as the following code
+
+procedure TForm1.FormCreate(Sender: TObject);
+
+var true:string;
+
+begin
+
+end;
+
+Can be executed correctly.
+
+The same identifier is similar to a reserved word, the following program can also be executed:
+
+type  Integer= Char;
+
+var  I: Integer;
+
+begin  I:= 'A';
+  ShowMessage(I);end;
+
+But the following program will report an error.
+
+type string = Integer;
+
+Therefore, it is best not to redefine the reserved words, identifiers, keywords, and modifiers;
+
+Turbo pascal reserved word
+
+and
+array
+asm
+begin
+break
+case
+const
+constructor
+continue
+destructor
+div
+do0
+downto
+else
+end
+false
+file
+for
+function
+goto
+if
+implementation
+in
+inline
+interface
+label	
+mod
+nil
+not	
+object
+of
+on
+operator
+or
+packed
+procedure
+program
+record
+repeat
+set
+shl
+shr
+string
+then
+to
+true
+type
+unit
+until
+uses
+var
+while
+with
+xor
+	 	 
+
+Object pascal reserved words
+
+as
+class
+dispose
+except
+exit
+exports
+finalization
+finally
+inherited
+initialization
+is
+library
+new
+on
+out
+property
+raise
+self
+threadvar
+try
+
+Delphi keywords
+
+And
+Array
+As
+Begin
+Case
+Class
+Const
+Constructor
+Destructor
+Div
+Do
+DownTo
+Else
+End
+Except
+File
+Finally
+For
+Function
+Goto
+If
+Implementation
+In
+Inherited
+Interface
+Is
+Mod
+Not
+Object
+Of
+On
+Or
+Packed
+Procedure
+Program
+Property
+Raise
+Record
+Repeat
+Set
+Shl
+Shr
+Then
+ThreadVar
+To
+Try
+Type
+Unit
+Until
+Uses
+Var
+While
+With	 	 	 
+
+Delphi reserved words and keywords
+
+Absolute
+Abstract
+And
+Array
+As
+Asm
+Assembler
+Automated
+Begin
+Case
+Cdecl
+Class
+Const
+Constructor
+Contains
+Default
+Destructor
+Dispid
+Dispinterface
+Div
+Do
+Downto
+Dynamic
+Else
+End
+Except
+Export
+Exports
+External
+Far
+File
+Finalization
+Finally
+For
+Forward
+Function
+Goto
+If
+Implementation
+Implements
+In
+Index
+Inherited
+Initialization
+Inline
+Interface
+Is
+Label
+Library
+Message
+Mod
+Name
+Near
+Nil
+Nodefault
+Not
+Object
+Of
+On
+Or
+Out
+Overload
+Override
+Package
+Packed
+Pascal
+Private
+Procedure
+Program
+Property
+Protected
+Public
+Published
+Raise
+Read
+Readonly
+Record
+Register
+Reintroduce
+Repeat
+Requires
+Resourcestring
+Safecall
+Set
+Shl
+Shr
+Stdcall
+Stored
+String
+Then
+Threadvar
+To
+Try
+Unit
+Until
+Uses
+Var
+Varargs
+Virtual
+While
+With
+Write
+Writeonly
+Xor
+
+The modified words supported by Freepascal include the reserved words turbopascal and object pascal (the red part is different from delphi)
+
+absolute
+abstract
+alias
+assembler
+cdecl
+cppdecl
+default
+export
+external
+forward
+index
+local
+name
+nostackframe
+oldfpccall
+override
+pascal
+private
+protected
+public
+published	
+read
+register
+reintroduce
+safecall
+softfloat
+stdcall
+virtual
+write
+	 	 	 
+
+Modifiers no longer supported by Freepascal
+
+=========================================================
+
+far
+near	 	 
+
+ISO 7185 standard keywords
+
+And
+Downto	
+If
+Or
+Then
+Array
+Else
+In
+Packed
+To
+Begin	
+End
+Label
+Procedure
+Type
+Case	
+File
+Mod
+Program
+Until
+Const
+For
+Nil
+Record
+Var
+Div
+Function	
+Not
+Repeat
+While
+Do
+Goto
+Of
+Set
+With
+
+ISO 10206 extended pascal keywords
+
+And_then
+Import
+Module
+Otherwise
+Qualified
+Bindable
+Implementation
+Only
+Pow
+Restricted
+Export
+Interface
+Or_else
+Protected
+Value
+
+Turbo Pascal keywords
+
+Absolute
+Destructor
+Inline
+Shl
+Uses
+Asm
+Implementation
+Interface
+Shr
+Virtual
+Constructor
+Inherited
+Object
+Unit
+Xor
+
+Delphi add keywords
+
+as
+exports
+initialization
+on
+threadvar
+class
+finalization
+is
+property
+try
+except
+finally
+library
+raise	 
+
+Free Pascal keywords
+
+dispose
+exit
+false
+new
+true
+
+Object Pascal keywords
+
+Abstract
+Constructor
+Inherited
+Object
+View
+Class
+Destructor
+Is
+Property
+Virtual
+
+
+GNU keywords
+
+All
+Asm
+Inline
+	 	 
+
+Pascal expands scientific computing keywords
+
+Module
+Operator
+
+Data type identifier
+
+Integer
+Shortint
+SmallInt
+Longint
+Longword
+Int64
+Byte
+Word
+Cardinal
+QWord
+Boolean
+ByteBool
+WordBool
+LongBool
+Char
+Real
+Single
+Double
+Extended
+Comp
+Currency
+Char
+String
+Shortstring
+Ansistring
+UnicodeString
+WideString
+Constantstring
+PChar
+Array
+Record
+VariantInteger
+Shortint
+SmallInt
+Longint
+Longword
+Int64
+Byte
+Word
+Cardinal
+QWord
+Boolean
+ByteBool
+WordBool
+LongBool
+Char
+Real
+Single
+Double
+Extended
+Comp
+Currency
+Char
+String
+Shortstring
+Ansistring
+UnicodeString
+WideString
+Constantstring
+PChar
+Array
+Record
+Variant
+	 
+
+In addition to the above variable types, there are also some predefined variable types of windows, fpc, and lcl. They are equivalent to the function of reserved words, and don't change them casually.
+
+Proprietary hint words for Lazarus and freepascal
+
+deprecated 
+experimental 
+platform 
+unimplemented 
+
+
+The following is a detailed explanation of each reserved word and keyword
+
+======================================================
+
+absolute   // It enables you to create a new variable, and the starting address of the variable is the same as another variable.
+
+abstract //It allows you to create abstract methods, including classes with abstract methods called abstract classes.
+
+Abstract   // keyword must be used with Virtual or Dynamic keyword at the same time, because abstract methods must be overridden.
+           // Abstract classes cannot be instantiated, abstract methods cannot contain method bodies.
+
+and //1. means logical and
+    //2. represents bit operation
+
+Array //Array is used to represent an array, any object can be declared as an array. Arrays are divided into two types: static and dynamic.
+      //Static array
+      //Dynamic array, because the number of elements is unknown at the time of declaration, you must use the SetLength method to set the size of the array later
+
+as    //As is used to transform one object into another
+      //For the conversion of the object filling interface, As must be used
+
+asm  //Asm keyword is used to insert assembly code. When using assembly code, you must use the structure of asm...end; instead of begin...end;
+
+assembler //Assembler keyword is used to support early assembly, such as 80386.
+
+automated //Automated access specifier is used to describe the members of an automatic type, which can make the version of the program backward compatible.
+
+begin //begin keyword is used to indicate the beginning of a program or a structure, and the end keyword must be used to end.
+
+case //Case statement is used to complete the condition selection. The selected object of the Case statement must be an ordered type, including integer types, enumeration types, character types, etc.
+
+cdecl //Cdecl is a type of function calling convention, which specifies the rules that must be followed when calling functions from a DLL written in C or C++.
+
+class //Class keyword is used to declare or inherit a class, or to make the class and interface inherit at the same time.
+
+const //Const keyword is used to declare constants, and the data declared with const cannot be changed in the program.
+
+constructor //constructor keyword is used to declare the constructor of a class. When the class is instantiated, this function is called first
+
+//The constructor is generally represented by Create, and the Create method can be associated with the CreateWnd method that exists in the class.
+
+type
+
+  ClassDemo = class(TObject)
+
+    private
+
+      fValue: Integer;
+
+    public
+
+      constructor Create;
+
+  end;
+
+constructor ClassDemo.Create;
+
+begin
+
+  fValue := 0;
+
+end;
+
+The contains//Contains keyword indicates whether a certain package (Package) contains a certain file.
+
+//Files imported with Contains must be added to the package file, it can avoid losing references to key files.
+
+package DATAX;
+
+  requires
+
+    rtl, clx;
+
+  contains
+
+    Db, DBLocal, DBXpress;
+
+end.
+
+The default//Default keyword is used to indicate the default value of an attribute
+
+//Only attributes of ordered types allow the existence of default values, otherwise the attribute value must be initialized in the constructor.
+
+type
+
+  ClassDemo = class
+
+    private
+
+      fValue: Integer;
+
+    published
+
+      property Value: Integer read fValue write fValue default 0;
+
+  end;
+
+//It can also indicate the default attributes of a class
+
+property strings[Index: Integer]: string read GetString write PutString; Default;
+
+destructor //Destructor is used to identify the destructor, which is automatically called when the class is released.
+
+dispid //DispId keyword is used in the DispInterface interface to specify a specific adaptation sequence number.
+
+dispinterface //DispInterface is used to declare a specific adapter interface, which can accept incoming and outgoing data from the standard system interface.
+
+div //Div is used to find the integer quotient of two numbers. The two values ​​used for Div operation must both be of integer type, and the result of the operation must also be of integer type.
+
+do //Do keyword is used in For, While, On, With statements to form a specific structure
+
+downto //DownTo keyword is used in the For statement to indicate that the loop variable is decrementing.
+
+for i := 100 downto 1 do
+
+  ListBox1.Items.Add(IntToStr(i));
+
+//In the For statement, the To keyword is used to increase the loop variable, and the DownTo keyword is used to decrease it.
+
+dynamic//Dynamic is used to declare a dynamic method,
+
+//Dynamic methods can be overridden, and the code size can be reduced as much as possible (different from Virtual).
+
+procedure X(i: Integer); dynamic;
+
+else//else is used to guide the running direction of the program. It can be used in conjunction with If, Case and On statements. When the condition is not met, it will run under else
+
+//If statement (in If statement, semicolon is not allowed before else):
+
+if a > b then
+
+  c := a
+
+else
+
+  c:=b;
+
+//Case statement:
+
+case Tag Of
+
+  1:Result:=1;
+
+  2:Result:=2;
+
+  3:Result:=3;
+
+else
+
+  Result:=0;
+
+end;
+
+//On statement (exception handling):
+
+try
+
+  i := StrToInt(s);
+
+Excpet
+
+  on EZeroDivide do Result := 1;
+
+  on EOverflow do Result := 2;
+
+else
+
+  Result := 0;
+
+end;
+
+end//End is used to end a statement block or a unit.
+
+//It can match begin, Case, Class, Interface, Asm, Unit, Package, etc.
+
+//For statement blocks (partial end), a semicolon must be added after End.
+
+//For units or packages (global end), a period must be added after end.
+
+//It is not allowed to add symbols after End before the else keyword in the If statement.
+
+procedure X;
+
+begin
+
+　with Button1 do
+
+　begin
+
+　　if Button1.ShowHint then
+
+　　　Button1.Caption :='Hinted'
+
+　　else
+
+　　　Button1.Caption :='Not Hinted';
+
+　end;
+
+end;
+
+//Use End in the package to end:
+
+package DATAX;
+
+  requires
+
+    rtl,
+
+    clx;
+
+  contains Db, DBLocal, DBXpress;
+
+end.
+
+The except//except keyword is used for exception handling and must be used in a try statement. If an exception occurs, the statement after except is executed
+
+try
+
+  i := StrToInt(s);
+
+except
+
+  ShowMessage('Error!');
+
+end;
+
+export//Export indicates the function call contract, indicating that the function can be exported, and the exported function can be called locally or remotely.
+
+//Other programs can call functions in the program in the form of dll. It is backward compatible.
+
+function Add(a,b: Integer): Integer; export;
+
+//If this program is compiled as Demo.exe, and another program needs to call this function, you can use the following statement
+
+function Add(a,b: Integer): Integer; stdcall; external 'Demo.exe';
+
+exports//exports is used to export objects, it must be used between the interface and the implementation, multiple items can be exported at the same time, and the items are separated by commas.
+
+library Demo;
+
+function X(i: Integer): string; stdcall;
+
+begin
+
+　Result:=IntToStr(i);
+
+end;
+
+exports
+
+　X;
+
+begin
+
+end.
+
+//If the output object is overloaded, you must give the object an alias and specify the parameters.
+
+library Demo;
+
+function X(i: Integer): string; overload; stdcall;
+
+begin
+
+　Result := IntToStr(i);
+
+end;
+
+function X(s: string): Integer; overload; stdcall;
+
+begin
+
+　Result := StrToInt(s);
+
+end;
+
+exports
+
+  X(i: Integer) name 'x1',
+
+  X(s: string) name 'x2';
+
+begin
+
+end.
+
+The external//External keyword is used to refer to an external or OBJ method.
+
+{$L Demo.OBJ}
+
+procedure X(i:Integer);external;
+
+//If it is referenced from a dll or an external program, you can use the following code:
+
+function A(FileName: string): string; external 'Demo.dll';
+
+//If the referenced function is overloaded, you must additionally indicate the referenced name.
+
+function A(Name: string): string; overload; stdcall; external 'Demo.dll' name 'A1';
+
+function A(Code: Integer): string; overload; stdcall; external 'Demo.dll' name 'A2';
+
+//When using the External keyword, you must pay attention to the case, otherwise an error will occur.
+
+far//Far indicates the function call contract, indicating that the function can be called remotely.
+
+//Other programs can call functions in the program in the form of dll. It is backward compatible.
+
+function Add(a,b: Integer): Integer; Far;
+
+//If this program is compiled into Demo.exe, and another program on another computer needs to call this function, you can use the following statement:
+
+function Add(a,b: Integer): Integer; stdcall; external 'Demo.exe';
+
+The file//File keyword indicates the type of file operation, the file must be declared as File,
+
+//If you append Of and file type after File, the file can be defined to read and write data of the specified type.
+
+type
+
+  TPerson = record
+
+    PName: string[32];
+
+    PAge: Integer;
+
+  end;
+
+var
+
+  PFile: file of TPerson;
+
+The finalization//finalization keyword identifies the method to be called when the unit is released.
+
+//Usually release objects that cannot be automatically released in the unit, or not.
+
+//The most common case of finalization is to deinitialize OLE objects.
+
+initialization
+
+  ActiveX.OleInitialize(nil);
+
+finalization
+
+  ActiveX.OleUninitialize;
+
+The finally//finally keyword points out the last method that must be called in exception handling.
+
+//Regardless of whether an exception occurs, the statement after the finally is always executed at the end of the try statement.
+
+try
+
+  Node := Node.GetNext;
+
+  Edit1.Text := Node.Text;
+
+finally
+
+　Node := nil;
+
+end;
+
+The for//For keyword leads to the For loop structure, which is used to loop a specified number of times.
+
+for i := 1 to 100 do sum := sum + i;
+
+//If the loop variable is decreasing, you can use the DownTo keyword
+
+for i := 100 downto 1 do Inc(sum);
+
+The forward//Forward keyword is used to pre-define a method. Only define the method declaration, and then implement the method at the back of the program.
+
+//This is conducive to the readability of the code, you can put all the declarations together, and then put all the implementations together.
+
+function X(i: Integer): Integer; forward;
+
+procedure Y(s: string); forward;
+
+...
+
+function X;
+
+begin
+
+  Result := i * 2;
+
+end;
+
+procedure Y;
+
+begin
+
+  WriteLn(s);
+
+end;
+
+//The method of forward declaration does not need to enter the method parameters and return value when implementing it, just use the method name directly.
+
+function//Function is used to declare functions
+
+function X(i: Integer): Integer;
+
+//It can also be used for the declaration of dynamic functions
+
+type
+
+　TFun = function(i: Integer): Integer of object;
+
+//Dynamic declaration, you don't need to indicate the function name, just indicate the parameters and return type. The specific function name can be bound later.
+
+goto//Goto statement is used to jump line number, you can jump to any position in the current structure layer.
+
+//The label keyword must be used to declare the line number in the declaration.
+
+//Because the Goto statement will destroy the structure of the program, it is not recommended.
+
+var
+
+　a,b: Integer;
+
+label
+
+　X,Y;
+
+begin
+
+　if a> b then
+
+　　goto X
+
+　else
+
+　　goto Y;
+
+X:
+
+　WriteLn('a> b');
+
+Y:
+
+　WriteLn('b> a');
+
+end;
+
+The if//If keyword leads to the If conditional statement, which is used to judge the condition.
+
+var
+
+　a,b: Integer;
+
+begin
+
+　a := 2; b := 3;
+
+　if a>b then
+
+　　WriteLn('a=' + IntToStr(a))
+
+　else
+
+　　WriteLn('b=' + IntToStr(b));
+
+end;
+
+//The general structure of the If statement is If...Then...else, and the else statement can also be omitted.
+
+//If there are multiple sub-statements in the If statement, they must be distinguished by the begin...End structure.
+
+if a > b then
+
+begin
+
+　WriteLn('a>b');
+
+　WriteLn('a=' + IntToStr(a));
+
+　WriteLn('b=' + IntToStr(b));
+
+End
+
+else
+
+　WriteLn('b>a');
+
+implementation//Implementation identifies the implementation part of the unit, and the basic structure of the unit is:
+
+//Unit...Interface...implementation...end.
+
+//Function body, procedure body, etc. must be written after the implementation keyword.
+
+//If the object is referenced after implementation, the object is non-public and can only be used by the unit itself.
+
+implementation
+
+  uses frmAbout;
+
+begin
+
+  FormAbout.Show;
+
+end;
+
+//A complete unit must have an implementation part.
+
+implements//Implements points out that a property is inherited from an interface, at which point the property is converted into an interface object.
+
+//Dynamic binding of attributes through the interface, and dynamic setting of attribute values.
+
+type
+
+　IMyInterface = interface
+
+　　procedure P1;
+
+　　procedure P2;
+
+　end;
+
+　TMyImplclass = class
+
+　　procedure P1;
+
+　　procedure P2;
+
+　end;
+
+　TMyclass = class(TInterfacedObject, IMyInterface)
+
+　　FMyImplClass: TMyImplClass;
+
+　　property MyImplClass: TMyImplclass read FMyImplclass implements IMyInterface;
+
+　　procedure IMyInterface.P1 = MyP1;
+
+　　procedure MyP1;
+
+　end;
+
+//After implementing the declaration, you can indicate the entity of the method in the interface when the class is declared, as in the above example:
+
+procedure IMyInterface.P1 = MyP1;
+
+in//In is used to determine whether a set contains an element. The content to be determined must be a single set element and an instance of a set.
+
+type
+
+　TCol = (cA,cB,cC);
+
+　TCols = set of TCol;
+
+var
+
+　Cols: TCols;
+
+begin
+
+　Cols := [cA,cB];
+
+　if cA in Cols then
+
+　　ShowMessage('cA in Cols')
+
+　else
+
+　　ShowMessage('cA not in Cols');
+
+end;
+
+//In is also used in project files to identify whether a file is referenced by the project.
+
+Uses
+
+　Unit1 in'Unit1.pas';
+
+//In can be used in a For statement to loop out the elements in a collection.
+
+var
+
+　s: string;
+
+　sl: TStringList;
+
+begin
+
+　...
+
+　for s In sl do
+
+　begin
+
+　　ShowMessage(s);
+
+　end;
+
+end;
+
+index//Index is used to identify the serial number in the attribute, so that the same attribute method (Get, Set) can be used to operate different attributes.
+
+type
+
+　TForm1 = class(TForm)
+
+　private
+
+　　function GetInfo(const Index: Integer): Longint;
+
+　　procedure SetInfo(const Index: Integer; const Value: Longint);
+
+　public
+
+　　property iLeft:Longint index 0 read GetInfo write SetInfo;
+
+　　property iTop:Longint index 1 read GetInfo write SetInfo;
+
+　　property iWidth:Longint index 2 read GetInfo write SetInfo;
+
+　　property iHeight:Longint index 3 read GetInfo write SetInfo;
+
+　end;
+
+function TForm1.GetInfo(const Index: Integer): Longint;
+
+begin
+
+　case Index of
+
+　　0: result := self.Left;
+
+　　1: Result := self.Top;
+
+　　2: result := self.Width;
+
+　　3: result := self.Height;
+
+　end;
+
+end;
+
+//Index keyword is also used to point out multiple elements in attributes, for example:
+
+property Selected[Index: Integer]: Boolean read GetSelected write SetSelected;
+
+inherited//Inherited is used to call the method of the parent class.
+
+type
+
+　TDemo = class(TComponent)
+
+　public
+
+　　constructor Create(AOwner: TComponent); override;
+
+　end;
+
+constructor TDemo.Create(AOwner: TComponent);
+
+begin
+
+　inherited Create(AOwner);
+
+end;
+
+//If you are calling a method with the same name as itself, you can also omit the method name and parameters. As in the above example
+
+inherited Create(AOwner);
+
+//Can be changed to:
+
+Inherited;
+
+The initialization//initialization keyword identifies the method to be called when the unit is loaded.
+
+//Usually initialize some objects that cannot be initialized automatically, or not.
+
+//The most common case of initialization is to initialize OLE objects.
+
+initialization
+
+  ActiveX.OleInitialize(nil);
+
+finalization
+
+  ActiveX.OleUninitialize;
+
+The inline//InLine keyword is used in Asm or assembler structure,
+
+//Used to indicate that the assembly statement is downward compatible. It has no effect on the compilation of the program.
+
+function IntToStr(Value: Integer): string;
+
+asm
+
+　InLine;
+
+  PUSH
+  ESI
+
+  MOV
+   ESI, ESP
+
+  SUB
+   ESP, 16
+
+  xor
+   ECX, ECX
+
+  PUSH
+  EDX
+
+  xor
+   EDX, EDX
+
+  CALL
+  CvtInt
+
+  MOV
+   EDX, ESI
+
+  POP
+   EAX
+
+  CALL
+  System.@LStrFromPCharLen
+
+  ADD
+   ESP, 16
+
+  POP
+   ESI
+
+end;
+
+interface//Interface identifies the interface part in the unit, and the basic structure of the unit is:
+
+//Unit...Interface...implementation...end.
+
+//The declaration of functions, procedures, etc. must be written after the Interface keyword.
+
+//If the object is referenced after Interface, the object has no instance and must be instantiated when used.
+
+Interface
+
+　uses frmAbout;
+
+var
+
+　FAbout: TFormAbout;
+
+begin
+
+　FAbout := TFormAbout.Create(Self);
+
+　FAbout.Show;
+
+end;
+
+//A complete unit must have an Interface part.
+
+//Interface can also be used as an interface declaration.
+
+type
+
+　IMalloc = interface(IInterface)
+
+　['{00000002-0000-0000-C000-000000000046}']
+
+　　function Alloc(Size: Integer): Pointer; stdcall;
+
+　　function Realloc(P: Pointer; Size: Integer): Pointer; stdcall;
+
+　　procedure Free(P: Pointer); stdcall;
+
+　　function GetSize(P: Pointer): Integer; stdcall;
+
+　　function DidAlloc(P: Pointer): Integer; stdcall;
+
+　　procedure HeapMinimize; stdcall;
+
+　end;
+
+The is//Is keyword is used to judge the object. In some cases, it can also be used as "As".
+
+var
+
+　Comp: TComponent;
+
+begin
+
+  ...
+
+　if Comp Is TEdit then
+
+　　(Comp as TEdit).Text :='Edit';
+
+end;
+
+The label//label keyword is used to declare the line number label so that Goto can be used for steering, and it is not recommended.
+
+var
+
+　a,b: Integer;
+
+label
+
+　X,Y;
+
+begin
+
+　if a> b then
+
+　　goto X
+
+　else
+
+　　goto Y;
+
+X:
+
+　WriteLn('a>b');
+
+Y:
+
+　WriteLn('b>a');
+
+end;
+
+The library//Library keyword is used to indicate that a project is a class library. After the class library is compiled, a DLL file is generated, which can be called by other programs.
+
+library Editors;
+
+uses EdInit, EdInOut, EdFormat, EdPrint;
+
+exports
+
+  InitEditors,
+
+  doneEditors name done,
+
+  InsertText name Insert,
+
+  DeleteSelection name Delete,
+
+  FormatSelection,
+
+  PrintSelection name Print,
+
+  SetErrorHandler;
+
+begin
+
+  InitLibrary;
+
+end.
+
+The message//Message keyword is used to declare the message method,
+
+//The method with Message must indicate the type of message received, and pass the message into the method by reference for processing.
+
+procedure Refresh(var Msg: TMessageRecordtype); message ID_REFRESH;
+
+procedure Refresh(var Msg: TMessageRecordtype);
+
+begin
+
+  if Chr(Msg.Code) = #13 then
+
+    ...
+
+  else
+
+    inherited;
+
+end;
+
+//Users can customize messages, and custom messages can also be received by Message and trigger events.
+
+mod//Mod is used to find the integer modulus of two numbers, that is, the remainder. The two values ​​used for Mod operation must be integers, and the result of the operation is also integer.
+
+var
+
+　a,b,c: Integer;
+
+begin
+
+　a := 20; b := 3;
+
+　c := a mod b; {2}
+
+end;
+
+The name//Name keyword is used to indicate the alias of the method,
+
+//For a method to be externally referenced, it is recommended to use Name to apply for a method alias to avoid external programs from changing the entity content of the method.
+
+//When referencing a method from outside, if the method has an alias, it must be identified by Name.
+
+function MessageBox(HWnd: Integer; Text, Caption: PChar; Flags: Integer): Integer; 
+
+  stdcall; external 'user32.dll' name 'MessageBoxA';
+
+Near//Near indicates the function call contract, indicating that the function can be called locally.
+
+//Other programs can call functions in the program in the form of dll. It is backward compatible.
+
+function Add(a,b: Integer): Integer; near;
+
+//If this program is compiled into Demo.exe, and another local program needs to call this function, you can use the following statement:
+
+function Add(a,b: Integer): Integer; stdcall; external 'Demo.exe';
+
+nil//Nil is used to represent a null pointer, or an object without an instance.
+
+while Node <> nil do
+
+begin
+
+　ListBox1.Items.Add(Node.Text);
+
+　Node := Node.GetNext;
+
+end;
+
+The nodefault//NoDefault keyword indicates that an attribute is not allowed to have a default value, which is usually used in inheritance.
+
+type
+
+　TClassA = class
+
+　private
+
+　　fValue: Integer;
+
+　published
+
+　　property Value: Integer read fValue write fValue default 0;
+
+　end;
+
+　TClassB = class(TClassA)
+
+　published
+
+　　property Value:Integer read fValue write fValue nodefault;
+
+　end;
+
+//From the above example, the Value in TClassA has a default value of 0,
+
+//TClassB inherits TClassA, so it also inherits its default value, here use NoDefault to remove the default value
+
+not//Not is used to negate, it negates the original result. For example:
+
+if a > b then
+
+//can be written as:
+
+if not(a < b) then
+
+//Not keyword is usually used to switch Boolean attributes
+
+procedure Button1Click(Sender: TObject);
+
+begin
+
+　StatusBar1.Visible := not StatusBar1.Visible;
+
+end;
+
+object//Object is used to declare an object, which can be arbitrary and backward compatible. Object can only be inherited by Object.
+
+//The method of declaring an object is the same as the method of declaring a class.
+
+type
+
+　ODemoA = object
+
+　end;
+
+　ODemoB = object(ODemoA)
+
+　end;
+
+//Object keyword is also used to declare dynamic functions or procedures, for example:
+
+type
+
+　TMyFun = function(i: Integer): Integer of Object;
+
+　TMyProc = procedure(s: string) of object;
+
+//The function or procedure declared by object can be dynamically bound to the specified function body, or bound to the control event.
+
+The of//Of key is used to form a specified structure with other keywords. Of can be used with Case, Class, Array, File, Set, Object.
+
+//Case statement:
+
+case Tag Of
+
+　0: Result :='a';
+
+　1: Result :='b';
+
+end;
+
+//Class statement:
+
+type
+
+　TDemo = class of TComponent;
+
+//Array structure:
+
+var
+
+　MyInt: array of Integer;
+
+//File structure:
+
+var
+
+　MyFile: file of Byte;
+
+//Set statement:
+
+type
+
+　TCol = (cA,cB,cC);
+
+　TCols = set of TCol;
+
+//Object structure:
+
+type
+
+　MyFun = function(I: Integer): Integer of Object;
+
+The on//On keyword is used for exception handling, pointing out the exception that occurred, and obtaining exception information.
+
+try
+
+　i := StrToInt(s);
+
+except
+
+　on E: exception do
+
+　　ShowMessage(E.Message);
+
+end;
+
+or//1. means logical or
+
+if (a>0) or (b>0) then
+
+//2. represents bit operation
+
+var
+
+  a,b,c: Integer;
+
+begin
+
+  c := (a or b);
+
+end;
+
+//When using Or to represent logic, the expressions around Or must be enclosed in parentheses to avoid conflicting conditions
+
+//If Or is used in the conditional statement, the editor does not know what the user does with Or
+
+E.g:
+
+if a>0 or b>0 then
+
+//The compiler may understand as:
+
+if a>(0 or b)>0 then
+
+//or
+
+if (a>0) or (b>0) then
+
+//But when actually compiling, the compiler will generate a conflict and report an error
+
+//And the first form may contain a>b>c, which is not supported in Delphi
+
+//So you must use parentheses when using the Or operator to distinguish between left and right conditions.
+
+//It means that you must also add parentheses when performing bitwise operations, enclose Or and the left and right parameters.
+
+The out//Out keyword explains the output method of the method parameters. General functions can only have one return value.
+
+//Use Out to return multiple results in one function.
+
+//Out is different from var. Out is a parameter return in the form of a return value, while var is the address of a parameter directly input.
+
+procedure X(out i: Integer; out s: string);
+
+begin
+
+　i := i * 2;
+
+　s := s +'abc';
+
+end;
+
+procedure TForm1.Button1Click(Sender: TObject);
+
+var
+
+　i: Integer;
+
+　s: string;
+
+begin
+
+　i := 20;
+
+　s :='xxx';
+
+　X(i,s);
+
+end;
+
+The overload//Overload keyword points out the method used for overloading, overloading means that the method name is the same,
+
+//But the number, type or order of parameters are different, and the components that meet this condition are overloaded.
+
+function X(i: Integer): string; overload;
+
+function X(s: string): string; overload;
+
+//When inheriting from the parent class, if the child class has the same method as the parent class, then overload must also be used to constitute an overload.
+
+//But this type of overload must also meet the requirements of the overload.
+
+type
+
+　TDemo = class(TComponent)
+
+　public
+
+　　procedure CreateWnd(AOwner: TWinControl); overload;
+
+　end;
+
+//As in the above example, the methods owned by the subclass are:
+
+procedure CreateWnd; {inherited from parent class}
+
+procedure CreateWnd(AOwner: TWinControl); {Subclass declaration}
+
+//A total of two CreateWnd methods.
+
+//If overloading is not used, the method of the parent class can be overridden in the subclass.
+
+override//Override is used to override a method in Virtual or Dynamic form.
+
+//The declaration of the overridden method must be used when overwriting, and the parameters and return type of the original method must not be modified.
+
+procedure Create(AOwner: TComponent); override;
+
+//Override is mostly used for inheritance, and the method of the parent class is overwritten with the subclass.
+
+type
+
+　TClassA = class
+
+　　procedure X; virtual;
+
+　end;
+
+　TClassB = class(TClassA)
+
+　　procedure X; override;
+
+　end;
+
+//As in the above example, the methods owned by the subclass are:
+
+procedure X; {override from parent class}
+
+//The methods owned by the parent class are:
+
+procedure X; {parent class own method, not covered}
+
+//If the method of the parent class is not declared with Virtual or Dynamic,
+
+//Or if you need to modify the parameters, you must use the Reintroduce keyword to cover it.
+
+The package//Package keyword is used to indicate that a project is a control library.
+
+//The BPL file is generated after the control library is compiled, which can be installed in the Delphi control library, so as to use the control in future development.
+
+package DATAX;
+
+  requires
+
+    rtl,
+
+    clx;
+
+  contains
+
+    MyUnit in 'C:\MyProject\MyUnit.pas';
+
+end.
+
+The packed//Packed keyword is used to pack structure records or arrays, and the volume of the packed objects can be significantly reduced after packing.
+
+type
+
+　TPerson = packed Record
+
+　　PName: string[32];
+
+　　PAge: Integer;
+
+　end;
+
+　MyArray: packed array of PChar;
+
+pascal//Pascal indicates the function call agreement,
+
+//Point out that the function follows Pascal reason when calling, that is, initialize all variables first,
+
+//Avoid errors caused by asynchronous thread calls. It is backward compatible.
+
+function X(i: Integer): Integer; Pascal;
+
+begin
+
+　Result := i * 2;
+
+end;
+
+Private//Private indicates the access distinguishing authority of the elements in the class, and the elements distinguished by Private can only be accessed inside the class.
+
+procedure//Procedure is used to declare the procedure
+
+procedure X(i: Integer);
+
+//It can also be used for the declaration of dynamic functions
+
+type
+
+　TProc = procedure(i: Integer) of object;
+
+//In dynamic declaration, you don't need to indicate the procedure name, just indicate the parameters. The specific procedure name can be bound later.
+
+The program//Program keyword is used to indicate that a project is an application. After the control library is compiled, an exe file is generated, which can be directly executed
+
+program Project1;
+
+uses
+
+  Forms,
+
+  Unit1 in 'Unit1.pas' ;
+
+{$R *.res}
+
+begin
+
+  Application.Initialize;
+
+  Application.CreateForm(TForm1, Form1);
+
+  Application.Run;
+
+end.
+
+The property//Property keyword is used to declare properties. Properties are divided into two types: explicit properties and implicit properties.
+
+//Only attributes declared under the published access specifier are explicit attributes, which can be viewed directly in the object viewer.
+
+type
+
+　TDemo = class
+
+　Private
+
+　　fValue: Integr;
+
+　Published
+
+　　property Value: Integer read fValue write fValue;
+
+　end;
+
+//Event is also a kind of property, which can be declared with Property under the published specifier
+
+type
+
+　TOnTextChange=procedure (Sender: TObject) of object;
+
+　TDemo = class
+
+　private
+
+　　fEvent: TOnTexChange;
+
+　published
+
+　　property OntextChange: TOnTextChange read fEvent write fEvent;
+
+　end;
+
+protected//Protected indicates the access distinguishing authority of the elements in the class, and the elements distinguished by Protected can only be accessed within the class and its subclasses.
+
+public//Public indicates the access distinguishing authority of the elements in the class, and the elements distinguished by Public can be accessed by any object in the class and outside the class.
+
+published//Published indicates the access distinguishing permissions of the elements in the class.
+
+//The elements distinguished by Published can be accessed by any RTTI objects within and outside the class
+
+//Only the attributes declared under the Published discriminator can become explicit attributes and be displayed in the object viewer.
+
+The raise//Raise statement is used to throw an exception,
+
+//If you want to handle the exception through an external program, or throw the exception again when the exception occurs, you can use the Raise statement.
+
+function GetString(i: Integer): string;
+
+begin
+
+　if i <0 then
+
+　　raise exception.Create('Integer Cannot smaller than 0');
+
+　Result := IntToStr(i);
+
+end;
+
+//In exception handling, the exception can be rethrown
+
+try
+
+　i := StrToInt(s);
+
+except
+
+　on E: exception do
+
+　　raise exception.Create(E.Message);
+
+end;
+
+read//Read is used to identify the member or method used for reading in the attribute.
+
+private
+
+　fValue: Integer;
+
+published
+
+　property Value: Integer read fValue;
+
+//The above example indicates that the value of the Value property is read from the fValue member.
+
+The readonly//ReadOnly keyword is used to identify whether an object is read-only.
+
+property ReadOnly;
+
+//When ReadOnly is set to True, users are not allowed to modify the properties manually, and can only be operated through other objects.
+
+The record//Record keyword is used to declare a structure record,
+
+//A structure can be regarded as an object that does not need to be instantiated and has its own members.
+
+type
+
+　TPerson = record
+
+　　PName: string[32];
+
+　　PAge: Integer;
+
+　end;
+
+The register//Register indicates the function call contract, indicating that the function can leave a record in the registry when it is called. It is backward compatible.
+
+function Add(a,b: Integer): Integer; Register; Register
+
+//Keywords are also used to register controls or expert tools with the control library or IDE.
+
+procedure Register;
+
+begin
+
+　RegisterComponents('Sample', [TDemo]);
+
+end;
+
+reintroduce//Reintroduce is used to redistribute methods, usually when inherited,
+
+//If the method to be overridden is a static method, or the parameters of the method need to be modified, etc., it must be republished with Reintroduce.
+
+//For Virtual or Dynamic methods, you can directly use Override to overwrite.
+
+type
+
+　TClassA = class
+
+　　procedure X;
+
+　end;
+
+　TClassB = class(TClassA)
+
+　　procedure X; reintroduce;
+
+　end;
+
+　TClassC = class(TClassB)
+
+　　procedure X(i: Integer); reintroduce;
+
+　end;
+
+The repeat//repeat keyword is used to introduce the repeat loop structure,
+
+//The loop must first execute the loop body, and then judge the loop conditions. The repeat must be used in conjunction with the Until keyword.
+
+i := 0;
+
+repeat
+
+　sum := sum + i;
+
+　Inc(i);
+
+until(i >= 100);
+
+The requires//Requires keyword points out the prerequisites when compiling the Package. If the Requires conditions are not met, the package is not allowed to be compiled.
+
+package DATAX;
+
+  requires
+
+    rtl,
+
+    clx;
+
+end.
+
+resourcestring//ResourceString is used to declare resource strings, which can be used within the declared structure.
+
+ResourceString
+
+　CreateError ='Cannot create file %s';
+
+　OpenError ='Cannot open file %s';
+
+　LineTooLong ='Line too long';
+
+　ProductName ='Borland Rocks';
+
+　SomeResourceString = SomeTrueConstant;
+
+Safecall//Safecall is a type of function calling convention, which stipulates the rules and rules that must be followed by functions called by COM.
+
+//At compile time, the function declared by Safecall is compiled into COM interface compatible.
+
+procedure X(s: WideString); safecall;
+
+//becomes:
+
+procedure X(s: PAnsiString);
+
+The set//Set keyword is used to declare a collection class, and the collection class allows operation with set operators, such as in.
+
+type
+
+　TCol = (cA,cB,cC);
+
+　TCols = set of TCol;
+
+//Allow use of plus and minus symbols to add or delete a collection element during operation
+
+var
+
+　Cols: Tcols;
+
+begin
+
+　Cols := Cols + [cA,cB];
+
+end;
+
+shl//SHL means shift to the left, and the number of bits shifted to the left is multiplied by a power of 2.
+
+var
+
+　x: Integer;
+
+begin
+
+　X := 2 shl 3; {16}
+
+end;
+
+shr//SHR means shift to the right, the number of bits shifted to the right is divided by a power of 2.
+
+var
+
+　x: Integer;
+
+begin
+
+　X := 16 shr 2; {4}
+
+end;
+
+Stdcall//Stdcall is a type of function calling convention, which stipulates the rules that functions that can be called by the program should be followed.
+
+//The Stdcall keyword must form a pairing between the caller and the callee.
+
+//For example, the called party function:
+
+Library Demo;
+
+function X(i: Integer): Integer; stdcall;
+
+begin
+
+　Result := i * 2;
+
+end;
+
+exports
+
+　X;
+
+begin
+
+end.
+
+//Main function:
+
+function X(i: Integer): Integer; stdcall; external 'Demo.dll';
+
+//At the same time, it should be noted that when using the Stdcall keyword, the called function is case sensitive, and it is extremely easy to make mistakes here.
+
+stored//Stored is used to indicate whether the value of an attribute can be retained. If True is specified, the assignment and undo operation of the attribute value is allowed.
+
+property Value: string read fValue write fValue stored True;
+
+string//String is a data type, it represents a string.
+
+var
+
+　Str: string;
+
+The then//Then keyword is used in the If statement. When the If condition is satisfied, the statement after Then is executed.
+
+var
+
+　a,b: Integer;
+
+begin
+
+　if a> b then
+
+　　WriteLn('a')
+
+　else
+
+　　WriteLn('b');
+
+end;
+
+threadvar//Threadvar identifies a variable created when the thread starts,
+
+//If you use Threadvar to declare a variable, you must manually release the space occupied by it before the end of the program.
+
+threadvar S: AnsiString;
+
+S := 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+S := '';
+
+//S :=''; That is, release the memory occupied by variable S.
+
+The to//To keyword is used in the For statement to indicate that the loop variable is incremented.
+
+for i := 10 to 100 do
+
+　ListBox1.Items.Add(IntToStr(i));
+
+//In the For statement, the To keyword is used to increase the loop variable, and the DownTo keyword is used to decrease it.
+
+The try//try statement is used for exception handling. For statements that may occur exceptions, they can be placed under the try structure to protect them from exceptions.
+
+try
+
+　i := StrToInt(s);
+
+except
+
+　ShowMessage('Error');
+
+end;
+
+The type//Type keyword is used to declare various objects, and the objects declared with the Type keyword are passed by reference when passed.
+
+type
+
+　TDemo = class
+
+　end;
+
+//type is also used to declare enumerated types or variables passed by reference.
+
+type
+
+　TCol = (cA,cB,cC);
+
+　TInt = Integer;
+
+unit//Unit identifies the beginning of the unit, and the basic structure of the unit is Unit...Interface...implementation...end.
+
+Unit Unit1;
+
+Interface
+
+　uses Classes;
+
+implementation
+
+end.
+
+//A complete unit must have Unit as the beginning.
+
+The until//Until keyword is used to determine the loop condition of the repeat loop structure,
+
+//If the loop condition is true, then exit the loop. Until must be used in conjunction with the repeat keyword.
+
+i := 0;
+
+repeat
+
+　sum := sum + i;
+
+　Inc(i);
+
+until(i >= 100);
+
+uses //Uses is used to refer to an external unit, and can use the public part of the unit.
+     //Uses statement is usually placed in the interface or implementation part of a unit.
+
+var //var keyword is used to declare a variable or object, and the variable declared by var is passed by value.
+
+varArgs  //  identifies the reference parameter, which must be used in conjunction with the Cdecl keyword to indicate that the function to be called is allowed to be passed by reference.
+
+while //While keyword is used to introduce the While loop statement, the loop condition is judged before the loop, and the loop is executed if the condition is true.
+
+with  //With keyword is used to group the same objects together. It can save a lot of repetitive code and make the code look simpler.
+
+write //Write is used to identify the member or method used for writing in the attribute.
+
+writeonly //writeonly keyword is used to identify whether an object is write-only.
+          //When writeonly is set to True, users are not allowed to read attributes and can only be operated through other objects.
+
+xor //Xor is used to take the exclusive OR. When the two operands are equal, it returns False, and when the operands are not equal, it returns True.
+    //Xor is also used to calculate the XOR value
+
+
+
+
+
+
+
+
+

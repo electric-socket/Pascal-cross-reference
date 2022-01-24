@@ -239,6 +239,7 @@ program imreg;
                        begin
                            Readln(Infile, Line);
                            inc(LineCount);
+                           inc(totalLines);
                            L := LowerCase(Line);
                            if (Pos('first_mm_imreg',L )>0)  then
                            begin

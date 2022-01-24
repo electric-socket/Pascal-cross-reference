@@ -32,13 +32,14 @@ var
 
 
 
+   Procedure TestMode;
    procedure SplitPath(const Path: UnicodeString; var Folder, Name, Ext: UnicodeString);
    // open a file where all we have is the name w/o path or extension
    Procedure OpenUnitFile(FName:UnicodeString);
    // this time we have a full file name
-   procedure OpenInputFile(Name:UnicodeString);
+   procedure OpenInputFile(FileName:UnicodeString);
    Procedure GetLine;
-
+   Procedure AllocateBuffer;
    Procedure InitPrintLine;                // process printing
 
 
@@ -79,7 +80,7 @@ end;
 
 
 // we have a whole file name, try to open
-procedure OpenInputFile(Name:UnicodeString);
+procedure OpenInputFile(FileName:UnicodeString);
 Var
 
      FolderIndex: NameRange;
@@ -96,40 +97,42 @@ begin
 
     with Buffer^ do
     repeat
-         if folderindex = 0 then // can't read if none there
+         if TopFolder = 0 then // can't read if none there
             NoFolder := TRUE
          Else
             Folder := FolderTable[FolderIndex];
 
          If Pos(Slashchar,Name )>0 then // if it's altrady marked with a path
          begin                          // don't add one
-             Buffer^.FullName :=  Name;
+             FullName :=  FileName;
              NoFolder := TRUE;
          end
          else
          begin
              if Folder <> '' then   // add path
                 Folder := Folder + SlashChar;
-             FullName := Folder + Name ;
+             FullName := Folder + FileName ;
          end;
-         Assign(Buffer^.F,Buffer^.FullName );
-         {$I-} Reset(Buffer^.F); {$I+}
-         Buffer^.Error :=  IOResult;  // IOResult is lost once read, so save it
-         if  Buffer^.Error = 0 then Exit;
+         Assign(F,FullName );
+         {$I-} Reset(F); {$I+}
+         Error :=  IOResult;  // IOResult is lost once read, so save it
+         if  Error = 0 then Exit;
          {$ifndef mswindows}
          // Additional attemptss for non-windows
 
          // repeat using all lower case
-         Buffer^.FullName := LowerCase(Buffer^.FullName);
-         Assign(Buffer^.F, Buffer^.FullName);
-         {$I-} Reset(Buffer^.F); {$I+}
-         if IOResult = 0 then Exit;
+         FullName := LowerCase(FullName);
+         Assign(F, FullName);
+         {$I-} Reset(F); {$I+}
+         Error :=  IOResult;  // IOResult is lost once read, so save it
+         if  Error = 0 then Exit;
 
          // repeat using all Upper Case
          Buffer^.FullName := UpperCase(Buffer^.FullName);
          Assign(Buffer^.F, Buffer^.FullName);
          {$I-} Reset(Buffer^.F); {$I+}
-         if IOResult = 0 then Exit;
+         Error :=  IOResult;
+         if  Error = 0 then Exit;
          {$endif}
          if nofolder then exit;
          Inc(FolderIndex);
@@ -281,8 +284,9 @@ end;
                Inc(InIndex);
                if InIndex > Len then
                begin  // comment continues on next line
-
-
+                   CompletePrintLine;
+                   GetLine;
+                   if EOF(F) then exit;
 
                end;
                if TextUC[Inindex] = C[1] then
@@ -441,14 +445,11 @@ end;
                      begin
                           Inc(InIndex); // Step over &
                           MakeIdent;    // collect ident
-                          Token := NONKEYWORD;  // protect from mistake as kw
+                          Token := NONKEYWORDTOK;  // protect from mistake as kw
                           Done := TRUE;      // exit loop
                      end;
             '/' : if NextCH='/' then // ignore / unless //
-                     Begin
-                         Inc(InIndex); // Step over /
-                         NewToken( ENDOFLINETOK );
-                     end;
+                     InIndex := Len; // Skip to end
             '#','0','1','2','3','4','5','6','7','8','9',
                '$' :  EatNum;
             ':' : IF NextCH <> '=' then
@@ -538,29 +539,36 @@ end;
        end; // Procedure CloseUnit
    end;
 
-// Given a unit name, begin processing
-Function ProcessUnit(UnitName: UnicodeString):integer;
+   Procedure AllocateBuffer;
 Var
-
     Temp: InPtr;
 
-begin  //*Function ProcessUnit;
+begin  //*Procedure AllocateBuffer
     If Buffer = NIL then // if this is the first unit
-       New(Buffer)
+    begin
+       New(Buffer);
+       Buffer^.Next := NIL;
+    end
     else
     begin // this is another unit
         New(Temp);
         Temp^.Next := Buffer;  // save the prior Buffer
         Buffer := Temp;
     end;
-    Buffer^.Error := 0;
+end;
+
+// Given a unit name, begin processing
+Function ProcessUnit(UnitName: UnicodeString):integer;
+begin  //*Function ProcessUnit;
+
+    Result := 0; // presume success
+    AllocateBuffer;
     OpenUnitFile(UnitName);
 
     if Buffer^.Error <> 0 then
     begin
         Writeln('? Unit ',UnitName,' not found');
-        Result := -2;
-        Exit;     // caller will release buffer
+        Exit(2);     // caller will release buffer
     end
     else
     With Buffer^ do
@@ -569,16 +577,57 @@ begin  //*Function ProcessUnit;
         begin   // empty file
             Writeln('? Unit ',UnitName,' empty');
             Close(F);
-            Result := -1;
-            Exit;
+            Exit(1);
         end;
         InitUnit;    //   Initialize this unit
     end;
-    Result := 1; // Syccess
 end ;
 
+   Procedure TestMode;
+   VAR
+        Tok: TokenType;
+         Id: UnicodeString;
+          I: Integer;
 
+   begin
+       Buffer := NIL;
+       AllocateBuffer;
+       ID := '';
+    with buffer^ do
+     begin
 
+       OpenInputFile('testtest.pas');
+
+       if error <>0 then
+       begin
+           Writeln('?Open Error ',error);
+           Write('*36 Press Enter: '); readln;
+
+           Exit;
+       end;
+       LineNumber := 0;
+       I := 0;
+       inindex := 1;
+       While Not EOF(F) do
+       begin
+           inc(I);
+           GetToken(Tok,ID);
+           Write(Tok,' ');
+           if ID<>'' then write('ID=',ID,' ');
+           if I>15 then
+           begin
+               writeln;
+               write(Linenumber:5,' ');
+               I := 0;
+           end;
+
+       end;
+       Writeln(' Completed, read ',LineNumber, ' lines');
+       write('*33 ?'); readln;
+       close(F);
+    end;
+
+   end;
 
 
 end.

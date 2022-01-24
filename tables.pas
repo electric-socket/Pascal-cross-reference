@@ -4,21 +4,22 @@
 // January 9, 2021
 // Copyright 2021 Paul Robinson
 // Licensed under GPL v2
-
+                                    
 // Tables,pas -  used for shared data structures
 unit Tables;
 
 {$mode ObjFPC}{$H+}
 interface
-Uses Windows;
-Const
+Uses Windows;  // Needed to define date vars
+
+const
+
+
     Months: array[1..12] of string[9]=
         ('January','February','March',   'April',   'May','     June',
          'July',    'August', 'September','October','November', 'December');
     Days: Array[0..6] of string[9]=
         ('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
-
-
 
     //  ** Identifier group **
 
@@ -32,19 +33,354 @@ Const
     // remainder of an identifier.
 
     Identmax  = 31;
-    upcase = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
+    alphaUC = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
                   'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
                   'Y', 'Z'];
-    locase = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
+    alphaLC = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
                   'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
                   'y', 'z'];
-     alphabet = upcase + locase;
+     alphabet = alphaUC + alphaLC;
      Underscore =  ['_'];
-     Identifier =   alphabet + Underscore ;
+     IdentScan =  alphabet + Underscore ;   // used for scan; includes lowercase
+     IdentSearch =  alphaUC + Underscore ;  // user for seaech; uppercase only
+
      digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-     alphanums = Identifier + digits + Underscore + Underscore +
+     alphanum = IdentScan + digits + Underscore + Underscore +  // for scan
                 (* 4 spares *)  Underscore + Underscore ;
+     alphanumU= IdentSearch + digits + Underscore + Underscore +  // for search
+                (* 4 spares *)  Underscore + Underscore ;
+
 type
+     TokenType =(
+        // State indicators
+            EMPTYTOK,        // no symbol yet; this is used as
+                             // start of symbol search range
+        // Delimiters
+        // Note on delimiters: they will be added to the keyword table, with
+        // two consecutive characters checked; then the first one is; so
+        // double characters, .. := (* etc. must appear before the single one
+            ADDRESSTOK,      // @
+            AMPERSANDTOK,    // &
+            BCOMMENTTOK,     // { OPEN BRACE COMMENT
+            BCOMMENTENDTOK,  // } CLOSE BRACE COMMENT
+            BCOMMENT1TOK,    // { Optional comment 1
+            BCOMMENT1ENDTOK, // } Closure            
+            BCOMMENT2TOK,    // { Optional comment 2
+            BCOMMENT2ENDTOK, // } Closure
+            BCOMMENT3TOK,    // { Optional comment 3
+            BCOMMENT3ENDTOK, // } Closure
+            BCOMMENT4TOK,    // { Optional comment 4
+            BCOMMENT4ENDTOK, // } Closure
+            BCOMMENT5TOK,    // { Optional comment 5
+            BCOMMENT5ENDTOK, // } Closure
+            COMMENTTOK,      // (*
+            COMMENTENDTOK,   // *)
+            CBRACKETTOK,     // ]
+            DCBRACKETTOK,    // .) OLD STYLE [
+            DOBRACKETTOK,    // (. OLD STYLE [
+            DOUBLEDOTTOK,    // .. (Can't be RANGETOK  as must come before PERIOD )
+            BECOMESTOK,      // :=
+            BOOLLETOK,       // <= These three are Named
+            BOOLNETOK,       // <> so these symbols come
+            BOOLGETOK,       // >= before the single char
+            COLONTOK,        // :
+            COMMATOK,        // ,
+            CPARENTOK,       // )
+            DBLSLASHTOK,     // // This item must come before DIVTOK
+            DEREFERENCETOK,  // ^
+            DIVTOK,          // /
+            DOLLARTOK,       // $
+            EQTOK,           // =
+            GTTOK,           // >
+            HASHTOK,         // #
+            LTTOK,           // <
+            MINUSTOK,        // -
+            MULTOK,          // *
+            OBRACETOK,       // [
+            OPARENTOK,       // (
+            PERIODTOK,       // .
+            PLUSTOK,         // +
+            QUOTETOK,        // '
+            SEMICOLONTOK,    // ;
+            CCNONETOK,      // used as start of conditionals
+        // conditional compilation tokens
+            CCDEFINETOK,    // $DEFINE
+            CCELSETOK,      // $ELSE  
+            CCELSEIFTOK,    // $ELSEIF
+            CCENDIFTOK,     // $ENDIFE
+            CCI,            // $I[NCLUDE]
+            CCIFTOK,        // $IF
+            CCIFDEFTOK,     // $IFDEF
+            CCIFNDEFTOK,    // $IFNDEF
+            CCINCLUDE,      // $INCLUDE
+            CCINCLUDEPATH,  // $INCLUDEPATH
+            CCUNDEFTOK,     // $UNDEF
+            cclast,         // sentinel for end
+        //  Keywords
+          // marker for keywords starting with a
+            ABSOLUTETOK,      // ABSOLUTE
+            ANDTOK,           // AND
+            AND_THENTOK,      // AND_THEN
+            ARRAYTOK,         // ARRAY
+            ASTOK,            // AS
+            ASMTOK,           // ASM
+          // marker for keywords starting with b   
+            BEGINTOK,         // BEGIN
+            BITPACKEDTOK,     // BITPACKED
+          // marker for keywords starting with c                 CASETOK,          // CASE
+            CLASSTOK,         // CLASS
+            CONSTRUCTORTOK,   // CONSTRUCTOR
+            CONSTTOK,         // CONST
+            CPPCLASSTOK,      // CPPCLASS
+          // marker for keywords starting with d
+            DESTRUCTORTOK,    // DESTRUCTOR
+            DISPINTERFACETOK, // DISPINTERFACE
+            IDIVTOK,          // DIV
+            DOTOK,            // DO
+            DOWNTOTOK,        // DOWNTO
+          // marker for keywords starting with e
+            ELSETOK,          // ELSE
+            ENDTOK,           // END
+            EXCEPTTOK,        // EXCEPT
+            EXPORTSTOK,       // EXPORTS
+            EXTERNALTOK,      // EXTERNAL
+          // marker for keywords starting with f
+            FILETOK,          // FILE
+            FINALIZATIONTOK,  // FINALIZATION
+            FINALLYTOK,       // FINALLY
+            FORTOK,           // FOR
+            FUNCTIONTOK,      // FUNCTION
+          // marker for keywords starting with g     
+            GOTOTOK,          // GOTO
+          // marker for keywords starting with h
+          // marker for keywords starting with i
+            IFTOK,            // IF
+            IMPLEMENTATIONTOK,// IMPLEMENTATION
+            INHERITEDTOK,     // INHERITED
+            INITIALIZATIONTOK,// INITIALIZATION
+            INTOK,            // IN
+            INTERFACETOK,     // INTERFACE
+            ISTOK,            // IS
+          // marker for keywords starting with j
+          // marker for keywords starting with k
+          // marker for keywords starting with l       
+            LABELTOK,         // LABEL
+            LIBRARYTOK,	      // library
+          // marker for keywords starting with m
+            MODTOK,           // MOD
+            MODULETOK,        // MODULE  (EP)
+          // marker for keywords starting with n    
+            NILTOK,           // NIL
+            NOTTOK,           // NOT
+          // marker for keywords starting with o   
+            OBJECTTOK,        // OBJECT
+            OFTOK,            // OF
+            OPERATORTOK,      // OPERATOR
+            ORTOK,            // OR
+            OR_ELSETOK,       // OR_ELSE
+            OTHERWISETOK,     // OTHERWISE  (EP,FP)
+          // marker for keywords starting with p      
+            PACKEDTOK,        // PACKED
+            PROCEDURETOK,     // PROCEDURE
+            PROGRAMTOK,       // PROGRAM
+            PROPERTYTOK,      // PROPERTY
+          // marker for keywords starting with q
+          // marker for keywords starting with r  
+            RAISETOK,         // RAISE
+            RECORDTOK,        // RECORD
+            REMTOK,           // REM (VSI)
+            REPEATTOK,        // REPEAT
+            RESOURCESTRINGTOK,  // RESOURCESTRING
+            RETURNTOK,        // RETURN   (VSI)
+         // marker for keywords starting with s  
+            SELFTOK,          // SELF
+            SETTOK,           // SET
+            SHLTOK,           // SHL
+            SHRTOK,           // SHR
+            STDCALLTOK,       // STDCALL
+         // marker for keywords starting with t  
+            THENTOK,          // THEN
+            THREADVARTOK,     // THREADVAR
+            TOTOK,            // TO
+            TRYTOK,           // TRY
+            TYPETOK,          // TYPE
+         // marker for keywords starting with u     
+            UNITTOK,          // UNIT
+            UNTILTOK,         // UNTIL
+            USESTOK,          // USES
+         // marker for keywords starting with v
+            VARTOK,           // VAR
+            VIRTUALTOK,       // VIRTUAL
+         // marker for keywords starting with w
+            WHILETOK,         // WHILE
+            WITHTOK,          // WITH
+         // marker for keywords starting with x
+            XORTOK,           // XOR
+         // marker for keywords starting with Y
+         // marker for keywords starting with Z
+            lastkW,           // used as sentinel
+
+            IDENTTOK,         // Used to indicate ordinary identifier
+            NONKEYWORDTOK,    // Protected identifier (Potential keyword protected by &)  
+            MODIFIERTOK,      // Item is modifier
+            ENUMTOK,	      // Enumerator
+            ENUMVALUETOK,     // Enumerator value
+
+          // these are not reserved words but modifiers; used as keywords
+          // in certain contexts
+            emptymod,           // no mod
+            ABSTRACTMOD,	// ABSTRACT
+            ALIASMOD,		// ALIAS
+            ASSEMBLERMOD,	// ASSEMBLER
+            CDECLMOD,		// CDECL
+            CPPDECLMOD,		// CPPDECL
+            CVARMOD,		// CVAR
+            DEFAULTMOD,		// DEFAULT
+            DEPRECATEDMOD,	// DEPRECATED
+            DYNAMICMOD,		// DYNAMIC
+            ENUMERATORMOD,	// ENUMERATOR
+            EXPERIMENTALMOD,	// EXPERIMENTAL
+            EXPORTMOD,		// EXPORT
+            EXTERNALMOD,	// EXTERNAL
+            FARMOD,		// FAR
+            FAR16MOD,		// FAR16
+            FORWARDMOD,		// FORWARD
+            GENERICMOD,		// GENERIC
+            HELPERMOD,		// HELPER
+            IMPLEMENTSMOD,	// IMPLEMENTS
+            INDEXMOD,		// INDEX
+            INTERRUPTMOD,	// INTERRUPT
+            IOCHECKMOD,		// IOCHECK
+            LOCALMOD,		// LOCAL
+            MESSAGEMOD,		// MESSAGE
+            NAMEMOD,		// NAME
+            NEARMOD,		// NEAR
+            NODEFAULTMOD,	// NODEFAULT
+            NORETURNMOD,	// NORETURN
+            NOSTACKFRAMEMOD,	// NOSTACKFRAME
+            OLDFPCCALLMOD,	// OLDFPCCALL
+            OVERLOADMOD,	// OVERLOAD
+            OVERRIDEMOD,	// OVERRIDE
+            PASCALMOD,		// PASCAL
+            PLATFORMMOD,	// PLATFORM
+            PRIVATEMOD,		// PRIVATE
+            PROTECTEDMOD,	// PROTECTED
+            PUBLICMOD,		// PUBLIC
+            PUBLISHEDMOD,	// PUBLISHED
+            READMOD,		// READ
+            REGISTERMOD,	// REGISTER
+            REINTRODUCEMOD,	// REINTRODUCE
+            RESULTMOD,		// RESULT
+            SAFECALLMOD,	// SAFECALL
+            SAVEREGISTERSMOD,	// SAVEREGISTERS
+            SOFTFLOATMOD,	// SOFTFLOAT
+            SPECIALIZEMOD,	// SPECIALIZE
+            STATICMOD,		// STATIC
+            STDCALLMOD,		// STDCALL
+            STOREDMOD,		// STORED
+            STRICTMOD,		// STRICT
+            UNALIGNEDMOD,	// UNALIGNED
+            UNIMPLEMENTEDMOD,	// UNIMPLEMENTED
+            VARARGSMOD,		// VARARGS
+            VIRTUALMOD,		// VIRTUAL
+            WINAPIMOD,		// WINAPI
+            lastmod,            // also no mod
+            lasttok             // Table setinel
+          );
+
+{ These are not keywords
+
+            CONSTPTOK,        // Procedural CONST signature item
+            VARPTOK,          // var in procedural signature
+            VALUETOK,         // value procedural signature
+            STRINGTOK,        // STRING  }
+
+          KeywordTypeList =(  // keyword and modifier chatacteristics
+            NoActDec,           //< words having no action for
+                                //< our purposes: array, to, of, in, etc
+                                //< most keywords will have this setting
+            ElemDec,            //< const, type, or var section, is
+                                //< released by:
+                                //<  implementation when interface ends
+                                //<  procedure, function in open code
+                                //<  begin in proc/func
+            ClearElemDec,       //< This keyword clears ElemDec flag
+
+           // These all start a block when found ; closed by
+            UnitLibProgDec,     //< unit, library, or program header
+            InterDec,           //< interface declaration
+            impDec,             //< implementation declaration
+            pfdec,              //< procedure or funcrion
+            BlockDec,           //< any block
+            CaseDec,            //< Case stmt
+            structdec,          //< Record, Object or class
+            nxstmtDec,          //< has next statement effect: probably
+                                //< "do" as used in for, while, with, etc.
+            closureDec,         //< This keyword closes some block or structure
+            usesDec,            //< uses clause
+            // Modifiers
+            genMod,             //< general modifier
+            prepfmod,           //< modifier used before procedural header
+                                //< proc, func, property or method
+            postpfmod,          //< modifier used after procedural
+            varmod,             //< only in VAR declaration
+            classmod,           //< only in a CLASS
+            objectmod,          //< only in an OBJECY
+            isforwardmod,       //< "FORWARD"
+            isexternalmod       //< "EXTERNAL"
+       );
+
+
+       StateCond =(
+              NoState,         // Not in a state
+              inProgram,       // program
+              inUnit,          // unit found
+              inLibrary,       // library
+              inUses,          // uses stmt
+              inInterface,     // Which part (carries to succeeding statements)
+              inImplementation,
+              inConstDec,         // CONST, TYPE, VAR declaration
+              inTypeDec,
+              inVarDec,
+              inforward,       // FORWARD
+              inExternal,      // EXTERNAL
+              inProcedure,     // Proc, Func, etc. (carries forward
+              inFunction,      //                   until closed)
+              inConstructor,
+              inDestructor,
+              inProperty,
+              inRecord,        // block types
+              inObject,
+              inClass,
+              inGeneric,       // defining a generic (template)
+              inOneStmt,       // this affects the next statement
+              inWith,          // a with statement is in effect (will
+                               // carry over to block or stmt following
+              inBegin,         // begin-end block
+              inRepeat,        // repeat-until block
+              inTry,           // try-finally block
+              inIgnore,        // block where we should ignore code (ASM-END)
+              inCase,          // case-end but not record case (that is
+                               // closed with the end statement on record)
+              condIf,          // we are currently in a
+                               // successful {@IF ditective
+              condElse         // we are currently in the {$ELSE part
+                               // of a no-match {$IF directive
+              );
+
+
+
+          TokenRecord = Record
+                  Key: String[18];               // string token consists of
+                 Kind: Set of KeywordTypeList;   // what it carries
+                State: StateCond;                // what ir does
+              Closure: TokenType;                // what closes it
+
+          end;
+
+
+
+
 
      IdentSize = 1..Identmax;     // 26 letters + _ + 4 spares
 
@@ -64,7 +400,7 @@ const
      SlashChar = '/'; // Your system's directory separator,
                       // \ on windows; / on unix, linux, etc
      QuoteChar = ''''; // what commands or file names containing
-                      // spaces are quotrd with
+                      // spaces are quoted with
      {$ENDIF}
 
      // Size of largest variant in Item in 32/64-bit words
@@ -74,60 +410,17 @@ const
             DummyMax =12;
      {$ENDIF}
 
-
-type
-     TokenType =(
-       // State indicators
-            EMPTYTOK,        // no symbol yet
-
-            EOFTOK,          // end of file during buffered read
-            ENDOFLINETOK,    // end of line or // found
-
-        // Delimiters
-            OPARENTOK,       // (
-            CPARENTOK,       // )
-            MULTOK,          // *
-            PLUSTOK,         // +
-            COMMATOK,        // ,
-            MINUSTOK,        // -
-            PERIODTOK,       // .
-            DIVTOK,          // /
-            HASHTOK,         // #
-            DOLLARTOK,       // $
-            COLONTOK,        // :
-            SEMICOLONTOK,    // ;
-            ADDRESSTOK,      // @
-            OBRACKETTOK,     // [
-            CBRACKETTOK,     // ]
-            DEREFERENCETOK,  // ^
-            AMPERSANDTOK,    // &
-            EQTOK,           // =
-            LTTOK,           // <
-            GTTOK,           // >
-            RANGETOK,        // ..
-            BECOMESTOK,      // :=
-            LETOK,           // <=
-            NETOK,           // <>
-            GETOK,           // >=
-            KEYWORDTOK,      // Item is keyword
-            MODIFIERTOK,     // Item is modifier
-            NONKEYWORD,      // Poyential keyword protected by &
-            IDENTTOK         // Identifier not recognized
-       );
+     DigitZero = ORD('0');
 
 
-     TokenEntry = Record
-           CH: WideChar;
-           SY: TokenType;
-     end;
 
-
+TYPE
      InPtr = ^InputBuffer;
      InputBuffer = Record
             Next: InPtr;                 //< prior buffer
-            F: Text;                     //< File being read
+
             InIndex,                     //< Index in string
-            Len:Integer;                 //< Length of string
+            Len,                         //< Length of string
 
             Error,                       //< Error opening file if nonzero
             Position,                    //< position on text line
@@ -142,6 +435,7 @@ type
             Folder,                      //< folder it's in, null if none
             Name,                        //< name excluding extension
             Ext: UnicodeString;          //< extension if any
+            F: Text;                     //< File being read
      end;
 
      OutputBuffer = Record
@@ -218,45 +512,104 @@ type
                                          //< is generated to a separate file
      end;
 
-     NameRange = 1..NameMax; // max. folders or exyensions
+     NameRange = 0..NameMax; // max. folders or exyensions
+
+      // ** Symbol Table items **
+
+     LineP       = ^LineType;
+     ItemP       = ^Item;                      // symbol table item
+
+     PROCCALLTY  = ^PROCCALL;
+     PROCSTRUCTY = ^PROCSTRUC;
+
+     LineType = PACKED Record                    // DESCRIPTION OF LINE NUMBERS
+        LINENum : byte;                            // Line number
+        PAGENum : integer;                         // Page number
+        CONTLINK : LINEP                           // Nrxt linr number record
+     End;
+
+    { PROCCALL }
+
+    PROCCALL = PACKED Record           //< DESCRIPTION OF PROCEDURE/FUNCTION
+                                       //< CALL BY AND CALL TO
+        PROCNAME : ItemP;                     //< POINTER TO THE CORRESPONDING
+                                              //< IDENTIFIER RECORD
+        PrevCallBy,                           //< Ptr to prior calling proc
+        NextCallBy,                           //< Ptr to next calling proc
+        PREVCALL,                             //< Ptr to prior called proc
+        NEXTCALL : PROCCALLTY;                //< Ptr to next called p-roc
+        FIRST,                                //< LINE NUMBER RECORD FOR
+                                              //< THE FIRST CALL
+        LAST : LineP                          //> LINE NUMBEER RCORD FOR
+                                              //< THE LAST CALL
+    End;
+
+    ObjectCall = PACKED Record
+        ObjectName: ItemP;
+
+    end;
+
+    PROCSTRUC = PACKED Record           //< DESCRIPTION OF PROCEDURE NESTING
+      PROCNAME : ItemP;                    //< POINTER TO THE
+                                           //< ASSOCIATED IDENTIFIER
+      PREVPROC,                            //< Ptrs to prior nested proc
+      NEXTPROC : PROCSTRUCTY;              //< POINTER TO THE NESTED PROCEDURE
+                                           //< DECLARED NEXT
+      PROCLEVEL,                           //< NESTING DEPTH OF PROCEDURE
+      DeclLine,                            //< PROCEDURE DECLARATION LINE NUMBER
+                                           //< (Interface or forward)
+      DefLine,                             //< PROCEDURE DEFINITION LINE NUMBER
+                                           //< (Place where actual header is)
+      BeginLine,                           //< Line No. of first BEGIN
+      EndLine: byte;                       //< Line No. of last END
+      DeclPage,                            //< PROCEDURE DECLARATION PAGE NUMBER
+      DefPage,                             //< PROCEDURE DEFINITION PAGE NUMBER 
+      BeginPage,                           //< Page No. of first BEGIN
+      EndPage: Integer;                    //< Page No. of last END
+    End;
 
 
 // base types
 
 // this only concerns identifier vslues;
 // procedutal types are encapsulated elsewhere
-Datatype= (notype,     // not a base type
-           enumGroup,  // name of enumerator list
-           EnumType,   // enumerated value,
-           boolType,   // boolean
-           bytetype,   // 8-bit integer
-           charType,   // 8-bit character
-           wordType,   // 16-bit integer
-          wcharType,   // 16-bit char
-            intType,   // 32-bit integer
-           realtype,   // 32-bit real
-         singleType,   // single
-         DoubleType,   // double precision real
-          int64Type,   // 64-bit int
-        ExtendedType,  // 80-bit real
-           pointerType,// address
-           setType,    // set
-           ArrayType,  // general array
-           stringType, // array of char with length
-           AnsStrType, // Ansistring
-           uniStrType, // unicodeString
-           RecordType, // record
-           objectType, // object
-            ClassType, // class
-         TemplateType, // template
-            FileType); // file
-
+Datatype= (notype,     //< not a base type     This must be first
+           enumGroup,  //< name of enumerator list
+           EnumType,   //< enumerated value,
+           boolType,   //< boolean
+       ShortIntType,   //< signed 8-bit int
+           bytetype,   //< 8-bit unsignrd integer
+           charType,   //< 8-bit character
+       SmallintType,   //< 16-bit signed integer
+           wordType,   //< 16-bit unsigned integer
+          wcharType,   //< 16-bit char
+       CardinalType,   //< 32-bit unsigned
+           LongType,   //< 32-bit unsigned integer
+            IntType,   //< Integer (compiler dependent)
+           realType,   //< real
+         singleType,   //< single
+         DoubleType,   //< double precision real
+          int64Type,   //< int64
+        ExtendedType,  //< 80-bit real
+           pointerType,//< address
+           setType,    //< set
+           ArrayType,  //< general array
+           stringType, //< array of char with length
+           AnsStrType, //< Ansistring
+           uniStrType, //< unicodeString
+           RecordType, //< record
+           objectType, //< object
+            ClassType, //< class
+         TemplateType, //< template
+            FileType); //< file        This must be last
 
         UnitP = ^UnitRecord;
         useP= ^UserUsed;     // list of user and used
-        ItemP = ^Item; // symbol table item
-        UserUsed = record
+
+        UserUsed = record   // list of units
                        this: unitp;  // this unit's pointer
+                       inInterface,
+                       inImplementation: Boolean;
                        next: UseP;   // next usage pointer
                    end;
         UnitRecord = record
@@ -264,80 +617,37 @@ Datatype= (notype,     // not a base type
                      FileName: ansistring; // file used
                      isDeclared,           // someone refeenced it
                      isfinished: boolean;  // we've read it through
-                     usedby,               // units used by
-                     UserOf: UserUsed;     // uses other units
-                     GlobalTable,          // interface items
+
+                     // I probably don't neef these two,
+                     // nuy I'll hold onto them for now
+                     FIRST ,               //< Pointer to first line number record
+                     LAST  : LineP;        //< Pointer to last line number record
+                     Prev,                 //< Pointer to bottom of alphabetical list of units
+                     Next:  Unitp;         //< Pointer to top of alphabetical list of units
+                     usedby,               //< pointer to list of units
+                                           //< this unit is used by
+                     UserOf: UserUsed;     //< pointer to list of units
+                                           //< this unit uses
+                     GlobalTable,          //< interface items
                      LocalTable:ItemP;     // implementation items
                      end;
 
 
-    StateCond = (NoState,         // Not in a state
-                 inProgram,       // program
-                 inUnit,          // unit found
-                 inLibrary,       // library
-                 inInterface,     // Which part (carries to succeeding statements)
-                 inImplementation,
-                 inConst,         // CONST, TYPE, VAR declaration
-                 inType,
-                 inVar,
-                 inforward,       // FORWARD
-                 inExternal,      // EXTERNAL
-                 inProcedure,     // Proc, Func, etc. (carries forward
-                 inFunction,      //                   until closed)
-                 inConstructor,
-                 inDestructor,
-                 inProperty,
-                 inRecord,        // block types
-                 inObject,
-                 inClass,
-                 inGeneric,       // defining a generic (template)
-                 inOneStmt,       // this affects the next statement
-                 inWith,          // a with statement is in effect (will
-                                  // carry over to block or stmt following
-                 inBegin,         // begin-end block
-                 inRepeat,        // repeat-until block
-                 inTry,           // try-finally block
-                 inIgnore,        // block where we should ignore code (ASM-END)
-                 inCase,          // case-end but not record case (that is
-                                  // closed with the end statement on record)
-                 condIf,          // we are currently in a
-                                  // successful {@IF ditective
-                 condElse         // we are currently in the {$ELSE part
-                                  // of a no-match {$IF directive
-                 );
 
-        KeywordType = (UndefKeyword, //< Three Guesses
-                       NoActDec,     //< words having no action for
-                                     //< our purposes: array, to, of, in, etc
-                                     //< most keywords will have this setting
-                       ElemDec,      //< const, type, or var section, is
-                                     //< released by:
-                                     //<  implementation when interface ends
-                                     //<  procedure, function in open code
-                                     //<  begin in proc/func
-                       ClearElem,    //< This keyword clears ElemDec flag
+        ConstVal = (strg, int, reel, bool);
+        ConstP =^ConstantTable;
+        ConstantTable = Record
+                     Next: ConstP;
+                     case val: Constval of
+                       Strg: (S: ^UnicodeString);
+                       int:  (I: Int64);
+                       Reel: (D: Double);
+                       Bool: (B: boolean)
+        end;
 
-                      // These all start a block when found ; closed by
-                       unitprogDec,  //< unit, module, libtary, or
-                                     //< program header ; end
-                       InterDec,     //< interface declaration  ; implemetation
-                       impDec,       //< implementation declaration ; end
-                       pfdec,        //< procedure or funcrion
-                       BlockDec,     //< any block
-                       CaseDec,      //< Case stmt
-                       structdec,    //< Record, Object or class
-                       nxstmtDec,    //< has next statement effect: probably
-                                     //< "do" as used in for, while, with
-                       closureDec,   //< This keyword closes some block or structure
-                       usesDec,      //< uses clause
-                       genMod,       //< general modifier
-                       prepfmod,     //< modifier used before procedural header
-                                     //< proc, func, property or method
-                       postpfmod     //< modifier used after procedural
-                  );
 
                    // info bits
-        MajorKind= ( NothingAtAll,         //< default, unassignef
+        MajorKind= ( NothingAtAll,         //< default, unassigned
                      inVisible,            //< not visible in cross-reference
                                            //< used for placeholder or
                                            //< "dummy" items
@@ -345,12 +655,11 @@ Datatype= (notype,     // not a base type
                      refonly,              //< list only if requested to
                                            //< show usage of standard items
                                            //< used (for predefined items)
-
-                     stdPF,                //< standard procedure/funcrion
+                     stdkind,              //< standard item
                                            //< as opposed to a const/type/var
                      predefined,           //< stystem or user predefined
                                            //< has no definition location
-                     compilerdefined,      //< predefined by compiler
+                     compdef,      //< predefined by compiler
                                            //< or by this program
                      AboveTheLine,         //< in interface
                      isLocal,              //< identifier declared within p/f
@@ -375,23 +684,51 @@ Datatype= (notype,     // not a base type
                      // record, object and class are in SizeType
                      ConstrKind,            //< constructor
                      DestrKind,             //< Destructor
-                     isUnit);               //< is a unit
+                     isProperty,            //< Property
+                     inVar,                 //< marked IN
+                     outVar,                //< marked OUT
+                     readVar,               //< marjed READ
+                     WriteVar,              //< marjed WRITE
+                     isPrivate,             //< explicit private
+                     isPublic,              //< explicit public   
+                     isLibrary,              //< if a unit is marked as library
+                     isProgram,             //< if the main program
+                     isUnit);              //< if a unit
 
          IdentType = (UnusedType,           //< For initializing the variant
                       proceduralType,       //< proc, func, method, prop, cons, destr
                       SignatureType,        //< argument of procedural type
-                      ElementType,          //< const, type, var
-                      UnitType,             //< unit or program
-                      PreUnit,              //< predefined unit
+                      ElementType,          //< type, var
+                      ConstType,            //< constant
+                      UnitType,             //< unit, library, or program
+                      PredefUnit,           //< predefined unit
                       StructureType,        //< structure: template, class,
                                             //< object, record etc.
-                      isKeywordType,        //< action
-                      ModifierType,         //< modifies keyword
-                      PredefinedType);      //< predefined by system or other units
-
-         LineP = ^LineTable;                //< list of line number usage
+                      PredefinedType);      //< predefined by system
+                                            //< or other units
 
          signatureP = ^Signature;           //< proc/func arge
+
+         // We don't necessarily care about the names of the
+         // arguments in a proc/func call; what we want is. since
+         // ptocedurals can be polymotphic (different proc/func having
+         // the same name but with different arguments), what we want is
+         // where there are multile ptocedutal items where the routine
+         // has the same name, and the type of the arhuments are
+         // identical, not necessarily the names of the arguments/
+         // Which brings up a question; if there ate two procs, same
+         // mame but all default items, which is used?
+         Signature= record
+                 BaseType: ItemP;           //< type of this arg
+                     Next: SignatureP;      //< next arg
+         end;
+
+         // used for WITH statements
+         WithP = ^WithRec;
+         WithRec = record
+               ThisWith: ItemP;
+               Prev: WithP;
+         end;
 
          StateP = ^State;
          State  = Record            //< Our running state
@@ -399,70 +736,85 @@ Datatype= (notype,     // not a base type
                 closer: string;     //< if in block, symbol we watch for
                                     //< to close it
                 BlockCount:integer; //< If in a block, how deep.
-                WithCount: byte;    // if the with stmt had multiple records,
-                                    // (or multiple With statements) number
+                Withlist: WithP;    //< when in WITH, which one
+                WithCount:integer;  //< (or multiple With statements) number
                 prev: StateP;       // if we are in a block, pointer to
                                     // state to return to
          end;
 
-         // Size of largest variant in Item in 32/64-bit words
+         // Size of largest variant in Item record in 32/64-bit words
          DummySize = 1 .. DummyMax;
 
-         Item = record                      //< identifier record  "Symbol Table"
+         Item = record                  //< identifier record  "Symbol Table"
                       Abbrev,               //< optional Short name
                       NameUC,               //< Upper case copy of Name
                       Name: ansistring;     //< its name as given
                       Index,                //< Identifier Serial Number
-                      Count,                //< Usage count
-                      DefPage,              //< page where it's defined
-                      DefLine: Integer;     //< Line # or line # in Defpage
-                      Usage: LineP;         //< Places where it's used
-                      UnitIn: UnitP;        //< Unit it's in
-                      Owner,                //< If in record, class of
-                                            //< object, which one
-                      LPS,                  //< chain of "lastProcStanding"
-                                            //< links for nested procedures
-                                            //< (see comment on that variable)
+                      Count:Integer;        //< Usage count
 
-                      // enclosure: immediate container: record, object,
-                      // class or procedural
+                      UnitIn: UnitP;        //< Unit it's in or its own unit record
+                      Owner,                //< Immediate enclosute of this
+                               //< identifier, either (in ascending order):
+                               //< record, class, or object;
+                               //< proc or func nested inside anotherl
+                               //< unit, library or main progtam (these
+                               //< last ones have no owner, or unit
+                               //< owner is main)
+
+                      // these cover idents in owner: idents in unit, in proc;
+                      // firlds in record; proc, prop, method, func in
+                      // class or object
+
                       PrevInPlace,          //< Prior item this enclosure
+                      // (Unit, Procedural, Object, ot Class )
                       NextInPlace,          //< Next item this enclosure
-                      PrevTotal,            //> Prior item in global symbol list
+                      PrevTotal,            //< Prior item in global symbol list
                       NextTotal: ItemP;     //< Next item in global symbol list
+                      FIRST ,               //< Pointer to first
+                                            //< line number record
+                      LAST  : LineP;        //< Pointer to last
+                                            //< line number record
                       DT: Datatype;         //< what it uses
                       Kind: set of Majorkind;      //< statistics
-                      case What: identType of      //< what it is
-                        proceduralType:
-                     ( SigCount: integer;     //< number of signatures
-                            SignatureList: SignatureP; //< signature items
-                            LocalTable,             //< List of local vars
-                            ResultType: ItemP);     //< type if function or nil
 
-                        SignatureType:
-                           ( NextSignature: SignatureP;); //< next arg of p/f
+                  // Variant part
+                   case What: identType of  //< what it is
 
-                        ElementType:                    //< elements: const, type. var
-                           ( NextField: ItemP);         //< if a field in record
-                                                        //< class, or object next one
-                                                        //< Our "owner" points to record
+               proceduralType:              //< proc, func, method, property
+                        ( SigCount: integer;       //< number of signatures
+                     SignatureList: SignatureP;    //< signature items
+                            CALLED,                //< POINTER TO THE FIRST
+                                                   //< PROCEDURE CALLED BY IT
+                          CALLEDBY: PROCCALLTY;    //< POINTER TO FIRST
+                                                   //< CALLING PROCEDURE
+                         ProcFirst,                //< Pointer to first line
+                                                   //< number record
+                          ProcLast: LineP;         //< Pointer to last line
+                                                   //< number record
+                        LocalTable,                //< List of local vars
+                        ResultType: ItemP);        //< type if function or nil
+                                                   //< if proc
 
-                        StructureType:                  //< structure: templ, obj, rec
-                          ( Child: ItemP);              //< Structure it encapsulates
-                                                        //< this is pointed back thru
-                                                        //< "owner" field
+                SignatureType:              // procedure/function arguments
+                   ( NextSignature: SignatureP;);  //< next arg of p/f
 
-                        isKeywordType, ModifierType:    //< Keywords and modifiers
-                        (    Closedby:ItemP;            //< If this starts a block
-                                                        //< what closes it
-                             KW: KeywordType;           //< what it does
-                             StateChange: StateCond;    //< if it chnages
-                                                        //< our state
-                             KeyWordClass,              //< What class of
-                                                        //< keyword is it
-                             Specials: word);           //< Special instrucrions
+                  ElementType:        //< elements: const, type. var
+                       ( NextField: ItemP);        //< if a field in record
+                                                   //< class, or object,
+                                                   //< next one; our "owner"
+                                                   //< points to record
 
-                        PreUnit, UnitType:              //< Unit details
+                    ConstType:        //< To use constants in conditional
+                            ( Valu: ConstP);       //< compilation, have to
+                                                   //< save value while in scope
+
+                StructureType:        //< structure: template, obj, class, rec
+                          ( Child: ItemP);         //< Structure it encapsulates
+                                                   //< this is pointed back thru
+                                                   //< "owner" field
+
+                   PredefUnit,        //< predefined or tegular unit details
+                     UnitType:
                            ( Status: UnitP;             //< what has happened
                              Dotted: boolean;           //< is this a "dotted"
                                     //< unit (effectively a subunit or "record"
@@ -487,44 +839,22 @@ Datatype= (notype,     // not a base type
                       NextinUnitLocal,      //< Next item in implementation
                                             //< this unit
                     }
-                             PrevInUnit,                //< prior itrm in unit
-                             NextinUnit,                //< next item in unit
-                             ParentUnit,                //< if we are a
-                                                        //< dotted unit
-                            { Don't need this; use "owner" field
-                             SiblingUnit,              //< If regular unit, nil
-
-                                  // if a child unit, next one on chain
-                             }
-                             ChildUnit: ItemP);
-
-                             UnusedType:       // Take at least as much room
-                                               // as the largest other
-                                               // variant to INIT can zero it
+                        PrevInUnit,         //< prior itrm in unit
+                        NextinUnit,         //< next item in unit
+                        ParentUnit,         //< if we are a dotted unit
+                            { Don't need these; use "owner" field
+                             SiblingUnit,   //< If regular unit, nil; if a
+                                            //< child unit, next one on chain }
+                         ChildUnit: ItemP);
+                        UnusedType:         // Take at least as much room
+                                            // as the largest other
+                                            // variant to INIT can zero it
 {$IFDEF Bits32}
                             (  Dummy: Array[DummySize] of integer; );
 {$ELSE}
                             (  Dummy: Array[DummySize] of int64; );
 {$ENDIF}
-         end;
-
-         LineTable = record
-                          UsePage,              // page where it's used
-                          UseLine: Integer;     // Line # or line # in Defpage
-                          Next: LineP;
-         end;
-
-         Signature= record
-                        BaseType: ItemP;        // type of this arg
-                        Next: SignatureP;    // next arg
-         end;
-
-         WithP = ^WithRec;
-         // used for WITH statements
-         WithRec = record
-               ThisWith: Itemp;
-               Prev: WithP;
-         end;
+         end;  // Item record
 
          SearchType = (NoSearch,    // not started
                        TableEmpty,  // This particulae letter
@@ -537,9 +867,77 @@ Datatype= (notype,     // not a base type
                        SearchMatch);// Matching record; if more
                                     // than one, this is the first
 
-  // ** Symbol Table items **
 
-VAR
+ CONST
+      DataTypeNames: Array [notype..FileType] of String = (
+                   'unspecified type ',
+                   'enumerator ',
+                   'enumerated value ',
+                   'boolean ',
+                   'shortint (signed 8-bit int) ',
+                   'byte (unsigned 8-bit int) ',
+                   'char ',
+                   'smallint (16-bit signed int) ',
+                   'word (16-bit unsigned int) ',
+                   'widechar (16-bit char) ',
+                   'cardinal (32-bit unsigned int) ',
+                   'long (32-bit signed int) ',
+                   'Integer ',
+                   'real ',
+                   'single ',
+                   'double ',
+                   'int64 ',
+                   'extended (80-bit real) ',
+                   'pointer ',
+                   'set ',
+                   'array ',
+                   'string',
+                   'ansistring ',
+                   'unicodestring ',
+                   'record ',
+                   'object ',
+                   'class ',
+                   'template ',
+                   'file ');
+
+      MajorKindNames: array[NothingAtAll .. isUnit] of string =(
+              'undefined ',
+              'invisible ',
+              'base type ',             //< base type: char, integer etc.
+              'reference only ',            //< used (for predefined items)
+              'standard ',                //< standard procedure/funcrion
+              'predefined ',                                           //< has no definition location
+              'compiler defined ',
+              'in interface ',
+              'in proc/func ',              //< identifier declared within p/f
+              'case selector ',
+              'proc/func argument ',        //< args of proc/func
+              'temporary ',            //< temporary item for search
+              'declared before def ',
+              'defined ',
+              'procedure ',
+              'fuction ',
+              'const ',
+              'type ',
+              'var ',
+              'value ',
+              'field ',
+              'constructor ',
+              'destructor ',
+              'property ',
+              'in var ',                 //< marked IN
+              'out var ',
+              'read var ',
+              'write var ',
+              'private ',
+              'public ',
+              'library ',
+              'program ',
+              'unit'
+              );
+
+
+ VAR
      SearchResult: SearchType;
 
      { In order to make searches faster, I divide up the symbol table
@@ -566,20 +964,249 @@ VAR
      // if in WITH, which one
      WithTable: WithP;
 
-     // what we are doing - this is also a oush-down list
+     // what we are doing - this is also a push-down list
      StateTable: StateP;
 
-     // Bookkeeping
-     IdentifierCount: Integer = 0;
 
-     // pascal language variants
-     Lang_extended: boolean = true;   // extended Pascal
-     Lang_turbo: boolean = true;      // turbo Pascal
-     Lang_XD: boolean = true;         // XDPascal
-     Lang_Borland: boolean = true;    // Borland Pascal
-     Lang_object: boolean = true;     // object Pascal
-     Lang_Delphi: boolean = true;     // Delphi
-     Lang_FreePascal: boolean = true; // Free Pascal
+     Tokens: array [EmptyTok .. LastTok] of TokenRecord = (
+        ( Key: '';		Kind: [NoActDec];  State: NoState),		// Sentinel for start of list
+        ( Key: '@';		Kind: [NoActDec];  State: NoState),		// Address
+        ( Key: '&';		Kind: [NoActDec];  State: NoState),		// Ampersand
+        ( Key: '{';		Kind: [NoActDec];  State: NoState),		// Brace Comment
+        ( Key: '}';		Kind: [NoActDec];  State: NoState),		// closure
+        ( Key: '';		Kind: [NoActDec];  State: NoState),		// Optional Comment 1
+        ( Key: '';		Kind: [NoActDec];  State: NoState),		// closure
+        ( Key: '';		Kind: [NoActDec];  State: NoState),		// Optional Comment 2
+        ( Key: '';		Kind: [NoActDec];  State: NoState),		// closure             
+        ( Key: '';		Kind: [NoActDec];  State: NoState),		// Optional Comment 3
+        ( Key: '';		Kind: [NoActDec];  State: NoState),		// closure
+        ( Key: '';		Kind: [NoActDec];  State: NoState),		// Optional Comment 4
+        ( Key: '';		Kind: [NoActDec];  State: NoState),		// closure
+        ( Key: '';		Kind: [NoActDec];  State: NoState),		// Optional Comment 5
+        ( Key: '';		Kind: [NoActDec];  State: NoState),		// closure
+        ( Key: '(*';		Kind: [NoActDec];  State: NoState),		// Paren Star Comment
+        ( Key: '*)';		Kind: [NoActDec];  State: NoState),		// Comment End
+        ( Key: ']';		Kind: [NoActDec];  State: NoState),		// Close Bracket
+        ( Key: '.)';		Kind: [NoActDec];  State: NoState),		// Dot Bracket (Old School [ )
+        ( Key: '(.';		Kind: [NoActDec];  State: NoState),		// Dor Bracket End (Old School ] )
+        ( Key: '..';		Kind: [NoActDec];  State: NoState),		// Range
+        ( Key: ':=';		Kind: [NoActDec];  State: NoState),		// Becomes
+        ( Key: '<=';		Kind: [NoActDec];  State: NoState),		// LE
+        ( Key: '<>';		Kind: [NoActDec];  State: NoState),		// NE
+        ( Key: '>=';		Kind: [NoActDec];  State: NoState),		// GE
+        ( Key: ':';		Kind: [NoActDec];  State: NoState),		// Colon
+        ( Key: ',';		Kind: [NoActDec];  State: NoState),		// Comma
+        ( Key: ')';		Kind: [NoActDec];  State: NoState),		// Close Paren
+        ( Key: '//';		Kind: [NoActDec];  State: NoState),		// Double Slash
+        ( Key: '^';		Kind: [NoActDec];  State: NoState),		// Dereference
+        ( Key: '/';		Kind: [NoActDec];  State: NoState),		// Div
+        ( Key: '$';		Kind: [NoActDec];  State: NoState),		// Dollar
+        ( Key: '=';		Kind: [NoActDec];  State: NoState),		// EQ
+        ( Key: '>';		Kind: [NoActDec];  State: NoState),		// GT
+        ( Key: '#';		Kind: [NoActDec];  State: NoState),		// Hash
+        ( Key: '<';		Kind: [NoActDec];  State: NoState),		// LT
+        ( Key: '-';		Kind: [NoActDec];  State: NoState),		// Minus
+        ( Key: '*';		Kind: [NoActDec];  State: NoState),		// Mul
+        ( Key: '[';		Kind: [NoActDec];  State: NoState),		// Open Brace
+        ( Key: '(';		Kind: [NoActDec];  State: NoState),		// Open Paren
+        ( Key: '.';		Kind: [NoActDec];  State: NoState),		// Period
+        ( Key: '+';		Kind: [NoActDec];  State: NoState),		// Plus
+        ( Key: '''';		Kind: [NoActDec];  State: NoState),		// Quote
+        ( Key: ';';		Kind: [NoActDec];  State: NoState),		// Semicolon
+        ( Key: '';		Kind: [NoActDec];  State: NoState),		// end of stmbols / Start of conditionals we care about
+        ( Key: '$DEFINE';	Kind: [NoActDec];  State: NoState),		// $DEFINE
+        ( Key: '$ELSE';		Kind: [NoActDec];  State: NoState),		// $ELSE
+        ( Key: '$ELSEIF';	Kind: [NoActDec];  State: NoState),		// $ELSEIFf Conditionals
+        ( Key: '$ENDIF';	Kind: [NoActDec];  State: NoState),		// $ENDIF
+        ( Key: '$I';		Kind: [NoActDec];  State: NoState),              // $I[NCLUDE]
+        ( Key: '$IF';		Kind: [NoActDec];  State: NoState),		// $IF
+        ( Key: '$IFDEF';	Kind: [NoActDec];  State: NoState),		// $IFDEF
+        ( Key: '$IFNDEF';	Kind: [NoActDec];  State: NoState),		// $IFNDEF
+        ( Key: '$INCLUDE';	Kind: [NoActDec];  State: NoState),             // $INCLUDE
+        ( Key: '$INCLUDEPATH';	Kind: [NoActDec];  State: NoState),             // $INCLUDEPATH
+        ( Key: '$UNDEF';	Kind: [NoActDec];  State: NoState),		// $UNDEF
+        ( Key: '';		Kind: [NoActDec];  State: NoState),		// End of Conditionals / start of krywotds
+	        // A
+        ( Key: 'ABSOLUTE';	Kind: [NoActDec];  State: NoState),	// Absolute
+        ( Key: 'AND';		Kind: [NoActDec];  State: NoState),		// And
+        ( Key: 'AND_THEN';	Kind: [NoActDec];  State: NoState),             // and_then  (Extended Pascal)
+        ( Key: 'ARRAY';		Kind: [NoActDec];  State: NoState),		// Array
+        ( Key: 'AS';		Kind: [NoActDec];  State: NoState),              // As
+        ( Key: 'ASM';		Kind: [NoActDec];  State: NoState),		// Asm
+	        // B
+        ( Key: 'BEGIN';		Kind: [NoActDec];  State: NoState),		// Begin
+        ( Key: 'BITPACKED';	Kind: [NoActDec];  State: NoState),
+	        // C
+        ( Key: 'CASE';		Kind: [NoActDec];  State: NoState),		// Case
+        ( Key: 'CLASS';		Kind: [NoActDec];  State: NoState),		// Class
+        ( Key: 'CONSTRUCTOR';	Kind: [NoActDec];  State: NoState),	// Constructor
+        ( Key: 'CONST';		Kind: [NoActDec];  State: NoState),		// Const
+	        // D
+        ( Key: 'DESTRUCTOR';	Kind: [NoActDec];  State: NoState),
+        ( Key: 'DISPINTERFACE';	Kind: [NoActDec];  State: NoState),
+        ( Key: 'DIV';		Kind: [NoActDec];  State: NoState),		// Div
+        ( Key: 'DO';		Kind: [NoActDec];  State: NoState),		// Do
+        ( Key: 'DOWNTO';	Kind: [NoActDec];  State: NoState),	        // Downto
+	        // E
+        ( Key: 'ELSE';		Kind: [NoActDec];  State: NoState),		// Else
+        ( Key: 'END';		Kind: [NoActDec];  State: NoState),		// End
+        ( Key: 'EXCEPT';	Kind: [NoActDec];  State: NoState),
+        ( Key: 'EXPORTS';	Kind: [NoActDec];  State: NoState),		// Exports
+        ( Key: 'EXTERNAL';	Kind: [NoActDec];  State: NoState),	// External
+	        // F
+        ( Key: 'FILE';		Kind: [NoActDec];  State: NoState),		// File
+        ( Key: 'FINALIZATION';	Kind: [NoActDec];  State: NoState),	// Finalization
+        ( Key: 'FINALLY';	Kind: [NoActDec];  State: NoState),		// Finally
+        ( Key: 'FOR';		Kind: [NoActDec];  State: NoState),		// For
+        ( Key: 'FUNCTION';	Kind: [NoActDec];  State: NoState),	// Function
+	        // G
+        ( Key: 'GOTO';		Kind: [NoActDec];  State: NoState),		// Goto
+	        // H
+	        // I
+        ( Key: 'IF';		Kind: [NoActDec];  State: NoState),
+        ( Key: 'IMPLEMENTATION';Kind: [NoActDec];  State: NoState),
+        ( Key: 'INHERITED';	Kind: [NoActDec];  State: NoState),
+        ( Key: 'INITIALIZATION';Kind: [NoActDec];  State: NoState),
+        ( Key: 'IN';		Kind: [NoActDec];  State: NoState),
+        ( Key: 'INTERFACE';	Kind: [NoActDec];  State: NoState),
+        ( Key: 'IS';		Kind: [NoActDec];  State: NoState),
+	        // J
+	        // K
+	        // L
+        ( Key: 'LABEL';		Kind: [NoActDec];  State: NoState),
+        ( Key: 'LIBRARY';	Kind: [NoActDec];  State: NoState),
+	        // M
+        ( Key: 'MOD';		Kind: [NoActDec];  State: NoState),		// Mod
+        ( Key: 'MODULE';	Kind: [NoActDec];  State: NoState),
+	        // N
+        ( Key: 'NIL';		Kind: [NoActDec];  State: NoState),
+        ( Key: 'NOT';		Kind: [NoActDec];  State: NoState),
+	        // O
+        ( Key: 'OBJECT';	Kind: [NoActDec];  State: NoState),
+        ( Key: 'OF';		Kind: [NoActDec];  State: NoState),
+        ( Key: 'OPERATOR';	Kind: [NoActDec];  State: NoState),
+        ( Key: 'OR';		Kind: [NoActDec];  State: NoState),
+        ( Key: 'OR_ELSE';	Kind: [NoActDec];  State: NoState),
+        ( Key: 'OTHERWISE';	Kind: [NoActDec];  State: NoState),
+	        // P
+        ( Key: 'PACKED';	Kind: [NoActDec];  State: NoState),
+        ( Key: 'PROCEDURE';	Kind: [NoActDec];  State: NoState),
+        ( Key: 'PROGRAM';	Kind: [NoActDec];  State: NoState),
+        ( Key: 'PROPERTY';	Kind: [NoActDec];  State: NoState),
+	        // Q
+	        // R
+        ( Key: 'RAISE';		Kind: [NoActDec];  State: NoState),
+        ( Key: 'RECORD';	Kind: [NoActDec];  State: NoState),
+        ( Key: 'REM';		Kind: [NoActDec];  State: NoState),
+        ( Key: 'REPEAT';	Kind: [NoActDec];  State: NoState),
+        ( Key: 'RESOURCESTRING';Kind: [NoActDec];  State: NoState),
+        ( Key: 'RETURN';	Kind: [NoActDec];  State: NoState),
+	        // S
+        ( Key: 'SELF';		Kind: [NoActDec];  State: NoState),
+        ( Key: 'SET';		Kind: [NoActDec];  State: NoState),
+        ( Key: 'SHL';		Kind: [NoActDec];  State: NoState),
+        ( Key: 'SHR';		Kind: [NoActDec];  State: NoState),
+        ( Key: 'STDCALL';	Kind: [NoActDec];  State: NoState),
+	        // T
+        ( Key: 'THEN';		Kind: [NoActDec];  State: NoState),
+        ( Key: 'THREADVAR';	Kind: [NoActDec];  State: NoState),
+        ( Key: 'TO';		Kind: [NoActDec];  State: NoState),
+        ( Key: 'TRY';		Kind: [NoActDec];  State: NoState),
+        ( Key: 'TYPE';		Kind: [NoActDec];  State: NoState),
+	        // U
+        ( Key: 'UNIT';		Kind: [NoActDec];  State: NoState),		// Unit
+        ( Key: 'UNTIL';		Kind: [NoActDec];  State: NoState),		// Until
+        ( Key: 'USES';		Kind: [NoActDec];  State: NoState),		// Uses
+	        // V
+        ( Key: 'VAR';		Kind: [NoActDec];  State: NoState),		// Var
+        ( Key: 'VIRTUAL';	Kind: [NoActDec];  State: NoState),
+	        // W
+        ( Key: 'WHILE';		Kind: [NoActDec];  State: NoState),		// While
+        ( Key: 'WITH';		Kind: [NoActDec];  State: NoState),		// With
+	        // X
+        ( Key: 'XOR';		Kind: [NoActDec];  State: NoState),		// Xor
+	        // Y
+	        // Z
+        ( Key: '';		Kind: [NoActDec];  State: NoState),    //< last keyword token
+
+        ( Key: '*IDENT';	Kind: [NoActDec];  State: NoState),          // Identifier
+        // Identifiers that might match keywords
+        ( Key: '*NO KEYWORD';	Kind: [NoActDec];  State: NoState),
+        ( Key: '*MODIFER';	Kind: [NoActDec];  State: NoState),
+        ( Key: '*ENUMERATOR';	Kind: [NoActDec];  State: NoState),
+        ( Key: '*ENUM VALUE';	Kind: [NoActDec];  State: NoState),
+
+        // These are all modifiers; they only become keywords if
+        // used within the same context applicable to that keyword,
+        // e.g. the indentifier "forward" is a perfectly reasonable
+        // variable name, and you can use it for any identifier. It
+        // only bcomes a keyword if used just after a procedural
+        // declaration. Thus I don't have to hide them until activated,
+        // as they only become acticated if you use them as a keyword.
+        ( Key: '';		Kind: [NoActDec];  State: NoState),
+        ( Key:  'ABSTRACT';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'ALIAS';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'ASSEMBLER';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'CDECL';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'CPPDECL';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'CVAR';		Kind: [NoActDec];  State: NoState),
+        ( Key:  'DEFAULT';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'DEPRECATED';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'DYNAMIC';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'ENUMERATOR';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'EXPERIMENTAL';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'EXPORT';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'EXTERNAL';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'FAR';		Kind: [NoActDec];  State: NoState),
+        ( Key:  'FAR16';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'FORWARD';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'GENERIC';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'HELPER';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'IMPLEMENTS';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'INDEX';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'INTERRUPT';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'IOCHECK';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'LOCAL';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'MESSAGE';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'NAME';		Kind: [NoActDec];  State: NoState),
+        ( Key:  'NEAR';		Kind: [NoActDec];  State: NoState),
+        ( Key:  'NODEFAULT';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'NORETURN';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'NOSTACKFRAME';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'OLDFPCCALL';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'OVERLOAD';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'OVERRIDE';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'PASCAL';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'PLATFORM';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'PRIVATE';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'PROTECTED';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'PUBLIC';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'PUBLISHED';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'READ';		Kind: [NoActDec];  State: NoState),
+        ( Key:  'REGISTER';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'REINTRODUCE';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'RESULT';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'SAFECALL';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'SAVEREGISTERS';Kind: [NoActDec];  State: NoState),
+        ( Key:  'SOFTFLOAT';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'SPECIALIZE';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'STATIC';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'STDCALL';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'STORED';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'STRICT';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'UNALIGNED';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'UNIMPLEMENTED';Kind: [NoActDec];  State: NoState),
+        ( Key:  'VARARGS';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'VIRTUAL';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'WINAPI';	Kind: [NoActDec];  State: NoState),
+        ( Key: '';		Kind: [NoActDec];  State: NoState),         // last modifier
+        ( Key: '';		Kind: [NoActDec];  State: NoState)          // Last Token
+	          );
+
+
+     // Bookkeeping
+     IdentifierCount: Integer = 0;  // total number of identifiers
+     UniqueIdents:    Integer = 0;  // total number of unique identifiers
 
      // folders and extensions
      FolderTable,
@@ -587,50 +1214,32 @@ VAR
      TopFolder,
      TopExtension: NameRange;
 
-      TokenList: Array [1..26] of TokenEntry = (
-      (CH: 'A'; SY: IDENTTOK),
-      (CH: 'B'; SY: IDENTTOK),
-      (CH: 'C'; SY: IDENTTOK),
-      (CH: 'D'; SY: IDENTTOK),
-      (CH: 'E'; SY: IDENTTOK),
-      (CH: 'F'; SY: IDENTTOK),
-      (CH: 'G'; SY: IDENTTOK),
-      (CH: 'H'; SY: IDENTTOK),
-      (CH: 'I'; SY: IDENTTOK),
-      (CH: 'J'; SY: IDENTTOK),
-      (CH: 'K'; SY: IDENTTOK),
-      (CH: 'L'; SY: IDENTTOK),
-      (CH: 'M'; SY: IDENTTOK),
-      (CH: 'N'; SY: IDENTTOK),
-      (CH: 'O'; SY: IDENTTOK),
-      (CH: 'P'; SY: IDENTTOK),
-      (CH: 'Q'; SY: IDENTTOK),
-      (CH: 'R'; SY: IDENTTOK),
-      (CH: 'S'; SY: IDENTTOK),
-      (CH: 'T'; SY: IDENTTOK),
-      (CH: 'U'; SY: IDENTTOK),
-      (CH: 'V'; SY: IDENTTOK),
-      (CH: 'W'; SY: IDENTTOK),
-      (CH: 'X'; SY: IDENTTOK),
-      (CH: 'Y'; SY: IDENTTOK),
-      (CH: 'Z'; SY: IDENTTOK)
-      );
+     Buffer: InPtr = NIL;
 
+     TaskStart,               //> Start Time of a particular task
+     RaskEnd,                 //< Used to determine how long it took
+     StartTime,               //< time program started
+     EndTime: SystemTime;     //< for elapsed time
 
-       Buffer: InPtr;
+     // file descriptor for this program
+     PasPath,                 //< Path of this program
+     PasFolder,               //< Folder program is in
+     PasName,                 //< Name of program
+     PasExt: UnicodeString;   //< Extension (.EXE on Windows
 
-       TaskStart,               //> Start Time of a particular task
-       RaskEnd,                 //< Used to determine how long it took
-       StartTime,               //< time program started
-       EndTime: SystemTime;     //< for elapsed time
-
-               // file descriptor for this program
-
-
-        PasPath,                        // filename being processed
-        PasFolder,
-        PasName,
-        PasExt: UnicodeString;
+     // Keyword and behavior switches
+     Lang_Extended,        //< Extebded Pascal
+     lang_Turbo,           //< Turbo Pascal
+     Lang_XD,              //< XDPascal
+     Lsng_GNU,             //< GNU Pascal
+     lang_Stanford,        //< Stanford Pascal
+     Lang_Borland,         //< Borland Pascal
+     Lang_object,          //< Object Pascal
+     Lang_Delphi,          //< Delphi
+     Lang_FreePascal,      //< Ftee Pascal
+     Allow_Control_Chars,  //< Allow ^A for Control-A ^B, etc.
+     // _ is a valid char in identifrers
+     Allow_Underscore: Boolean;
 
 
 implementation

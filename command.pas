@@ -12,12 +12,13 @@ unit Command;
 
 interface
 
-uses   Notice, Tables,SysUtils;
+uses   Notice, Tables,SysUtils, Scan;
 Var
     Quit: Boolean = False;
     WillExit: Boolean = False;         //< Exit without acting
     WillHold: Boolean = False;         //< pause before exit
-    WillDumpStat: Boolean = False;       //< dump statistics
+    WillDryRun: Boolean = False;         //< test w/o acting
+    WillDumpStats: Boolean = False;       //< dump statistics
 
 
 
@@ -28,6 +29,8 @@ Procedure ProcessSingleArgument(const S:UnicodeString);
 Procedure ProcessDoubleArgument(const S:UnicodeString);
 // handle @command file
 Procedure ProcessCommandFile(Const S: UnicodeString);
+// handle source file
+Procedure ProcessSourceFile(Const S: UnicodeString);
 // Message if no args
 Procedure Usage;
 
@@ -116,7 +119,7 @@ begin
     Eq := Pos('=',UCArg);
     If Eq > 0 then
     begin
-       Val := Copy(S,Eq+1,Length(S));
+       Val := Copy(S,Eq+1,Len);
        Cmd := Copy(UCArg,1,Eq-1);
     end
     else
@@ -128,7 +131,7 @@ begin
     CASE UCArg of
        'H','HELP','INFO': begin usage; WillExit := TRUE; end;
        'XYXXY': Writeln('Nothing happens.');
-       'HOLD' 'STOP': WillHold := TRUE;
+       'HOLD', 'STOP': WillHold := TRUE;
        'DRY','DRYRUN','DRY-RUN' : Dryrun;
     else
        Writeln('?Imvalid argument "',S,'" ignoted');
@@ -142,7 +145,6 @@ Procedure ProcessDoubleArgument(const S:UnicodeString);
 Var
     Len,                  //< param (S) length
     Eq: Integer;          //< location of = in param
-    WillExit;BOOLEAN;     //< Will exit after commands process
     Val,                  //< if = in command, value after it
     Cmd,                  //< command as given
     UCArg:UnicodeString;  //< command in UPPER CASE
@@ -153,7 +155,7 @@ begin
     Eq := Pos('=',UCArg);
     If Eq > 0 then
     begin
-       Val := Copy(S,Eq+1,Length(S));
+       Val := Copy(S,Eq+1,Len);
        Cmd := Copy(UCArg,1,Eq-1);
     end
     else
@@ -168,17 +170,36 @@ begin
         'HOLD','STOP' : WillHold := TRUE;
         'DRY','DRYRUN','DRY-RUN' : Dryrun;
     else
-       Writeln('?Imvalid argument "',S," ignored');
+       Writeln('?Imvalid argument "',S,'" ignored');
     end
 
 end;
 
 // handle @command file
 Procedure ProcessCommandFile(Const S: UnicodeString);
+var
+     Temp: InPtr;
+
+begin
+    If Buffer = NIL then // if this is the first unit
+        New(Buffer)
+    else
+    begin // this is another file
+        New(Temp);
+        Temp^.Next := Buffer;  // save the prior Buffer
+        Buffer := Temp;
+    end;
+
+
+end;
+
+// handle source file
+Procedure ProcessSourceFile(Const S: UnicodeString);
 begin
 
 
 end;
+
 
 END.
 

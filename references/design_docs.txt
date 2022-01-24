@@ -94,14 +94,21 @@ long use --, short - or /
   B(LOCK) increasing block count (flipped by NB)
   U(NTIL) block not raising count
   I(GNORE)  Ignore everythng between them
-* AC - allow . commands in programs (default, flipped by DC) [File]
+* AC - allow . commands in programs (default, flipped by DC/NC)
+* ADD KEY[WORD]/KEY[WORD] ident - Add a keyword not in our list
 * ALLCR[EF] (see CA)
 * ALL CREF (see CA)
 * ALLOW C[OMMANDS] (see AC)
+* BLOCK start,finish BLOCK start:finish - define a new block type
+  starts with symbol "start" ends with symbol "finish" these words
+  will automatically become keywords
 * CA - Generate combined cross-reference
   listing for all files (default)  {flipped by NC)+-
 * CN (NC)
-* COM[MANDS] [ON]  )ac)
+* COM[MANDS] [ON]  (ac)
+* COND NOP[RINT] (XC)
+* COND[ITIONALS] P[RINT]/PC /P[RINT] C[ONDITIONALS] - List code not compiled
+  and not included in cross reference (inverse of XC)
 * CM - Main cref only (don't do unit cref)
 * CR[EF] A[LL] (CA)
 * CR[EF] M[AIN] (CM)
@@ -109,93 +116,13 @@ long use --, short - or /
 * CR[EF] U[NIT]  - Cross teference only Units (no main; flips CA, flipped by NC)
 * CT (CA) (cref total)
 * DC  - don't allow . commands (flips AC)
-* I[NCLUDE] filename - include this file (should be a unit) [File]      
 * DEF/DEFINE symbol [,|= [value]] - Define a compile-time symbol
 * DIS[ALLOW] [COMMANDS]  (see DC)
 * E  - sends statistics to stderr
 * ERROR REDIRECT (see E)
-* IP / PATH name - add name as a search directory [File]
-* LIST P[AGE] (PN) Identifier numbering by page (default)
-* LL - Number references by line number (flips PN)
-* LN (-LL)
-* LP - Number references by page and line (default. flipped by LN)   Identifier numbering
-* LI[ST] - List program (default)
-* LIST L[INE] (-LL)
-* MAXW[IDTH] (-W)
-* MW (-W)
-* NB / --no-block - (don't increase block count. flips B
-* NC -  Don't generate cross reference (flips CA)
-* NL name - ctoss ref buy don't lisy unit name (only gives
-             trf to unit but no line or page)
-* NP - Don't list program (flips LI)
-* NO B[LOCK] (NB)
-* NO CO[MMANDS]/NOC[OMMANDS] (DC)
-* NO S[ORTUNIT] (NS)
-* NOCREF (see NC)
-* NOL[IST] (NL)
-* NOS[ORTUNIT] (NS)
-* NS  - Do not sort units (default, flipped by SU)
-* NU NOUNIT/ /CREF NOU[NIT]- Don't generate unit cross-reference
-* PN (LP)
-* RK / REM[OVE] keuword - list keyord usage in cross reference (still opertates)
-
-* ST - Count reserved word usage, file lines, file sizes
-                       number of identifiers, consts, vars, objects, classes
-* STATS (-ST)
-* STATISICS (-ST)
-* SU /SORT[UNIT] - List units in aphabetical order (flips NU)
-* UN directory - add search path for units
-* UNITSO[RT]
-* UP  - unit path
-* UND[EF] symbol - Delete a symbol
-* UNI[T PATH] name (UN)
-* W[IDTH] n - Width of listing (minimum 40) default 150   0 for no limit
-  oversize lines will fold at last delimiter
-
-
-
-
-
-
-* NOST[ATS] = dont show statistice; inverts ST
-* ADD KEY[WORD]/KEY[WORD] ident - Add a keyword not in our list
-* PRE/PREDEF/PREDEFINE ident - Presume this is defined
-* BLOCK start,finish BLOCK start:finish - define a new block type
-starts with symbol "start" ends with symbol "finish" these words
-will automatically become keywords
-* KEY OFF/NO KEY ident - treat this as not a keyword
-* KS/KEY S[TD]/ST[ANDARD] - Only use STD keywords (Jensen & Wirth)
-* KE/KEY E]NHANCED] - Accept UCSD/XDPascal level keywords
-& KT/KEY T[URBO] - Accept Turbo Pascal keywords
-* KO/KEY OB[JECT] -  Object Pascal standard keywords
-* KD/KEY D[ELPHI] - Delhi Standard keywords
-* KF/KEY F[PC]/F[REEPASCAL] - FPC Standard Keywords
-* KA/KEY A[LL] - Use all keywords
-
-* MA/MO[DIFIER] A]FTER] keyword, modifier  - this identifier is only a
-                                             keyword if immediately after
-                                             keyword
-* MB/MO[DIFIER] B[EFORE] keyword, modifier - this identifier is only a
-                                             keyword if immediately before
-                                             keyword
-* MN/MO[DIFIER] N[EAR] keyword,modifier    - Can be anywhere from
-                                             prior semicolon to next when
-                                             this keyword is present
-* MP/MO[DIFIER] P[RECEDES] keyword,modifier  - Can be anywhere from
-                                             prior semicolon to this keyword
-* Mf/MO[DIFIER] F[OLLOWS] keyword,modifier  - Can be anywhere from this keyword
-                                                to next semicolon
+* I[NCLUDE] filename - include this file (should be a unit) [File]
 * IB/BLOCK/IG[NORE] B[LOCK] start,finish  - ignore everything between these
-                                    keywords (ASM blocks)
-* AA/A[LLOW] A[SSEMBLY] - Include assembly code in cref (option)
-* NOCREF ASM  -- same as NA
-
-For code not compiled because of conditionals
-
-* COND[ITIONALS] P[RINT]/PC /P[RINT] C[ONDITIONALS] - List code not compiled (inverse of XC)
-                               not included in cross reference
-* XC /E[XCLUDE] C[ONDITIONALS] -    Don't list skipped code (default,
-  COND NOP[RINT]                                    flip by PC.IC)
+  keywords (ASM blocks)
 * IC / I[NCLUDE] C[ONDITIONALS] -   List AND CREF skipped code (INVERSE XC)
   Skipped code on the same line as visible code is listed in strike-out
   When Included, it is in slightly lighter print
@@ -205,6 +132,75 @@ For code not compiled because of conditionals
       an indication that so many lines were askipped
    3  . List it anywat, showing it in different colors, or
         dimmed/strikeout
+
+* IP / name - add name as an include file search directory [File]
+* LIST P[AGE] (PN) Identifier numbering by page (default)
+* KA/KEY A[LL] - Use all keywords
+* KD/KEY D[ELPHI] - Delhi Standard keywords
+* KEY O[FF]/NO KEY/NK ident - treat this as not a keyword
+* KEY[WORD] / ADD KEY[WORD] ident - Add a keyword not in our list
+* KF/KEY F[PC]/F[REEPASCAL] - FPC Standard Keywords
+* KO/KEY OB[JECT] -  Object Pascal standard keywords
+# KS/KEY S[TD]/ST[ANDARD] - Only use STD keywords (Jensen & Wirth)
+  This is the standard and is automatic
+* KE/KEY E]NHANCED] - Accept UCSD/XDPascal level keywords
+* KT/KEY T[URBO] - Accept Turbo Pascal keywords (LANG TURBO)
+* KX/KEY XD[PASCAL]
+* LANG TURBO,DELPHI,OBJECT,FREEPASCAL,XDPASCAL - add this language's
+  keywords, identifiers, and compile-time symbols
+* LL/LN - Number references by line number (flips PN/LP)
+* LN (-LL)
+* LP/PN - Number references by page and line (default. flipped by LN)
+* LI[ST] - List program (default)
+* LIST L[INE] (-LL)
+* MA/MO[DIFIER] A]FTER] keyword, modifier  - this identifier is only a
+  keyword if immediately after keyword
+* MAXW[IDTH] /MW (-W)
+* MB/MO[DIFIER] B[EFORE] keyword, modifier - this identifier is only a
+  keyword if immediately before keyword                                              prior semicolon to this keyword
+* MF/MO[DIFIER] F[OLLOWS] keyword,modifier  - Can be anywhere from this keyword
+  to next semicolon
+* MN/MO[DIFIER] N[EAR] keyword,modifier    - Can be anywhere from
+  prior semicolon to next ; when this keyword is present
+* MP/MO[DIFIER] P[RECEDES] keyword,modifier  - Can be anywhere from
+  prior semicolon to this keyword
+* MW - max width of output line
+* NC -  Don't generate cross reference (flips CA)   
+* NK/KEY OFF/NO KEY ident - treat this as not a keyword
+* NL name - ctoss ref buy don't lisy unit name (only gives
+             trf to unit but no line or page)
+* NP - Don't list program (flips LI)
+* NO B[LOCK] (NB)
+* NO CO[MMANDS]/NOC[OMMANDS] (DC)
+* NO S[ORTUNIT] (NS)
+* NOCREF (see NC)
+* NOL[IST] (NL)
+* NOSO[RTUNIT] (NS)
+* NOST[ATS] = dont show statistice; inverts ST
+* NS  - Do not sort units (default, flipped by SU)
+* NU NOUNIT/ /CREF NOU[NIT]- Don't generate unit cross-reference
+* PATH - folder to find unir or include files
+* PN (LP)
+* PRE/PREDEF/PREDEFINE ident - Presume this is defined
+* RK / REM[OVE] keuword - list keyord usage in cross reference (still opertates)
+* ST - Count reserved word usage, file lines, file sizes
+                       number of identifiers, consts, vars, objects, classes
+* STATS (-ST)
+* STATISICS (-ST)
+* SU /SORT[UNIT]/UNITSO[RT] - List units in aphabetical order (flips NU)
+* UN/UP directory - add search path for units
+* UNITSO[RT]/SU
+* UP/UN - unit path
+* UND[EF] symbol - Delete a symbol
+* UNI[T PATH] name (UN)
+* W[IDTH] n - Width of listing (minimum 40) default 150   0 for no limit
+  oversize lines will fold at last delimiter
+* XC /E[XCLUDE] C[ONDITIONALS] -    Don't list skipped code (default, flip by PC.IC)
+
+* AA/A[LLOW] A[SSEMBLY] - Include assembly code in cref (option)
+* NOCREF ASM  -- same as NA
+
+For code not compiled because of conditionals
 
 
 

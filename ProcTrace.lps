@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="12"/>
+    <BuildModes Active="Default"/>
+    <Units>
+      <Unit>
+        <Filename Value="ProcTrace.pas"/>
+        <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="192"/>
+        <CursorPos X="11" Y="202"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="pullall.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="216"/>
+        <CursorPos X="37" Y="72"/>
+        <UsageCount Value="10"/>
+      </Unit>
+      <Unit>
+        <Filename Value="CrossrefPrefixCode.inc"/>
+        <EditorIndex Value="1"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Noisy\noisyadd.pas"/>
+        <UnitName Value="NoisyAdd"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="517"/>
+        <CursorPos X="28" Y="541"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit>
+    </Units>
+    <JumpHistory HistoryIndex="29">
+      <Position>
+        <Filename Value="ProcTrace.pas"/>
+        <Caret Line="55" Column="20" TopLine="58"/>
+      </Position>
+      <Position>
+        <Filename Value="ProcTrace.pas"/>
+        <Caret Line="203" Column="15" TopLine="188"/>
+      </Position>
+      <Position>
+        <Filename Value="ProcTrace.pas"/>
+        <Caret Line="273" Column="26" TopLine="252"/>
+      </Position>
+      <Position>
+        <Filename Value="ProcTrace.pas"/>
+        <Caret Line="256" Column="54" TopLine="250"/>
+      </Position>
+      <Position>
+        <Filename Value="ProcTrace.pas"/>
+      </Position>
+      <Position>
+        <Filename Value="ProcTrace.pas"/>
+        <Caret Line="285" Column="19" TopLine="264"/>
+      </Position>
+      <Position>
+        <Filename Value="ProcTrace.pas"/>
+        <Caret Line="46" Column="4" TopLine="40"/>
+      </Position>
+      <Position>
+        <Filename Value="ProcTrace.pas"/>
+        <Caret Line="263" Column="50" TopLine="246"/>
+      </Position>
+      <Position>
+        <Filename Value="ProcTrace.pas"/>
+        <Caret Line="364" Column="38" TopLine="291"/>
+      </Position>
+      <Position>
+        <Filename Value="ProcTrace.pas"/>
+        <Caret Line="238" Column="26" TopLine="229"/>
+      </Position>
+      <Position>
+        <Filename Value="ProcTrace.pas"/>
+        <Caret Line="37" Column="48" TopLine="58"/>
+      </Position>
+      <Position>
+        <Filename Value="ProcTrace.pas"/>
+        <Caret Line="243" Column="12" TopLine="223"/>
+      </Position>
+      <Position>
+        <Filename Value="ProcTrace.pas"/>
+        <Caret Line="249" TopLine="262"/>
+      </Position>
+      <Position>
+        <Filename Value="ProcTrace.pas"/>
+        <Caret Line="244" Column="20" TopLine="231"/>
+      </Position>
+      <Position>
+        <Filename Value="ProcTrace.pas"/>
+        <Caret Line="260" TopLine="243"/>
+      </Position>
+      <Position>
+        <Filename Value="ProcTrace.pas"/>
+        <Caret Line="475" Column="18" TopLine="386"/>
+      </Position>
+      <Position>
+        <Filename Value="ProcTrace.pas"/>
+        <Caret Line="404" Column="52" TopLine="388"/>
+      </Position>
+      <Position>
+        <Filename Value="ProcTrace.pas"/>
+        <Caret Line="263" TopLine="244"/>
+      </Position>
+      <Position>
+        <Filename Value="ProcTrace.pas"/>
+        <Caret Line="429" Column="35" TopLine="417"/>
+      </Position>
+      <Position>
+        <Filename Value="ProcTrace.pas"/>
+        <Caret Line="432" Column="51" TopLine="419"/>
+      </Position>
+      <Position>
+        <Filename Value="ProcTrace.pas"/>
+        <Caret Line="436" Column="31" TopLine="422"/>
+      </Position>
+      <Position>
+        <Filename Value="ProcTrace.pas"/>
+        <Caret Line="439" Column="40" TopLine="426"/>
+      </Position>
+      <Position>
+        <Filename Value="ProcTrace.pas"/>
+        <Caret Line="452" Column="42" TopLine="443"/>
+      </Position>
+      <Position>
+        <Filename Value="ProcTrace.pas"/>
+        <Caret Line="459" Column="37" TopLine="451"/>
+      </Position>
+      <Position>
+        <Filename Value="ProcTrace.pas"/>
+        <Caret Line="463" Column="57" TopLine="454"/>
+      </Position>
+      <Position>
+        <Filename Value="ProcTrace.pas"/>
+        <Caret Line="492" Column="3" TopLine="465"/>
+      </Position>
+      <Position>
+        <Filename Value="ProcTrace.pas"/>
+        <Caret Line="488" Column="19" TopLine="477"/>
+      </Position>
+      <Position>
+        <Filename Value="ProcTrace.pas"/>
+        <Caret Line="485" Column="7" TopLine="475"/>
+      </Position>
+      <Position>
+        <Filename Value="ProcTrace.pas"/>
+        <Caret Line="472" Column="14" TopLine="462"/>
+      </Position>
+      <Position>
+        <Filename Value="ProcTrace.pas"/>
+        <Caret Line="393" Column="20" TopLine="379"/>
+      </Position>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes ActiveMode="default">
+        <Mode Name="default">
+          <local>
+            <CommandLineParams Value="i.pas"/>
+          </local>
+        </Mode>
+      </Modes>
+    </RunParams>
+    <HistoryLists>
+      <List Name="WorkingDirectory" Type="File" Count="1"/>
+      <List Name="LaunchingApplication" Type="File" Count="1">
+        <Item1 Value="C:\Windows\system32\cmd.exe /C ${TargetCmdLine}"/>
+      </List>
+      <List Name="CommandLineParameters" Count="2">
+        <Item1 Value="i.pas"/>
+      </List>
+    </HistoryLists>
+  </ProjectSession>
+</CONFIG>

@@ -1,0 +1,1918 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Delphi, Lazarus reserved words, keywords detailed explanation - Karthi softek</title>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="shortcut icon" href="/favicon" type="image/x-icon" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <link href="/css/SiteCss.css" rel="stylesheet" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js" type="text/javascript"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D7XPBZNT1Z"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-D7XPBZNT1Z');
+    </script>
+    <script data-ad-client="ca-pub-6272495347606857" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script src="/js/siteJs.js" type="text/javascript"></script>
+    <script src="/js/Boots-material-moment-selpick-tagip-notify.js"></script>
+</head>
+<body>
+    <nav class="navbar  navbar-success">
+
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <h2 class="" style="margin :2px;font-size:x-large">
+                    <a class="navbar-brand" style="font-size:x-large" href="/">Karthi Softek</a>
+                </h2>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav  pull-right">
+                    <li class="">
+                        <a href="/">
+                            <i class="material-icons">home</i> Home
+
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="material-icons">list</i>Topics
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu dropdown-with-icons">
+                            <li>
+                                <a href="/f?Id=android">
+                                    <i class="material-icons">done</i>Android
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/f?Id=coder_life">
+                                    <i class="material-icons">done</i>Coder Life
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/f?Id=dev_tools">
+                                    <i class="material-icons">done</i>Dev Tools
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="/f?Id=programming">
+                                    <i class="material-icons">done</i>Programming
+                                </a>
+                            </li>
+                        </ul>
+
+                    </li>
+                    <li class="dropdown">
+                        <a href="" class="" data-toggle="dropdown">
+                            <i class="material-icons">web</i>Options
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu dropdown-with-icons">
+                            <li>
+                                <a href="/contact">
+                                    <i class="material-icons">contacts</i>Contact
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/policies">
+                                    <i class="material-icons">policy</i>Policies
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="/about">
+                                    <i class="material-icons">info</i>About
+                                </a>
+                            </li>
+                        </ul>
+
+                    </li>
+                    <li>
+                        <div class="text-center">
+                            <a href="/" target="_blank" style="padding:0px 10px" data-placement="bottom" data-toggle="tooltip">
+                                <img src="/img/Logo/KarthiSoftek.png" style="width:45px;height:45px;border-radius:10px !important;background-color: white;" />
+                            </a>
+                        </div>
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav> 
+    <div class="" style="min-height:100vh">
+        <div>
+             
+<style>
+    .btn-xs > * > * {
+        font-size: 10px;
+        line-height: 1.5;
+    }
+
+    .btn-xs {
+        display: unset !important;
+    }
+
+    h5 {
+        margin: 10px 15px !important;
+    }
+
+    h6 {
+        margin: 0px 20px 0px 20px
+    }
+
+    .search {
+        display: block;
+    }
+
+    video {
+        display: block;
+        margin: 20px auto;
+        width: 80%
+    }
+
+    .nav > li > a > img {
+        width: 45px;
+        height: 45px;
+        border-radius: 100px;
+    }
+
+    .ptx, p, font, b, li, article div {
+        font-size: medium;
+        line-height: 2.0em;
+        text-align: justify;
+        word-break: break-word;
+    }
+
+    div {
+        word-wrap: break-word;
+        line-height: 2.5em;
+    }
+
+    span {
+        word-wrap: break-word;
+        line-height: 2.5em;
+    }
+
+    @media(max-width:500px) {
+        .header {
+            margin: 5px !important;
+        }
+
+        ul {
+            padding: 0px !important;
+        }
+
+        .card-body {
+            padding: 10px !important;
+        }
+    }
+
+    pre {
+        white-space: pre-wrap;
+        font-size: medium;
+        color: white;
+        background-color: #333;
+    }
+
+    blockquote {
+        font-size: small;
+        border: 3px grey solid;
+        border-radius: 10px;
+        margin-top: 10px;
+    }
+
+    .math-inline {
+        width: auto !important;
+        height: auto !important;
+    }
+
+    @media(max-width:500px) {
+        img {
+            max-width: none;
+            height: auto;
+        }
+
+        .col-xs-12 {
+            padding: 5px 5px !important;
+            width: 100%;
+        }
+    }
+
+    @media(min-width:550px) {
+        img {
+            width: auto !important;
+            max-width: 100%;
+        }
+    }
+
+    .fb_iframe_widget_fluid {
+        display: unset;
+    }
+
+    .col-md-7 {
+        padding-left: 0px;
+    }
+
+    p, span {
+        font-family: "Roboto", "Helvetica", "Arial", sans-serif !important;
+    }
+
+    ol, ul {
+        list-style-type: square;
+    }
+
+    h1 > font > font {
+        font-size: x-large !important
+    }
+
+    h1::first-letter, h2::first-letter, h3::first-letter, h4::first-letter {
+        text-transform: capitalize !important;
+    }
+
+    .col-md-3, .col-md-6 {
+        padding-left: 5px !important;
+        padding-right: 5px;
+    }
+
+    .card {
+        margin-bottom: 8px
+    }
+
+    .article-title {
+        margin: 10px 20px 10px !important;
+    }
+
+    article div {
+        /*display:inline-block;*/
+        padding-left: 5px;
+        padding-right: 5px;
+        font-family: "Roboto", "Helvetica", "Arial", sans-serif !important;
+    }
+
+    h5, h4, h3, h6 {
+        font-size: medium !important;
+    }
+
+    h1, h2 {
+        font-size: large !important;
+    }
+
+    td {
+        min-width: 100px !important;
+    }
+
+    .col-md-12 {
+        padding-left: 2px !important;
+        padding-right: 2px !important;
+    }
+
+    .col-md-3 {
+        width: 23% !important;
+    }
+
+    .col-md-6 {
+        width: 54% !important;
+    }
+</style>
+    <div class="col-md-12">
+        <div class="col-md-8">
+
+            <div class="card">
+                <div>
+                    <div class="header header-danger" id="title">
+                        <h5 class="title">  Delphi, Lazarus reserved words, keywords detailed explanation</h5>
+                    </div>
+                </div>
+                <div class="card-body" style="min-height:300px">
+                    <div id="exp">
+                        <h1 id="articleContentId">Delphi, Lazarus reserved words, keywords detailed explanation</h1><article>
+        <div id="article_content">
+        
+                <div id="content_views">
+                    <div id="cnblogs_post_body">
+ <h2>&nbsp;</h2> 
+ <div> 
+  <div> 
+   <p>Blogs from oranges, in case, and other places</p> 
+   <p>&nbsp;</p> 
+   <p>Reserved words: identifiers such as variables can be reused;</p> 
+   <p>Keywords: have specific meaning and cannot be redefined;</p> 
+   <p>Modifiers: functions similar to reserved words, which means that they can be reused;</p> 
+   <p>Data type: The data type is similar to reserved words, and generally do not redefine;</p> 
+   <p>Prompt word: This information is used to prompt the user for platform dependency and other purposes during compilation, and should not be changed.</p> 
+   <p>&nbsp;</p> 
+   <p>But try not to redefine reserved words, such as the following code</p> 
+   <p>procedure&nbsp;TForm1.FormCreate(Sender:&nbsp;TObject);</p> 
+   <p>var&nbsp;true:string;</p> 
+   <p>begin</p> 
+   <p>&nbsp;</p> 
+   <p>end;</p> 
+   <p>Can be executed correctly.</p> 
+   <p>The same identifier is similar to a reserved word, the following program can also be executed:</p> 
+   <p>type&nbsp;&nbsp;Integer=&nbsp;Char;</p> 
+   <p>var&nbsp;&nbsp;I:&nbsp;Integer;</p> 
+   <p>begin&nbsp;&nbsp;I:=&nbsp;'A';&nbsp;&nbsp;ShowMessage(I);end;</p> 
+   <p>But the following program will report an error.</p> 
+   <p>type&nbsp;string&nbsp;=&nbsp;Integer;</p> 
+   <p>Therefore, it is best not to redefine the reserved words, identifiers, keywords, and modifiers;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>Turbo pascal reserved word</p> 
+   <p>&nbsp;</p> 
+   <table><tbody><tr><td width="142"> <p>and</p> </td><td width="142"> <p>array</p> </td><td width="142"> <p>asm</p> </td><td width="142"> <p>begin</p> </td></tr><tr><td width="142"> <p>break</p> </td><td width="142"> <p>case</p> </td><td width="142"> <p>const</p> </td><td width="142"> <p>constructor</p> </td></tr><tr><td width="142"> <p>continue</p> </td><td width="142"> <p>destructor</p> </td><td width="142"> <p>div</p> </td><td width="142"> <p>do</p> </td></tr><tr><td width="142"> <p>downto</p> </td><td width="142"> <p>else</p> </td><td width="142"> <p>end</p> </td><td width="142"> <p>false</p> </td></tr><tr><td width="142"> <p>file</p> </td><td width="142"> <p>for</p> </td><td width="142"> <p>function</p> </td><td width="142"> <p>goto</p> </td></tr><tr><td width="142"> <p>if</p> </td><td width="142"> <p>implementation</p> </td><td width="142"> <p>in</p> </td><td width="142"> <p>inline</p> </td></tr><tr><td width="142"> <p>interface</p> </td><td width="142"> <p>label</p> </td><td width="142"> <p>mod</p> </td><td width="142"> <p>nil</p> </td></tr><tr><td width="142"> <p>not</p> </td><td width="142"> <p>object</p> </td><td width="142"> <p>of</p> </td><td width="142"> <p>on</p> </td></tr><tr><td width="142"> <p>operator</p> </td><td width="142"> <p>or</p> </td><td width="142"> <p>packed</p> </td><td width="142"> <p>procedure</p> </td></tr><tr><td width="142"> <p>program</p> </td><td width="142"> <p>record</p> </td><td width="142"> <p>repeat</p> </td><td width="142"> <p>set</p> </td></tr><tr><td width="142"> <p>shl</p> </td><td width="142"> <p>shr</p> </td><td width="142"> <p>string</p> </td><td width="142"> <p>then</p> </td></tr><tr><td width="142"> <p>to</p> </td><td width="142"> <p>true</p> </td><td width="142"> <p>type</p> </td><td width="142"> <p>unit</p> </td></tr><tr><td width="142"> <p>until</p> </td><td width="142"> <p>uses</p> </td><td width="142"> <p>var</p> </td><td width="142"> <p>while</p> </td></tr><tr><td width="142"> <p>with</p> </td><td width="142"> <p>xor</p> </td><td width="142">&nbsp;</td><td width="142">&nbsp;</td></tr></tbody></table>
+   <p>&nbsp;</p> 
+   <p>Object pascal reserved words</p> 
+   <table><tbody><tr><td width="142"> <p>as</p> </td><td width="142"> <p>class</p> </td><td width="142"> <p>dispose</p> </td><td width="142"> <p>except</p> </td></tr><tr><td width="142"> <p>exit</p> </td><td width="142"> <p>exports</p> </td><td width="142"> <p>finalization</p> </td><td width="142"> <p>finally</p> </td></tr><tr><td width="142"> <p>inherited</p> </td><td width="142"> <p>initialization</p> </td><td width="142"> <p>is</p> </td><td width="142"> <p>library</p> </td></tr><tr><td width="142"> <p>new</p> </td><td width="142"> <p>on</p> </td><td width="142"> <p>out</p> </td><td width="142"> <p>property</p> </td></tr><tr><td width="142"> <p>raise</p> </td><td width="142"> <p>self</p> </td><td width="142"> <p>threadvar</p> </td><td width="142"> <p>try</p> </td></tr></tbody></table>
+   <p>&nbsp;</p> 
+   <p>Delphi keywords</p> 
+   <table><tbody><tr><td width="142"> <p>And</p> </td><td width="142"> <p>Array</p> </td><td width="142"> <p>As</p> </td><td width="142"> <p>Begin</p> </td></tr><tr><td width="142"> <p>Case</p> </td><td width="142"> <p>Class</p> </td><td width="142"> <p>Const</p> </td><td width="142"> <p>Constructor</p> </td></tr><tr><td width="142"> <p>Destructor</p> </td><td width="142"> <p>Div</p> </td><td width="142"> <p>Do</p> </td><td width="142"> <p>DownTo</p> </td></tr><tr><td width="142"> <p>Else</p> </td><td width="142"> <p>End</p> </td><td width="142"> <p>Except</p> </td><td width="142"> <p>File</p> </td></tr><tr><td width="142"> <p>Finally</p> </td><td width="142"> <p>For</p> </td><td width="142"> <p>Function</p> </td><td width="142"> <p>Goto</p> </td></tr><tr><td width="142"> <p>If</p> </td><td width="142"> <p>Implementation</p> </td><td width="142"> <p>In</p> </td><td width="142"> <p>Inherited</p> </td></tr><tr><td width="142"> <p>Interface</p> </td><td width="142"> <p>Is</p> </td><td width="142"> <p>Mod</p> </td><td width="142"> <p>Not</p> </td></tr><tr><td width="142"> <p>Object</p> </td><td width="142"> <p>Of</p> </td><td width="142"> <p>On</p> </td><td width="142"> <p>Or</p> </td></tr><tr><td width="142"> <p>Packed</p> </td><td width="142"> <p>Procedure</p> </td><td width="142"> <p>Program</p> </td><td width="142"> <p>Property</p> </td></tr><tr><td width="142"> <p>Raise</p> </td><td width="142"> <p>Record</p> </td><td width="142"> <p>Repeat</p> </td><td width="142"> <p>Set</p> </td></tr><tr><td width="142"> <p>Shl</p> </td><td width="142"> <p>Shr</p> </td><td width="142"> <p>Then</p> </td><td width="142"> <p>ThreadVar</p> </td></tr><tr><td width="142"> <p>To</p> </td><td width="142"> <p>Try</p> </td><td width="142"> <p>Type</p> </td><td width="142"> <p>Unit</p> </td></tr><tr><td width="142"> <p>Until</p> </td><td width="142"> <p>Uses</p> </td><td width="142"> <p>Var</p> </td><td width="142"> <p>While</p> </td></tr><tr><td width="142"> <p>With</p> </td><td width="142">&nbsp;</td><td width="142">&nbsp;</td><td width="142">&nbsp;</td></tr></tbody></table>
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>Delphi reserved words and keywords</p> 
+   <table><tbody><tr><td width="142"> <p>Absolute</p> </td><td width="142"> <p>Abstract</p> </td><td width="142"> <p>And</p> </td><td width="142"> <p>Array</p> </td></tr><tr><td width="142"> <p>As</p> </td><td width="142"> <p>Asm</p> </td><td width="142"> <p>Assembler</p> </td><td width="142"> <p>Automated</p> </td></tr><tr><td width="142"> <p>Begin</p> </td><td width="142"> <p>Case</p> </td><td width="142"> <p>Cdecl</p> </td><td width="142"> <p>Class</p> </td></tr><tr><td width="142"> <p>Const</p> </td><td width="142"> <p>Constructor</p> </td><td width="142"> <p>Contains</p> </td><td width="142"> <p>Default</p> </td></tr><tr><td width="142"> <p>Destructor</p> </td><td width="142"> <p>Dispid</p> </td><td width="142"> <p>Dispinterface</p> </td><td width="142"> <p>Div</p> </td></tr><tr><td width="142"> <p>Do</p> </td><td width="142"> <p>Downto</p> </td><td width="142"> <p>Dynamic</p> </td><td width="142"> <p>Else</p> </td></tr><tr><td width="142"> <p>End</p> </td><td width="142"> <p>Except</p> </td><td width="142"> <p>Export</p> </td><td width="142"> <p>Exports</p> </td></tr><tr><td width="142"> <p>External</p> </td><td width="142"> <p>Far</p> </td><td width="142"> <p>File</p> </td><td width="142"> <p>Finalization</p> </td></tr><tr><td width="142"> <p>Finally</p> </td><td width="142"> <p>For</p> </td><td width="142"> <p>Forward</p> </td><td width="142"> <p>Function</p> </td></tr><tr><td width="142"> <p>Goto</p> </td><td width="142"> <p>If</p> </td><td width="142"> <p>Implementation</p> </td><td width="142"> <p>Implements</p> </td></tr><tr><td width="142"> <p>In</p> </td><td width="142"> <p>Index</p> </td><td width="142"> <p>Inherited</p> </td><td width="142"> <p>Initialization</p> </td></tr><tr><td width="142"> <p>Inline</p> </td><td width="142"> <p>Interface</p> </td><td width="142"> <p>Is</p> </td><td width="142"> <p>Label</p> </td></tr><tr><td width="142"> <p>Library</p> </td><td width="142"> <p>Message</p> </td><td width="142"> <p>Mod</p> </td><td width="142"> <p>Name</p> </td></tr><tr><td width="142"> <p>Near</p> </td><td width="142"> <p>Nil</p> </td><td width="142"> <p>Nodefault</p> </td><td width="142"> <p>Not</p> </td></tr><tr><td width="142"> <p>Object</p> </td><td width="142"> <p>Of</p> </td><td width="142"> <p>On</p> </td><td width="142"> <p>Or</p> </td></tr><tr><td width="142"> <p>Out</p> </td><td width="142"> <p>Overload</p> </td><td width="142"> <p>Override</p> </td><td width="142"> <p>Package</p> </td></tr><tr><td width="142"> <p>Packed</p> </td><td width="142"> <p>Pascal</p> </td><td width="142"> <p>Private</p> </td><td width="142"> <p>Procedure</p> </td></tr><tr><td width="142"> <p>Program</p> </td><td width="142"> <p>Property</p> </td><td width="142"> <p>Protected</p> </td><td width="142"> <p>Public</p> </td></tr><tr><td width="142"> <p>Published</p> </td><td width="142"> <p>Raise</p> </td><td width="142"> <p>Read</p> </td><td width="142"> <p>Readonly</p> </td></tr><tr><td width="142"> <p>Record</p> </td><td width="142"> <p>Register</p> </td><td width="142"> <p>Reintroduce</p> </td><td width="142"> <p>Repeat</p> </td></tr><tr><td width="142"> <p>Requires</p> </td><td width="142"> <p>Resourcestring</p> </td><td width="142"> <p>Safecall</p> </td><td width="142"> <p>Set</p> </td></tr><tr><td width="142"> <p>Shl</p> </td><td width="142"> <p>Shr</p> </td><td width="142"> <p>Stdcall</p> </td><td width="142"> <p>Stored</p> </td></tr><tr><td width="142"> <p>String</p> </td><td width="142"> <p>Then</p> </td><td width="142"> <p>Threadvar</p> </td><td width="142"> <p>To</p> </td></tr><tr><td width="142"> <p>Try</p> </td><td width="142"> <p>Unit</p> </td><td width="142"> <p>Until</p> </td><td width="142"> <p>Uses</p> </td></tr><tr><td width="142"> <p>Var</p> </td><td width="142"> <p>Varargs</p> </td><td width="142"> <p>Virtual</p> </td><td width="142"> <p>While</p> </td></tr><tr><td width="142"> <p>With</p> </td><td width="142"> <p>Write</p> </td><td width="142"> <p>Writeonly</p> </td><td width="142"> <p>Xor</p> </td></tr></tbody></table>
+   <p>&nbsp;</p> 
+   <p>The modified words supported by Freepascal include the reserved words turbopascal and object pascal (the red part is different from delphi)</p> 
+   <table><tbody><tr><td width="142"> <p>absolute</p> </td><td width="142"> <p>abstract</p> </td><td width="142"> <p>alias</p> </td><td width="142"> <p>assembler</p> </td></tr><tr><td width="142"> <p>cdecl</p> </td><td width="142"> <p>cppdecl</p> </td><td width="142"> <p>default</p> </td><td width="142"> <p>export</p> </td></tr><tr><td width="142"> <p>external</p> </td><td width="142"> <p>forward</p> </td><td width="142"> <p>index</p> </td><td width="142"> <p>local</p> </td></tr><tr><td width="142"> <p>name</p> </td><td width="142"> <p>nostackframe</p> </td><td width="142"> <p>oldfpccall</p> </td><td width="142"> <p>override</p> </td></tr><tr><td width="142"> <p>pascal</p> </td><td width="142"> <p>private</p> </td><td width="142"> <p>protected</p> </td><td width="142"> <p>public</p> </td></tr><tr><td width="142"> <p>published</p> </td><td width="142"> <p>read</p> </td><td width="142"> <p>register</p> </td><td width="142"> <p>reintroduce</p> </td></tr><tr><td width="142"> <p>safecall</p> </td><td width="142"> <p>softfloat</p> </td><td width="142"> <p>stdcall</p> </td><td width="142"> <p>virtual</p> </td></tr><tr><td width="142"> <p>write</p> </td><td width="142">&nbsp;</td><td width="142">&nbsp;</td><td width="142">&nbsp;</td></tr></tbody></table>
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>Modifiers no longer supported by Freepascal</p> 
+   <p>=========================================================</p> 
+   <table><tbody><tr><td width="142"> <p>far</p> </td><td width="142"> <p>near</p> </td><td width="142">&nbsp;</td><td width="142">&nbsp;</td></tr></tbody></table>
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>ISO 7185 standard keywords</p> 
+   <table><tbody><tr><td width="145"> <p>And</p> </td><td width="119"> <p>Downto</p> </td><td width="89"> <p>If</p> </td><td width="94"> <p>Or</p> </td><td width="91"> <p>Then</p> </td></tr><tr><td width="145"> <p>Array</p> </td><td width="119"> <p>Else</p> </td><td width="89"> <p>In</p> </td><td width="94"> <p>Packed</p> </td><td width="91"> <p>To</p> </td></tr><tr><td width="145"> <p>Begin</p> </td><td width="119"> <p>End</p> </td><td width="89"> <p>Label</p> </td><td width="94"> <p>Procedure</p> </td><td width="91"> <p>Type</p> </td></tr><tr><td width="145"> <p>Case</p> </td><td width="119"> <p>File</p> </td><td width="89"> <p>Mod</p> </td><td width="94"> <p>Program</p> </td><td width="91"> <p>Until</p> </td></tr><tr><td width="145"> <p>Const</p> </td><td width="119"> <p>For</p> </td><td width="89"> <p>Nil</p> </td><td width="94"> <p>Record</p> </td><td width="91"> <p>Var</p> </td></tr><tr><td width="145"> <p>Div</p> </td><td width="119"> <p>Function</p> </td><td width="89"> <p>Not</p> </td><td width="94"> <p>Repeat</p> </td><td width="91"> <p>While</p> </td></tr><tr><td width="145"> <p>Do</p> </td><td width="119"> <p>Goto</p> </td><td width="89"> <p>Of</p> </td><td width="94"> <p>Set</p> </td><td width="91"> <p>With</p> </td></tr></tbody></table>
+   <p>ISO 10206 extended pascal keywords</p> 
+   <table><tbody><tr><td width="144"> <p>And_then</p> </td><td width="118"> <p>Import</p> </td><td width="92"> <p>Module</p> </td><td width="92"> <p>Otherwise</p> </td><td width="92"> <p>Qualified</p> </td></tr><tr><td width="144"> <p>Bindable</p> </td><td width="118"> <p>Implementation</p> </td><td width="92"> <p>Only</p> </td><td width="92"> <p>Pow</p> </td><td width="92"> <p>Restricted</p> </td></tr><tr><td width="144"> <p>Export</p> </td><td width="118"> <p>Interface</p> </td><td width="92"> <p>Or_else</p> </td><td width="92"> <p>Protected</p> </td><td width="92"> <p>Value</p> </td></tr></tbody></table>
+   <p>Turbo Pascal keywords</p> 
+   <table><tbody><tr><td width="143"> <p>Absolute</p> </td><td width="118"> <p>Destructor</p> </td><td width="92"> <p>Inline</p> </td><td width="95"> <p>Shl</p> </td><td width="93"> <p>Uses</p> </td></tr><tr><td width="143"> <p>Asm</p> </td><td width="118"> <p>Implementation</p> </td><td width="92"> <p>Interface</p> </td><td width="95"> <p>Shr</p> </td><td width="93"> <p>Virtual</p> </td></tr><tr><td width="143"> <p>Constructor</p> </td><td width="118"> <p>Inherited</p> </td><td width="92"> <p>Object</p> </td><td width="95"> <p>Unit</p> </td><td width="93"> <p>Xor</p> </td></tr></tbody></table>
+   <p>Delphi add keywords</p> 
+   <table><tbody><tr><td width="142"> <p>as</p> </td><td width="119"> <p>exports</p> </td><td width="92"> <p>initialization</p> </td><td width="95"> <p>on</p> </td><td width="92"> <p>threadvar</p> </td></tr><tr><td width="142"> <p>class</p> </td><td width="119"> <p>finalization</p> </td><td width="92"> <p>is</p> </td><td width="95"> <p>property</p> </td><td width="92"> <p>try</p> </td></tr><tr><td width="142"> <p>except</p> </td><td width="119"> <p>finally</p> </td><td width="92"> <p>library</p> </td><td width="95"> <p>raise</p> </td><td width="92">&nbsp;</td></tr></tbody></table>
+   <p>Free Pascal keywords</p> 
+   <table><tbody><tr><td width="92"> <p>dispose</p> </td><td width="92"> <p>exit</p> </td><td width="92"> <p>false</p> </td><td width="92"> <p>new</p> </td><td width="92"> <p>true</p> </td></tr></tbody></table>
+   <p>Object Pascal keywords</p> 
+   <table><tbody><tr><td width="92"> <p>Abstract</p> </td><td width="92"> <p>Constructor</p> </td><td width="92"> <p>Inherited</p> </td><td width="92"> <p>Object</p> </td><td width="92"> <p>View</p> </td></tr><tr><td width="92"> <p>Class</p> </td><td width="92"> <p>Destructor</p> </td><td width="92"> <p>Is</p> </td><td width="92"> <p>Property</p> </td><td width="92"> <p>Virtual</p> </td></tr></tbody></table>
+   <p>GNU keywords</p> 
+   <table><tbody><tr><td width="92"> <p>All</p> </td><td width="92"> <p>Asm</p> </td><td width="92"> <p>Inline</p> </td><td width="92">&nbsp;</td><td width="92">&nbsp;</td></tr></tbody></table>
+   <p>Pascal expands scientific computing keywords</p> 
+   <table><tbody><tr><td width="92"> <p>Module</p> </td><td width="369"> <p>Operator</p> </td></tr></tbody></table>
+   <p>Data type identifier</p> 
+   <table><tbody><tr><td width="142"> <p>Integer</p> </td><td width="142"> <p>Shortint</p> </td><td width="142"> <p>SmallInt</p> </td><td width="142"> <p>Longint</p> </td></tr><tr><td width="142"> <p>Longword</p> </td><td width="142"> <p>Int64</p> </td><td width="142"> <p>Byte</p> </td><td width="142"> <p>Word</p> </td></tr><tr><td width="142"> <p>Cardinal</p> </td><td width="142"> <p>QWord</p> </td><td width="142"> <p>Boolean</p> </td><td width="142"> <p>ByteBool</p> </td></tr><tr><td width="142"> <p>WordBool</p> </td><td width="142"> <p>LongBool</p> </td><td width="142"> <p>Char</p> </td><td width="142"> <p>Real</p> </td></tr><tr><td width="142"> <p>Single</p> </td><td width="142"> <p>Double</p> </td><td width="142"> <p>Extended</p> </td><td width="142"> <p>Comp</p> </td></tr><tr><td width="142"> <p>Currency</p> </td><td width="142"> <p>Char</p> </td><td width="142"> <p>Strings</p> </td><td width="142"> <p>Shortstrings</p> </td></tr><tr><td width="142"> <p>Ansistrings</p> </td><td width="142"> <p>UnicodeStrings</p> </td><td width="142"> <p>WideStrings</p> </td><td width="142"> <p>Constantstrings</p> </td></tr><tr><td width="142"> <p>PChar</p> </td><td width="142"> <p>Array</p> </td><td width="142"> <p>Record</p> </td><td width="142"> <p>VariantInteger</p> </td></tr><tr><td width="142"> <p>Shortint</p> </td><td width="142"> <p>SmallInt</p> </td><td width="142"> <p>Longint</p> </td><td width="142"> <p>Longword</p> </td></tr><tr><td width="142"> <p>Int64</p> </td><td width="142"> <p>Byte</p> </td><td width="142"> <p>Word</p> </td><td width="142"> <p>Cardinal</p> </td></tr><tr><td width="142"> <p>QWord</p> </td><td width="142"> <p>Boolean</p> </td><td width="142"> <p>ByteBool</p> </td><td width="142"> <p>WordBool</p> </td></tr><tr><td width="142"> <p>LongBool</p> </td><td width="142"> <p>Char</p> </td><td width="142"> <p>Real</p> </td><td width="142"> <p>Single</p> </td></tr><tr><td width="142"> <p>Double</p> </td><td width="142"> <p>Extended</p> </td><td width="142"> <p>Comp</p> </td><td width="142"> <p>Currency</p> </td></tr><tr><td width="142"> <p>Char</p> </td><td width="142"> <p>Strings</p> </td><td width="142"> <p>Shortstrings</p> </td><td width="142"> <p>Ansistrings</p> </td></tr><tr><td width="142"> <p>UnicodeStrings</p> </td><td width="142"> <p>WideStrings</p> </td><td width="142"> <p>Constantstrings</p> </td><td width="142"> <p>PChar</p> </td></tr><tr><td width="142"> <p>Array</p> </td><td width="142"> <p>Record</p> </td><td width="142"> <p>Variant</p> </td><td width="142">&nbsp;</td></tr></tbody></table>
+   <p>In addition to the above variable types, there are also some predefined variable types of windows, fpc, and lcl. They are equivalent to the function of reserved words, and don't change them casually.</p> 
+   <p>&nbsp;</p> 
+   <p>Proprietary hint words for Lazarus and freepascal</p> 
+   <table><tbody><tr><td width="142"> <p>deprecated&nbsp;</p> </td><td width="142"> <p>experimental&nbsp;</p> </td><td width="142"> <p>platform&nbsp;</p> </td><td width="142"> <p>unimplemented&nbsp;</p> </td></tr></tbody></table>
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The following is a detailed explanation of each reserved word and keyword</p> 
+   <p>======================================================</p> 
+   <p>absolute&nbsp;</p> 
+   <p>//It enables you to create a new variable, and the starting address of the variable is the same as another variable.</p> 
+   <p>var</p> 
+   <p>&nbsp;&nbsp;Str:&nbsp;string[32];</p> 
+   <p>&nbsp;&nbsp;StrLen:&nbsp;Byte&nbsp;absolute&nbsp;Str;</p> 
+   <p>&nbsp;</p> 
+   <p>//This declaration specifies that the starting address of the variable StrLen is the same as Str.</p> 
+   <p>//Since the 0th position of the string stores the length of the string, the value of StrLen is the length of the string.</p> 
+   <p>begin</p> 
+   <p>&nbsp;&nbsp;Str&nbsp;:=&nbsp;'abc';</p> 
+   <p>&nbsp;&nbsp;Edit1.Text&nbsp;:=&nbsp;IntToStr(StrLen);</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>abstract//It allows you to create abstract methods, including classes with abstract methods called abstract classes.</p> 
+   <p>//Abstract keyword must be used with Virtual or Dynamic keyword at the same time, because abstract methods must be overridden.</p> 
+   <p>//Abstract classes cannot be instantiated, abstract methods cannot contain method bodies.</p> 
+   <p>type</p> 
+   <p>&nbsp;&nbsp;TDemo&nbsp;=&nbsp;class</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;private</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;protected</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;procedure&nbsp;X;&nbsp;virtual;&nbsp;abstract;</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;public</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;constructor&nbsp;Create;</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;destructor&nbsp;Destroy;&nbsp;override;</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;published</p> 
+   <p>&nbsp;&nbsp;end;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>and//1. means logical and</p> 
+   <p>if&nbsp;(a&gt;0)&nbsp;and&nbsp;(b&gt;0)&nbsp;then</p> 
+   <p>&nbsp;</p> 
+   <p>//2. represents bit operation</p> 
+   <p>var</p> 
+   <p>&nbsp;&nbsp;a,b,c:&nbsp;Integer;</p> 
+   <p>begin</p> 
+   <p>&nbsp;&nbsp;c&nbsp;:=&nbsp;(a&nbsp;and&nbsp;b);</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>//When using And to represent logic, the expressions around And must be enclosed in parentheses to avoid conflicting conditions.</p> 
+   <p>//E.g:</p> 
+   <p>if&nbsp;a&gt;0&nbsp;and&nbsp;b&gt;0&nbsp;then</p> 
+   <p>//The compiler may understand as:</p> 
+   <p>if&nbsp;a&gt;(0&nbsp;and&nbsp;b)&gt;0&nbsp;then</p> 
+   <p>//or:</p> 
+   <p>if&nbsp;(a&gt;0)&nbsp;and&nbsp;(b&gt;0)&nbsp;then</p> 
+   <p>//But when actually compiling, the compiler will generate a conflict and report an error.</p> 
+   <p>//And the first form may include a&gt;b&gt;c, which is not supported in Delphi.</p> 
+   <p>//So you must use parentheses when using the And operator to distinguish between left and right conditions.</p> 
+   <p>//It means that you must add parentheses when performing bitwise operations, enclose And and the left and right parameters.</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>Array//Array is used to represent an array, any object can be declared as an array. Arrays are divided into two types: static and dynamic.</p> 
+   <p>&nbsp;</p> 
+   <p>//Static array</p> 
+   <p>var</p> 
+   <p>&nbsp;&nbsp;Arr1:&nbsp;array&nbsp;[1..10]&nbsp;of&nbsp;Integer;</p> 
+   <p>&nbsp;</p> 
+   <p>//Dynamic array, because the number of elements is unknown at the time of declaration, you must use the SetLength method to set the size of the array later</p> 
+   <p>var</p> 
+   <p>&nbsp;&nbsp;Arr2:&nbsp;array&nbsp;of&nbsp;Integer;</p> 
+   <p>&nbsp;</p> 
+   <p><strong>//When the array is used as a parameter, you cannot pass in the size of the array, you can only pass in the name of the array, and then use the Length method to get the number of elements in the array</strong></p> 
+   <p>function&nbsp;X(A:&nbsp;array&nbsp;of&nbsp;Integer):&nbsp;Integer;</p> 
+   <p>var</p> 
+   <p>&nbsp;i:&nbsp;Integer;</p> 
+   <p>begin</p> 
+   <p>&nbsp;&nbsp;Result&nbsp;:=&nbsp;0;</p> 
+   <p>&nbsp;&nbsp;for&nbsp;i&nbsp;:=&nbsp;0&nbsp;to&nbsp;Length(A)-1&nbsp;do</p> 
+   <p>&nbsp;&nbsp;Result&nbsp;:=&nbsp;Result&nbsp;+&nbsp;A[i];</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>as//As is used to transform one object into another</p> 
+   <p>procedure&nbsp;BtnClick(Sender:TObject);</p> 
+   <p>begin</p> 
+   <p>&nbsp;&nbsp;(Sender&nbsp;as&nbsp;TButton).Caption&nbsp;:=&nbsp;'Clicked';</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>//For the conversion of the object filling interface, As must be used</p> 
+   <p>(HTTPRIO&nbsp;as&nbsp;IExp).GetConnection;</p> 
+   <p>&nbsp;</p> 
+   <p>//As cannot be used for data type conversion, the following code is wrong:</p> 
+   <p>var</p> 
+   <p>&nbsp;&nbsp;i:&nbsp;Integer;</p> 
+   <p>&nbsp;&nbsp;s:&nbsp;string;</p> 
+   <p>begin</p> 
+   <p>&nbsp;&nbsp;s&nbsp;:=&nbsp;(i&nbsp;as&nbsp;string);</p> 
+   <p>end;</p> 
+   <p>//The correct writing is:</p> 
+   <p>s&nbsp;:=&nbsp;string(i);</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The asm//Asm keyword is used to insert assembly code. When using assembly code, you must use the structure of asm...end; instead of begin...end;</p> 
+   <p>function&nbsp;IntToHex(Value:&nbsp;Integer;&nbsp;Digits:&nbsp;Integer):&nbsp;string;</p> 
+   <p>asm</p> 
+   <p>&nbsp;&nbsp;CMP&nbsp;&nbsp;EDX,&nbsp;32</p> 
+   <p>&nbsp;&nbsp;JBE&nbsp;&nbsp;@A1</p> 
+   <p>&nbsp;&nbsp;xor&nbsp;&nbsp;EDX,&nbsp;EDX</p> 
+   <p>&nbsp;&nbsp;@A1:&nbsp;PUSH&nbsp;ESI</p> 
+   <p>&nbsp;&nbsp;MOV&nbsp;&nbsp;ESI,&nbsp;ESP</p> 
+   <p>&nbsp;&nbsp;SUB&nbsp;&nbsp;ESP,&nbsp;32</p> 
+   <p>&nbsp;&nbsp;PUSH&nbsp;ECX</p> 
+   <p>&nbsp;&nbsp;MOV&nbsp;&nbsp;ECX,&nbsp;16</p> 
+   <p>&nbsp;&nbsp;CALL&nbsp;CvtInt</p> 
+   <p>&nbsp;&nbsp;MOV&nbsp;&nbsp;EDX,&nbsp;ESI</p> 
+   <p>&nbsp;&nbsp;POP&nbsp;&nbsp;EAX</p> 
+   <p>&nbsp;&nbsp;CALL&nbsp;System.@LStrFromPCharLen</p> 
+   <p>&nbsp;&nbsp;ADD&nbsp;&nbsp;ESP,&nbsp;32</p> 
+   <p>&nbsp;&nbsp;POP&nbsp;&nbsp;ESI</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The assembler//Assembler keyword is used to support early assembly, such as 80386.</p> 
+   <p>//The difference between it and Asm: Asm allows Win32 assembly, while Assembler only allows 80x86 assembly, it does not allow Invoke statements.</p> 
+   <p>function&nbsp;IntToHex(AValue:&nbsp;Int64):&nbsp;string;&nbsp;assembler;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p><strong>The automated//Automated access specifier is used to describe the members of an automatic type, which can make the version of the program backward compatible.</strong></p> 
+   <p>//The members and instances in the ComObj unit cannot use Automated access specifiers.</p> 
+   <p>type</p> 
+   <p>&nbsp;&nbsp;TDemo&nbsp;=&nbsp;class</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;automated</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Str:WideString;</p> 
+   <p>&nbsp;&nbsp;end;</p> 
+   <p>&nbsp;</p> 
+   <p>//In the next version of the program, Str has been modified to become</p> 
+   <p>type</p> 
+   <p>&nbsp;&nbsp;TDemo&nbsp;=&nbsp;class</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;automated</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Str:&nbsp;AnsiString;</p> 
+   <p>&nbsp;&nbsp;end</p> 
+   <p>//The new version of the Str variable can accept the old version of WideString data and automatically convert it to AnsiString.</p> 
+   <p>//In actual development, if there is no special need, the automated access distinguisher is generally not used.</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The begin//begin keyword is used to indicate the beginning of a program or a structure, and the end keyword must be used to end.</p> 
+   <p>procedure&nbsp;X;</p> 
+   <p>begin</p> 
+   <p>&nbsp;&nbsp;ShowMessage('A&nbsp;Demo');</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>//General structures, such as If, For, While, etc. also need to use the begin keyword to mark the starting point of the structure</p> 
+   <p>for&nbsp;i:=1&nbsp;to&nbsp;100&nbsp;do</p> 
+   <p>begin</p> 
+   <p>&nbsp;&nbsp;sum&nbsp;:=&nbsp;sum&nbsp;+&nbsp;i;</p> 
+   <p>&nbsp;&nbsp;if&nbsp;sum&nbsp;&gt;&nbsp;1000&nbsp;then&nbsp;Break;</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The case//Case statement is used to complete the condition selection. The selected object of the Case statement must be an ordered type, including integer types, enumeration types, character types, etc.</p> 
+   <p>//Case statement must end with end. If there is no matching option, you can add else to make a general choice.</p> 
+   <p>function&nbsp;GetDays(AYear,AMonth:&nbsp;Integer):&nbsp;Integer;</p> 
+   <p>begin</p> 
+   <p>&nbsp;&nbsp;case&nbsp;AMonth&nbsp;of</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;1,3,5,7,8,10,12:&nbsp;Result&nbsp;:=&nbsp;31;</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;4,6,9,11:&nbsp;Result&nbsp;:=&nbsp;30;</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;2:&nbsp;begin</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;IsLeapYear(AYear)&nbsp;then</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Result:=29</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;else</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Result:=28;</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;end;</p> 
+   <p>&nbsp;&nbsp;else</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;Result:=0;</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>cdecl&nbsp;</p> 
+   <p>//Cdecl is a type of function calling convention, which specifies the rules that must be followed when calling functions from a DLL written in C or C++.</p> 
+   <p>//It can convert data types in C or C++ to Delphi.</p> 
+   <p>//For example, the code in C++:</p> 
+   <p>int&nbsp;X(int&nbsp;i)</p> 
+   <p>{</p> 
+   <p>&nbsp;&nbsp;return&nbsp;i*2;</p> 
+   <p>}</p> 
+   <p>&nbsp;</p> 
+   <p>//This function is compiled in Demo.dll and must be used when calling with Delphi:</p> 
+   <p>function&nbsp;X(i:&nbsp;Integer):&nbsp;Integer;&nbsp;Cdecl;&nbsp;external&nbsp;'Demo.dll';</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The class//Class keyword is used to declare or inherit a class, or to make the class and interface inherit at the same time.</p> 
+   <p>//In addition, the Class keyword can also be used to declare general methods of a class, so that the parent class can access the methods of the subclass from within the class.</p> 
+   <p>type</p> 
+   <p>&nbsp;&nbsp;ClassDemo&nbsp;=&nbsp;class(TObject)</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;private</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;public</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;constructor&nbsp;Create;</p> 
+   <p>&nbsp;&nbsp;end;</p> 
+   <p>&nbsp;</p> 
+   <p>//If you use class to declare a method, the method can be used in both the class and related classes, such as:</p> 
+   <p>type</p> 
+   <p>&nbsp;&nbsp;ClassA&nbsp;=&nbsp;class</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;private</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;public</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;procedure&nbsp;Y;</p> 
+   <p>&nbsp;&nbsp;end;</p> 
+   <p>&nbsp;</p> 
+   <p>type</p> 
+   <p>&nbsp;&nbsp;ClassB&nbsp;=&nbsp;class(ClassA)</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;private</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;public</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;procedure&nbsp;X;</p> 
+   <p>&nbsp;&nbsp;end;</p> 
+   <p>//When in use, ClassA can directly access the X method of ClassB</p> 
+   <p>procedure&nbsp;ClassA.Y;</p> 
+   <p>begin</p> 
+   <p>&nbsp;&nbsp;Self.X;</p> 
+   <p>end;</p> 
+   <p>//At this time, the parent class calls the class method of the subclass as its own method.</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The const//Const keyword is used to declare constants, and the data declared with const cannot be changed in the program.</p> 
+   <p>//It can also be used to declare function parameters, the parameters specified with const are not allowed to be changed in the function.</p> 
+   <p>const&nbsp;MyFileName&nbsp;=&nbsp;'Delphi';</p> 
+   <p>const&nbsp;MyInteger&nbsp;=&nbsp;100;</p> 
+   <p>&nbsp;</p> 
+   <p>//Using Const to declare a constant does not need to indicate its data type, the system will automatically determine the type and make automatic adjustments.</p> 
+   <p>//The function can use const to declare unchangeable parameters</p> 
+   <p>function&nbsp;X(const&nbsp;i:&nbsp;Integer):&nbsp;string;</p> 
+   <p>//At this time, during the function operation, the value of i cannot be changed.</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The constructor//constructor keyword is used to declare the constructor of a class. When the class is instantiated, this function is called first</p> 
+   <p>//The constructor is generally represented by Create, and the Create method can be associated with the CreateWnd method that exists in the class.</p> 
+   <p>type</p> 
+   <p>&nbsp;&nbsp;ClassDemo&nbsp;=&nbsp;class(TObject)</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;private</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fValue:&nbsp;Integer;</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;public</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;constructor&nbsp;Create;</p> 
+   <p>&nbsp;&nbsp;end;</p> 
+   <p>&nbsp;</p> 
+   <p>constructor&nbsp;ClassDemo.Create;</p> 
+   <p>begin</p> 
+   <p>&nbsp;&nbsp;fValue&nbsp;:=&nbsp;0;</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The contains//Contains keyword indicates whether a certain package (Package) contains a certain file.</p> 
+   <p>//Files imported with Contains must be added to the package file, it can avoid losing references to key files.</p> 
+   <p>package&nbsp;DATAX;</p> 
+   <p>&nbsp;&nbsp;requires</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;rtl,&nbsp;clx;</p> 
+   <p>&nbsp;&nbsp;contains</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;Db,&nbsp;DBLocal,&nbsp;DBXpress;</p> 
+   <p>end.</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The default//Default keyword is used to indicate the default value of an attribute</p> 
+   <p>//Only attributes of ordered types allow the existence of default values, otherwise the attribute value must be initialized in the constructor.</p> 
+   <p>type</p> 
+   <p>&nbsp;&nbsp;ClassDemo&nbsp;=&nbsp;class</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;private</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fValue:&nbsp;Integer;</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;published</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;property&nbsp;Value:&nbsp;Integer&nbsp;read&nbsp;fValue&nbsp;write&nbsp;fValue&nbsp;default&nbsp;0;</p> 
+   <p>&nbsp;&nbsp;end;</p> 
+   <p>&nbsp;</p> 
+   <p>//It can also indicate the default attributes of a class</p> 
+   <p>property&nbsp;strings[Index:&nbsp;Integer]:&nbsp;string&nbsp;read&nbsp;GetString&nbsp;write&nbsp;PutString;&nbsp;Default;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>destructor//Destructor is used to identify the destructor, which is automatically called when the class is released.</p> 
+   <p>//The destructor is only allowed to be overwritten, and no overload is allowed. The destructor usually uses Destroy as the function name.</p> 
+   <p>type</p> 
+   <p>&nbsp;&nbsp;ClassDemo&nbsp;=&nbsp;class(TComponent)</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;public</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;destructor&nbsp;Destroy;override;</p> 
+   <p>&nbsp;&nbsp;end;</p> 
+   <p>&nbsp;</p> 
+   <p>//Because the Destroy method is also in the TComponent class, it must be rewritten</p> 
+   <p>//But if you want to overload the destructor, it is not allowed, the following code is wrong:</p> 
+   <p>destructor&nbsp;Destroy;&nbsp;overload;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The dispid//DispId keyword is used in the DispInterface interface to specify a specific adaptation sequence number.</p> 
+   <p>//In the DispInterface interface, the adaptation sequence number must be unique,</p> 
+   <p>//If you do not specify DispId, the system will automatically assign an adaptation serial number to each method in the interface.</p> 
+   <p>//The methods in the DispInterface interface can be accessed through the adaptation sequence number.</p> 
+   <p>type</p> 
+   <p>&nbsp;&nbsp;IStringsDisp&nbsp;=&nbsp;dispinterface</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;['{EE05DFE2-5549-11D0-9EA9-0020AF3D82DA}']</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;property&nbsp;ControlDefault[Index:&nbsp;Integer]:&nbsp;Olevariant&nbsp;dispid&nbsp;0;&nbsp;default;</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;Count:&nbsp;Integer;&nbsp;dispid&nbsp;1;</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;property&nbsp;Item[Index:&nbsp;Integer]:&nbsp;Olevariant&nbsp;dispid&nbsp;2;</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;procedure&nbsp;Remove(Index:&nbsp;Integer);&nbsp;dispid&nbsp;3;</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;procedure&nbsp;Clear;&nbsp;dispid&nbsp;4;</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;Add(Item:&nbsp;Olevariant):&nbsp;Integer;&nbsp;dispid&nbsp;5;</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;_NewEnum:&nbsp;IUnknown;&nbsp;dispid&nbsp;-4;</p> 
+   <p>&nbsp;&nbsp;end;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>dispinterface//DispInterface is used to declare a specific adapter interface, which can accept incoming and outgoing data from the standard system interface.</p> 
+   <p>//The interface declared with DispInterface cannot be inherited, it can only be referenced.</p> 
+   <p>//The methods in DispInterface can only be called and must be dynamically bound.</p> 
+   <p>//DispId can be used to assign adaptation serial numbers to Fanghan in the interface.</p> 
+   <p>//DispInterface can only be used on the Windows platform. If you develop under Linux, this keyword will be automatically blocked by the system.</p> 
+   <p>//Normally, DispInterface is not used.</p> 
+   <p>&nbsp;</p> 
+   <p>//See DispId for examples</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>div//Div is used to find the integer quotient of two numbers. The two values ​​used for Div operation must both be of integer type, and the result of the operation must also be of integer type.</p> 
+   <p>var</p> 
+   <p>&nbsp;&nbsp;a,b,c:Integer;</p> 
+   <p>begin</p> 
+   <p>&nbsp;&nbsp;a&nbsp;:=&nbsp;20;&nbsp;b&nbsp;:=&nbsp;3;</p> 
+   <p>&nbsp;&nbsp;c&nbsp;:=&nbsp;a&nbsp;div&nbsp;b;&nbsp;{6}</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The do//Do keyword is used in For, While, On, With statements to form a specific structure</p> 
+   <p>&nbsp;</p> 
+   <p>//For statement:</p> 
+   <p>for&nbsp;i&nbsp;:=&nbsp;1&nbsp;to&nbsp;100&nbsp;do&nbsp;sum:=sum+i;</p> 
+   <p>&nbsp;</p> 
+   <p>//While statement:</p> 
+   <p>while&nbsp;i&nbsp;&lt;&nbsp;100&nbsp;do</p> 
+   <p>begin</p> 
+   <p>　sum := sum + i;</p> 
+   <p>　Inc(i);</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>//On statement (exception handling):</p> 
+   <p>try</p> 
+   <p>　i := StrToInt(s);</p> 
+   <p>except</p> 
+   <p>　on exception do ShowMessage('Error!');</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>//With statement:</p> 
+   <p>with&nbsp;Memo1.Lines&nbsp;do</p> 
+   <p>begin</p> 
+   <p>　Clear;</p> 
+   <p>　Append('abc');</p> 
+   <p>　Append('123');</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The downto//DownTo keyword is used in the For statement to indicate that the loop variable is decrementing.</p> 
+   <p>for&nbsp;i&nbsp;:=&nbsp;100&nbsp;downto&nbsp;1&nbsp;do</p> 
+   <p>&nbsp;&nbsp;ListBox1.Items.Add(IntToStr(i));</p> 
+   <p>&nbsp;</p> 
+   <p>//In the For statement, the To keyword is used to increase the loop variable, and the DownTo keyword is used to decrease it.</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>dynamic//Dynamic is used to declare a dynamic method,</p> 
+   <p>//Dynamic methods can be overridden, and the code size can be reduced as much as possible (different from Virtual).</p> 
+   <p>procedure&nbsp;X(i:&nbsp;Integer);&nbsp;dynamic;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>else//else is used to guide the running direction of the program. It can be used in conjunction with If, Case and On statements. When the condition is not met, it will run under else</p> 
+   <p>&nbsp;</p> 
+   <p>//If statement (in If statement, semicolon is not allowed before else):</p> 
+   <p>if&nbsp;a&nbsp;&gt;&nbsp;b&nbsp;then</p> 
+   <p>&nbsp;&nbsp;c&nbsp;:=&nbsp;a</p> 
+   <p>else</p> 
+   <p>&nbsp;&nbsp;c:=b;</p> 
+   <p>&nbsp;</p> 
+   <p>//Case statement:</p> 
+   <p>case&nbsp;Tag&nbsp;Of</p> 
+   <p>&nbsp;&nbsp;1:Result:=1;</p> 
+   <p>&nbsp;&nbsp;2:Result:=2;</p> 
+   <p>&nbsp;&nbsp;3:Result:=3;</p> 
+   <p>else</p> 
+   <p>&nbsp;&nbsp;Result:=0;</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p><strong>//On statement (exception handling):</strong></p> 
+   <p><strong>try</strong></p> 
+   <p><strong>&nbsp;&nbsp;i&nbsp;:=&nbsp;StrToInt(s);</strong></p> 
+   <p><strong>Excpet</strong></p> 
+   <p><strong>&nbsp;&nbsp;on&nbsp;EZeroDivide&nbsp;do&nbsp;Result&nbsp;:=&nbsp;1;</strong></p> 
+   <p><strong>&nbsp;&nbsp;on&nbsp;EOverflow&nbsp;do&nbsp;Result&nbsp;:=&nbsp;2;</strong></p> 
+   <p><strong>else</strong></p> 
+   <p><strong>&nbsp;&nbsp;Result&nbsp;:=&nbsp;0;</strong></p> 
+   <p><strong>end;</strong></p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>end//End is used to end a statement block or a unit.</p> 
+   <p>//It can match begin, Case, Class, Interface, Asm, Unit, Package, etc.</p> 
+   <p>//For statement blocks (partial end), a semicolon must be added after End.</p> 
+   <p>//For units or packages (global end), a period must be added after end.</p> 
+   <p>//It is not allowed to add symbols after End before the else keyword in the If statement.</p> 
+   <p>procedure&nbsp;X;</p> 
+   <p>begin</p> 
+   <p>　with Button1 do</p> 
+   <p>　begin</p> 
+   <p>　　if Button1.ShowHint then</p> 
+   <p>　　　Button1.Caption :='Hinted'</p> 
+   <p>　　else</p> 
+   <p>　　　Button1.Caption :='Not Hinted';</p> 
+   <p>　end;</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>//Use End in the package to end:</p> 
+   <p>package&nbsp;DATAX;</p> 
+   <p>&nbsp;&nbsp;requires</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;rtl,</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;clx;</p> 
+   <p>&nbsp;&nbsp;contains&nbsp;Db,&nbsp;DBLocal,&nbsp;DBXpress;</p> 
+   <p>end.</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The except//except keyword is used for exception handling and must be used in a try statement. If an exception occurs, the statement after except is executed</p> 
+   <p>try</p> 
+   <p>&nbsp;&nbsp;i&nbsp;:=&nbsp;StrToInt(s);</p> 
+   <p>except</p> 
+   <p>&nbsp;&nbsp;ShowMessage('Error!');</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p><strong>export//Export indicates the function call contract, indicating that the function can be exported, and the exported function can be called locally or remotely.</strong></p> 
+   <p><strong>//Other programs can call functions in the program in the form of dll. It is backward compatible.</strong></p> 
+   <p><strong>function&nbsp;Add(a,b:&nbsp;Integer):&nbsp;Integer;&nbsp;export;</strong></p> 
+   <p><strong>&nbsp;</strong></p> 
+   <p><strong>//If this program is compiled as Demo.exe, and another program needs to call this function, you can use the following statement</strong></p> 
+   <p><strong>function&nbsp;Add(a,b:&nbsp;Integer):&nbsp;Integer;&nbsp;stdcall;&nbsp;external&nbsp;'Demo.exe';</strong></p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>exports//exports is used to export objects, it must be used between the interface and the implementation, multiple items can be exported at the same time, and the items are separated by commas.</p> 
+   <p>library&nbsp;Demo;</p> 
+   <p>&nbsp;</p> 
+   <p>function&nbsp;X(i:&nbsp;Integer):&nbsp;string;&nbsp;stdcall;</p> 
+   <p>begin</p> 
+   <p>　Result:=IntToStr(i);</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>exports</p> 
+   <p>　X;</p> 
+   <p>&nbsp;</p> 
+   <p>begin</p> 
+   <p>end.</p> 
+   <p>&nbsp;</p> 
+   <p>//If the output object is overloaded, you must give the object an alias and specify the parameters.</p> 
+   <p>library&nbsp;Demo;</p> 
+   <p>&nbsp;</p> 
+   <p>function&nbsp;X(i:&nbsp;Integer):&nbsp;string;&nbsp;overload;&nbsp;stdcall;</p> 
+   <p>begin</p> 
+   <p>　Result := IntToStr(i);</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>function&nbsp;X(s:&nbsp;string):&nbsp;Integer;&nbsp;overload;&nbsp;stdcall;</p> 
+   <p>begin</p> 
+   <p>　Result := StrToInt(s);</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p><strong>exports</strong></p> 
+   <p><strong>&nbsp;&nbsp;X(i:&nbsp;Integer)&nbsp;name&nbsp;'x1',</strong></p> 
+   <p><strong>&nbsp;&nbsp;X(s:&nbsp;string)&nbsp;name&nbsp;'x2';</strong></p> 
+   <p>&nbsp;</p> 
+   <p>begin</p> 
+   <p>end.</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p><strong>The external//External keyword is used to refer to an external or OBJ method.</strong></p> 
+   <p><strong>{$L&nbsp;Demo.OBJ}</strong></p> 
+   <p><strong>procedure&nbsp;X(i:Integer);external;</strong></p> 
+   <p><strong>&nbsp;</strong></p> 
+   <p><strong>//If it is referenced from a dll or an external program, you can use the following code:</strong></p> 
+   <p><strong>function&nbsp;A(FileName:&nbsp;string):&nbsp;string;&nbsp;external&nbsp;'Demo.dll';</strong></p> 
+   <p>&nbsp;</p> 
+   <p>//If the referenced function is overloaded, you must additionally indicate the referenced name.</p> 
+   <p>function&nbsp;A(Name:&nbsp;string):&nbsp;string;&nbsp;overload;&nbsp;stdcall;&nbsp;external&nbsp;'Demo.dll'&nbsp;name&nbsp;'A1';</p> 
+   <p>function&nbsp;A(Code:&nbsp;Integer):&nbsp;string;&nbsp;overload;&nbsp;stdcall;&nbsp;external&nbsp;'Demo.dll'&nbsp;name&nbsp;'A2';</p> 
+   <p>&nbsp;</p> 
+   <p>//When using the External keyword, you must pay attention to the case, otherwise an error will occur.</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>far//Far indicates the function call contract, indicating that the function can be called remotely.</p> 
+   <p>//Other programs can call functions in the program in the form of dll. It is backward compatible.</p> 
+   <p>function&nbsp;Add(a,b:&nbsp;Integer):&nbsp;Integer;&nbsp;Far;</p> 
+   <p>&nbsp;</p> 
+   <p>//If this program is compiled into Demo.exe, and another program on another computer needs to call this function, you can use the following statement:</p> 
+   <p>function&nbsp;Add(a,b:&nbsp;Integer):&nbsp;Integer;&nbsp;stdcall;&nbsp;external&nbsp;'Demo.exe';</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p><strong>The file//File keyword indicates the type of file operation, the file must be declared as File,</strong></p> 
+   <p><strong>//If you append Of and file type after File, the file can be defined to read and write data of the specified type.</strong></p> 
+   <p><strong>type</strong></p> 
+   <p><strong>&nbsp;&nbsp;TPerson&nbsp;=&nbsp;record</strong></p> 
+   <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;PName:&nbsp;string[32];</strong></p> 
+   <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;PAge:&nbsp;Integer;</strong></p> 
+   <p><strong>&nbsp;&nbsp;end;</strong></p> 
+   <p><strong>var</strong></p> 
+   <p><strong>&nbsp;&nbsp;PFile:&nbsp;file&nbsp;of&nbsp;TPerson;</strong></p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The finalization//finalization keyword identifies the method to be called when the unit is released.</p> 
+   <p>//Usually release objects that cannot be automatically released in the unit, or not.</p> 
+   <p>//The most common case of finalization is to deinitialize OLE objects.</p> 
+   <p>initialization</p> 
+   <p>&nbsp;&nbsp;ActiveX.OleInitialize(nil);</p> 
+   <p>finalization</p> 
+   <p>&nbsp;&nbsp;ActiveX.OleUninitialize;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The finally//finally keyword points out the last method that must be called in exception handling.</p> 
+   <p>//Regardless of whether an exception occurs, the statement after the finally is always executed at the end of the try statement.</p> 
+   <p>try</p> 
+   <p>&nbsp;&nbsp;Node&nbsp;:=&nbsp;Node.GetNext;</p> 
+   <p>&nbsp;&nbsp;Edit1.Text&nbsp;:=&nbsp;Node.Text;</p> 
+   <p>finally</p> 
+   <p>　Node := nil;</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The for//For keyword leads to the For loop structure, which is used to loop a specified number of times.</p> 
+   <p>for&nbsp;i&nbsp;:=&nbsp;1&nbsp;to&nbsp;100&nbsp;do&nbsp;sum&nbsp;:=&nbsp;sum&nbsp;+&nbsp;i;</p> 
+   <p>&nbsp;</p> 
+   <p>//If the loop variable is decreasing, you can use the DownTo keyword</p> 
+   <p>for&nbsp;i&nbsp;:=&nbsp;100&nbsp;downto&nbsp;1&nbsp;do&nbsp;Inc(sum);</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p><strong>The forward//Forward keyword is used to pre-define a method. Only define the method declaration, and then implement the method at the back of the program.</strong></p> 
+   <p><strong>//This is conducive to the readability of the code, you can put all the declarations together, and then put all the implementations together.</strong></p> 
+   <p><strong>function&nbsp;X(i:&nbsp;Integer):&nbsp;Integer;&nbsp;forward;</strong></p> 
+   <p><strong>procedure&nbsp;Y(s:&nbsp;string);&nbsp;forward;</strong></p> 
+   <p><strong>...</strong></p> 
+   <p><strong>function&nbsp;X;</strong></p> 
+   <p><strong>begin</strong></p> 
+   <p><strong>&nbsp;&nbsp;Result&nbsp;:=&nbsp;i&nbsp;*&nbsp;2;</strong></p> 
+   <p><strong>end;</strong></p> 
+   <p><strong>&nbsp;</strong></p> 
+   <p><strong>procedure&nbsp;Y;</strong></p> 
+   <p><strong>begin</strong></p> 
+   <p><strong>&nbsp;&nbsp;WriteLn(s);</strong></p> 
+   <p><strong>end;</strong></p> 
+   <p><strong>&nbsp;</strong></p> 
+   <p><strong>//The method of forward declaration does not need to enter the method parameters and return value when implementing it, just use the method name directly.</strong></p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>function//Function is used to declare functions</p> 
+   <p>function&nbsp;X(i:&nbsp;Integer):&nbsp;Integer;</p> 
+   <p>&nbsp;</p> 
+   <p>//It can also be used for the declaration of dynamic functions</p> 
+   <p>type</p> 
+   <p>　TFun = function(i: Integer): Integer of object;</p> 
+   <p>&nbsp;</p> 
+   <p>//Dynamic declaration, you don't need to indicate the function name, just indicate the parameters and return type. The specific function name can be bound later.</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>goto//Goto statement is used to jump line number, you can jump to any position in the current structure layer.</p> 
+   <p>//The label keyword must be used to declare the line number in the declaration.</p> 
+   <p>//Because the Goto statement will destroy the structure of the program, it is not recommended.</p> 
+   <p>var</p> 
+   <p>　a,b: Integer;</p> 
+   <p>label</p> 
+   <p>　X,Y;</p> 
+   <p>begin</p> 
+   <p>　if a&gt; b then</p> 
+   <p>　　goto X</p> 
+   <p>　else</p> 
+   <p>　　goto Y;</p> 
+   <p>X:</p> 
+   <p>　WriteLn('a&gt; b');</p> 
+   <p>Y:</p> 
+   <p>　WriteLn('b&gt; a');</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The if//If keyword leads to the If conditional statement, which is used to judge the condition.</p> 
+   <p>var</p> 
+   <p>　a,b: Integer;</p> 
+   <p>begin</p> 
+   <p>　a := 2; b := 3;</p> 
+   <p>　if a&gt;b then</p> 
+   <p>　　WriteLn('a=' + IntToStr(a))</p> 
+   <p>　else</p> 
+   <p>　　WriteLn('b=' + IntToStr(b));</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>//The general structure of the If statement is If...Then...else, and the else statement can also be omitted.</p> 
+   <p>//If there are multiple sub-statements in the If statement, they must be distinguished by the begin...End structure.</p> 
+   <p>if&nbsp;a&nbsp;&gt;&nbsp;b&nbsp;then</p> 
+   <p>begin</p> 
+   <p>　WriteLn('a&gt;b');</p> 
+   <p>　WriteLn('a=' + IntToStr(a));</p> 
+   <p>　WriteLn('b=' + IntToStr(b));</p> 
+   <p>End</p> 
+   <p>else</p> 
+   <p>　WriteLn('b&gt;a');</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>implementation//Implementation identifies the implementation part of the unit, and the basic structure of the unit is:</p> 
+   <p>//Unit...Interface...implementation...end.</p> 
+   <p>//Function body, procedure body, etc. must be written after the implementation keyword.</p> 
+   <p>//If the object is referenced after implementation, the object is non-public and can only be used by the unit itself.</p> 
+   <p>implementation</p> 
+   <p>&nbsp;&nbsp;uses&nbsp;frmAbout;</p> 
+   <p>begin</p> 
+   <p>&nbsp;&nbsp;FormAbout.Show;</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>//A complete unit must have an implementation part.</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p><strong>implements//Implements points out that a property is inherited from an interface, at which point the property is converted into an interface object.</strong></p> 
+   <p><strong>//Dynamic binding of attributes through the interface, and dynamic setting of attribute values.</strong></p> 
+   <p><strong>type</strong></p> 
+   <p><strong>　IMyInterface = interface</strong></p> 
+   <p><strong>　　procedure P1;</strong></p> 
+   <p><strong>　　procedure P2;</strong></p> 
+   <p><strong>　end;</strong></p> 
+   <p><strong>　TMyImplclass = class</strong></p> 
+   <p><strong>　　procedure P1;</strong></p> 
+   <p><strong>　　procedure P2;</strong></p> 
+   <p><strong>　end;</strong></p> 
+   <p><strong>　TMyclass = class(TInterfacedObject, IMyInterface)</strong></p> 
+   <p><strong>　　FMyImplClass: TMyImplClass;</strong></p> 
+   <p><strong>　　property MyImplClass: TMyImplclass read FMyImplclass implements IMyInterface;</strong></p> 
+   <p><strong>　　procedure IMyInterface.P1 = MyP1;</strong></p> 
+   <p><strong>　　procedure MyP1;</strong></p> 
+   <p><strong>　end;</strong></p> 
+   <p><strong>&nbsp;</strong></p> 
+   <p><strong>//After implementing the declaration, you can indicate the entity of the method in the interface when the class is declared, as in the above example:</strong></p> 
+   <p><strong>procedure&nbsp;IMyInterface.P1&nbsp;=&nbsp;MyP1;</strong></p> 
+   <p><strong>&nbsp;</strong></p> 
+   <p>&nbsp;</p> 
+   <p>in//In is used to determine whether a set contains an element. The content to be determined must be a single set element and an instance of a set.</p> 
+   <p>type</p> 
+   <p>　TCol = (cA,cB,cC);</p> 
+   <p>　TCols = set of TCol;</p> 
+   <p>var</p> 
+   <p>　Cols: TCols;</p> 
+   <p>begin</p> 
+   <p>　Cols := [cA,cB];</p> 
+   <p>　if cA in Cols then</p> 
+   <p>　　ShowMessage('cA in Cols')</p> 
+   <p>　else</p> 
+   <p>　　ShowMessage('cA not in Cols');</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>//In is also used in project files to identify whether a file is referenced by the project.</p> 
+   <p>Uses</p> 
+   <p>　Unit1 in'Unit1.pas';</p> 
+   <p>&nbsp;</p> 
+   <p>//In can be used in a For statement to loop out the elements in a collection.</p> 
+   <p>var</p> 
+   <p>　s: string;</p> 
+   <p>　sl: TStringList;</p> 
+   <p>begin</p> 
+   <p>　...</p> 
+   <p>　for s In sl do</p> 
+   <p>　begin</p> 
+   <p>　　ShowMessage(s);</p> 
+   <p>　end;</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p><strong>index//Index is used to identify the serial number in the attribute, so that the same attribute method (Get, Set) can be used to operate different attributes.</strong></p> 
+   <p><strong>type</strong></p> 
+   <p><strong>　TForm1 = class(TForm)</strong></p> 
+   <p><strong>　private</strong></p> 
+   <p><strong>　　function GetInfo(const Index: Integer): Longint;</strong></p> 
+   <p><strong>　　procedure SetInfo(const Index: Integer; const Value: Longint);</strong></p> 
+   <p><strong>　public</strong></p> 
+   <p><strong>　　property iLeft:Longint index 0 read GetInfo write SetInfo;</strong></p> 
+   <p><strong>　　property iTop:Longint index 1 read GetInfo write SetInfo;</strong></p> 
+   <p><strong>　　property iWidth:Longint index 2 read GetInfo write SetInfo;</strong></p> 
+   <p><strong>　　property iHeight:Longint index 3 read GetInfo write SetInfo;</strong></p> 
+   <p><strong>　end;</strong></p> 
+   <p><strong>&nbsp;</strong></p> 
+   <p><strong>function&nbsp;TForm1.GetInfo(const&nbsp;Index:&nbsp;Integer):&nbsp;Longint;</strong></p> 
+   <p><strong>begin</strong></p> 
+   <p><strong>　case Index of</strong></p> 
+   <p><strong>　　0: result := self.Left;</strong></p> 
+   <p><strong>　　1: Result := self.Top;</strong></p> 
+   <p><strong>　　2: result := self.Width;</strong></p> 
+   <p><strong>　　3: result := self.Height;</strong></p> 
+   <p><strong>　end;</strong></p> 
+   <p><strong>end;</strong></p> 
+   <p><strong>&nbsp;</strong></p> 
+   <p><strong>//Index keyword is also used to point out multiple elements in attributes, for example:</strong></p> 
+   <p><strong>property&nbsp;Selected[Index:&nbsp;Integer]:&nbsp;Boolean&nbsp;read&nbsp;GetSelected&nbsp;write&nbsp;SetSelected;</strong></p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>inherited//Inherited is used to call the method of the parent class.</p> 
+   <p>type</p> 
+   <p>　TDemo = class(TComponent)</p> 
+   <p>　public</p> 
+   <p>　　constructor Create(AOwner: TComponent); override;</p> 
+   <p>　end;</p> 
+   <p>&nbsp;</p> 
+   <p>constructor&nbsp;TDemo.Create(AOwner:&nbsp;TComponent);</p> 
+   <p>begin</p> 
+   <p>　inherited Create(AOwner);</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>//If you are calling a method with the same name as itself, you can also omit the method name and parameters. As in the above example</p> 
+   <p>inherited&nbsp;Create(AOwner);</p> 
+   <p>//Can be changed to:</p> 
+   <p>Inherited;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The initialization//initialization keyword identifies the method to be called when the unit is loaded.</p> 
+   <p>//Usually initialize some objects that cannot be initialized automatically, or not.</p> 
+   <p>//The most common case of initialization is to initialize OLE objects.</p> 
+   <p>initialization</p> 
+   <p>&nbsp;&nbsp;ActiveX.OleInitialize(nil);</p> 
+   <p>finalization</p> 
+   <p>&nbsp;&nbsp;ActiveX.OleUninitialize;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The inline//InLine keyword is used in Asm or assembler structure,</p> 
+   <p>//Used to indicate that the assembly statement is downward compatible. It has no effect on the compilation of the program.</p> 
+   <p>function&nbsp;IntToStr(Value:&nbsp;Integer):&nbsp;string;</p> 
+   <p>asm</p> 
+   <p>　InLine;</p> 
+   <p>&nbsp;&nbsp;PUSH&nbsp;&nbsp;ESI</p> 
+   <p>&nbsp;&nbsp;MOV&nbsp;&nbsp;&nbsp;ESI,&nbsp;ESP</p> 
+   <p>&nbsp;&nbsp;SUB&nbsp;&nbsp;&nbsp;ESP,&nbsp;16</p> 
+   <p>&nbsp;&nbsp;xor&nbsp;&nbsp;&nbsp;ECX,&nbsp;ECX</p> 
+   <p>&nbsp;&nbsp;PUSH&nbsp;&nbsp;EDX</p> 
+   <p>&nbsp;&nbsp;xor&nbsp;&nbsp;&nbsp;EDX,&nbsp;EDX</p> 
+   <p>&nbsp;&nbsp;CALL&nbsp;&nbsp;CvtInt</p> 
+   <p>&nbsp;&nbsp;MOV&nbsp;&nbsp;&nbsp;EDX,&nbsp;ESI</p> 
+   <p>&nbsp;&nbsp;POP&nbsp;&nbsp;&nbsp;EAX</p> 
+   <p>&nbsp;&nbsp;CALL&nbsp;&nbsp;System.@LStrFromPCharLen</p> 
+   <p>&nbsp;&nbsp;ADD&nbsp;&nbsp;&nbsp;ESP,&nbsp;16</p> 
+   <p>&nbsp;&nbsp;POP&nbsp;&nbsp;&nbsp;ESI</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>interface//Interface identifies the interface part in the unit, and the basic structure of the unit is:</p> 
+   <p>//Unit...Interface...implementation...end.</p> 
+   <p>//The declaration of functions, procedures, etc. must be written after the Interface keyword.</p> 
+   <p>//If the object is referenced after Interface, the object has no instance and must be instantiated when used.</p> 
+   <p>Interface</p> 
+   <p>　uses frmAbout;</p> 
+   <p>var</p> 
+   <p>　FAbout: TFormAbout;</p> 
+   <p>begin</p> 
+   <p>　FAbout := TFormAbout.Create(Self);</p> 
+   <p>　FAbout.Show;</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>//A complete unit must have an Interface part.</p> 
+   <p>&nbsp;</p> 
+   <p>//Interface can also be used as an interface declaration.</p> 
+   <p>type</p> 
+   <p>　IMalloc = interface(IInterface)</p> 
+   <p>　['{00000002-0000-0000-C000-000000000046}']</p> 
+   <p>　　function Alloc(Size: Integer): Pointer; stdcall;</p> 
+   <p>　　function Realloc(P: Pointer; Size: Integer): Pointer; stdcall;</p> 
+   <p>　　procedure Free(P: Pointer); stdcall;</p> 
+   <p>　　function GetSize(P: Pointer): Integer; stdcall;</p> 
+   <p>　　function DidAlloc(P: Pointer): Integer; stdcall;</p> 
+   <p>　　procedure HeapMinimize; stdcall;</p> 
+   <p>　end;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The is//Is keyword is used to judge the object. In some cases, it can also be used as "As".</p> 
+   <p>var</p> 
+   <p>　Comp: TComponent;</p> 
+   <p>begin</p> 
+   <p>&nbsp;&nbsp;...</p> 
+   <p>　if Comp Is TEdit then</p> 
+   <p>　　(Comp as TEdit).Text :='Edit';</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The label//label keyword is used to declare the line number label so that Goto can be used for steering, and it is not recommended.</p> 
+   <p>var</p> 
+   <p>　a,b: Integer;</p> 
+   <p>label</p> 
+   <p>　X,Y;</p> 
+   <p>begin</p> 
+   <p>　if a&gt; b then</p> 
+   <p>　　goto X</p> 
+   <p>　else</p> 
+   <p>　　goto Y;</p> 
+   <p>X:</p> 
+   <p>　WriteLn('a&gt;b');</p> 
+   <p>Y:</p> 
+   <p>　WriteLn('b&gt;a');</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The library//Library keyword is used to indicate that a project is a class library. After the class library is compiled, a DLL file is generated, which can be called by other programs.</p> 
+   <p>library&nbsp;Editors;</p> 
+   <p>uses&nbsp;EdInit,&nbsp;EdInOut,&nbsp;EdFormat,&nbsp;EdPrint;</p> 
+   <p>exports</p> 
+   <p>&nbsp;&nbsp;InitEditors,</p> 
+   <p>&nbsp;&nbsp;doneEditors&nbsp;name&nbsp;done,</p> 
+   <p>&nbsp;&nbsp;InsertText&nbsp;name&nbsp;Insert,</p> 
+   <p>&nbsp;&nbsp;DeleteSelection&nbsp;name&nbsp;Delete,</p> 
+   <p>&nbsp;&nbsp;FormatSelection,</p> 
+   <p>&nbsp;&nbsp;PrintSelection&nbsp;name&nbsp;Print,</p> 
+   <p>&nbsp;&nbsp;SetErrorHandler;</p> 
+   <p>begin</p> 
+   <p>&nbsp;&nbsp;InitLibrary;</p> 
+   <p>end.</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The message//Message keyword is used to declare the message method,</p> 
+   <p>//The method with Message must indicate the type of message received, and pass the message into the method by reference for processing.</p> 
+   <p>procedure&nbsp;Refresh(var&nbsp;Msg:&nbsp;TMessageRecordtype);&nbsp;message&nbsp;ID_REFRESH;</p> 
+   <p>&nbsp;</p> 
+   <p>procedure&nbsp;Refresh(var&nbsp;Msg:&nbsp;TMessageRecordtype);</p> 
+   <p>begin</p> 
+   <p>&nbsp;&nbsp;if&nbsp;Chr(Msg.Code)&nbsp;=&nbsp;#13&nbsp;then</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;...</p> 
+   <p>&nbsp;&nbsp;else</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;inherited;</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>//Users can customize messages, and custom messages can also be received by Message and trigger events.</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>mod//Mod is used to find the integer modulus of two numbers, that is, the remainder. The two values ​​used for Mod operation must be integers, and the result of the operation is also integer.</p> 
+   <p>var</p> 
+   <p>　a,b,c: Integer;</p> 
+   <p>begin</p> 
+   <p>　a := 20; b := 3;</p> 
+   <p>　c := a mod b; {2}</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The name//Name keyword is used to indicate the alias of the method,</p> 
+   <p>//For a method to be externally referenced, it is recommended to use Name to apply for a method alias to avoid external programs from changing the entity content of the method.</p> 
+   <p>//When referencing a method from outside, if the method has an alias, it must be identified by Name.</p> 
+   <p>function&nbsp;MessageBox(HWnd:&nbsp;Integer;&nbsp;Text,&nbsp;Caption:&nbsp;PChar;&nbsp;Flags:&nbsp;Integer):&nbsp;Integer;&nbsp;</p> 
+   <p>&nbsp;&nbsp;stdcall;&nbsp;external&nbsp;'user32.dll'&nbsp;name&nbsp;'MessageBoxA';</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p><strong>Near//Near indicates the function call contract, indicating that the function can be called locally.</strong></p> 
+   <p><strong>//Other programs can call functions in the program in the form of dll. It is backward compatible.</strong></p> 
+   <p><strong>function&nbsp;Add(a,b:&nbsp;Integer):&nbsp;Integer;&nbsp;near;</strong></p> 
+   <p><strong>&nbsp;</strong></p> 
+   <p><strong>//If this program is compiled into Demo.exe, and another local program needs to call this function, you can use the following statement:</strong></p> 
+   <p><strong>function&nbsp;Add(a,b:&nbsp;Integer):&nbsp;Integer;&nbsp;stdcall;&nbsp;external&nbsp;'Demo.exe';</strong></p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>nil//Nil is used to represent a null pointer, or an object without an instance.</p> 
+   <p>while&nbsp;Node&nbsp;&lt;&gt;&nbsp;nil&nbsp;do</p> 
+   <p>begin</p> 
+   <p>　ListBox1.Items.Add(Node.Text);</p> 
+   <p>　Node := Node.GetNext;</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p><strong>The nodefault//NoDefault keyword indicates that an attribute is not allowed to have a default value, which is usually used in inheritance.</strong></p> 
+   <p>type</p> 
+   <p>　TClassA = class</p> 
+   <p>　private</p> 
+   <p>　　fValue: Integer;</p> 
+   <p>　published</p> 
+   <p>　　property Value: Integer read fValue write fValue default 0;</p> 
+   <p>　end;</p> 
+   <p>&nbsp;</p> 
+   <p>　TClassB = class(TClassA)</p> 
+   <p>　published</p> 
+   <p>　　property Value:Integer read fValue write fValue nodefault;</p> 
+   <p>　end;</p> 
+   <p>&nbsp;</p> 
+   <p>//From the above example, the Value in TClassA has a default value of 0,</p> 
+   <p>//TClassB inherits TClassA, so it also inherits its default value, here use NoDefault to remove the default value</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>not//Not is used to negate, it negates the original result. For example:</p> 
+   <p>if&nbsp;a&nbsp;&gt;&nbsp;b&nbsp;then</p> 
+   <p>//can be written as:</p> 
+   <p>if&nbsp;not(a&nbsp;&lt;&nbsp;b)&nbsp;then</p> 
+   <p>&nbsp;</p> 
+   <p>//Not keyword is usually used to switch Boolean attributes</p> 
+   <p>procedure&nbsp;Button1Click(Sender:&nbsp;TObject);</p> 
+   <p>begin</p> 
+   <p>　StatusBar1.Visible := not StatusBar1.Visible;</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>object//Object is used to declare an object, which can be arbitrary and backward compatible. Object can only be inherited by Object.</p> 
+   <p>//The method of declaring an object is the same as the method of declaring a class.</p> 
+   <p>type</p> 
+   <p>　ODemoA = object</p> 
+   <p>　end;</p> 
+   <p>&nbsp;</p> 
+   <p>　ODemoB = object(ODemoA)</p> 
+   <p>　end;</p> 
+   <p>&nbsp;</p> 
+   <p><strong>//Object keyword is also used to declare dynamic functions or procedures, for example:</strong></p> 
+   <p><strong>type</strong></p> 
+   <p><strong>　TMyFun = function(i: Integer): Integer of Object;</strong></p> 
+   <p><strong>　TMyProc = procedure(s: string) of object;</strong></p> 
+   <p><strong>&nbsp;</strong></p> 
+   <p><strong>//The function or procedure declared by object can be dynamically bound to the specified function body, or bound to the control event.</strong></p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The of//Of key is used to form a specified structure with other keywords. Of can be used with Case, Class, Array, File, Set, Object.</p> 
+   <p>&nbsp;</p> 
+   <p>//Case statement:</p> 
+   <p>case&nbsp;Tag&nbsp;Of</p> 
+   <p>　0: Result :='a';</p> 
+   <p>　1: Result :='b';</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>//Class statement:</p> 
+   <p>type</p> 
+   <p>　TDemo = class of TComponent;</p> 
+   <p>&nbsp;</p> 
+   <p>//Array structure:</p> 
+   <p>var</p> 
+   <p>　MyInt: array of Integer;</p> 
+   <p>&nbsp;</p> 
+   <p>//File structure:</p> 
+   <p>var</p> 
+   <p>　MyFile: file of Byte;</p> 
+   <p>&nbsp;</p> 
+   <p>//Set statement:</p> 
+   <p>type</p> 
+   <p>　TCol = (cA,cB,cC);</p> 
+   <p>　TCols = set of TCol;</p> 
+   <p>&nbsp;</p> 
+   <p><strong>//Object structure:</strong></p> 
+   <p><strong>type</strong></p> 
+   <p><strong>　MyFun = function(I: Integer): Integer of Object;</strong></p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The on//On keyword is used for exception handling, pointing out the exception that occurred, and obtaining exception information.</p> 
+   <p>try</p> 
+   <p>　i := StrToInt(s);</p> 
+   <p>except</p> 
+   <p>　on E: exception do</p> 
+   <p>　　ShowMessage(E.Message);</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>or//1. means logical or</p> 
+   <p>if&nbsp;(a&gt;0)&nbsp;or&nbsp;(b&gt;0)&nbsp;then</p> 
+   <p>&nbsp;</p> 
+   <p>//2. represents bit operation</p> 
+   <p>var</p> 
+   <p>&nbsp;&nbsp;a,b,c:&nbsp;Integer;</p> 
+   <p>begin</p> 
+   <p>&nbsp;&nbsp;c&nbsp;:=&nbsp;(a&nbsp;or&nbsp;b);</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>//When using Or to represent logic, the expressions around Or must be enclosed in parentheses to avoid conflicting conditions</p> 
+   <p>//If Or is used in the conditional statement, the editor does not know what the user does with Or</p> 
+   <p>E.g:</p> 
+   <p>if&nbsp;a&gt;0&nbsp;or&nbsp;b&gt;0&nbsp;then</p> 
+   <p>//The compiler may understand as:</p> 
+   <p>if&nbsp;a&gt;(0&nbsp;or&nbsp;b)&gt;0&nbsp;then</p> 
+   <p>//or</p> 
+   <p>if&nbsp;(a&gt;0)&nbsp;or&nbsp;(b&gt;0)&nbsp;then</p> 
+   <p>//But when actually compiling, the compiler will generate a conflict and report an error</p> 
+   <p>//And the first form may contain a&gt;b&gt;c, which is not supported in Delphi</p> 
+   <p>//So you must use parentheses when using the Or operator to distinguish between left and right conditions.</p> 
+   <p>//It means that you must also add parentheses when performing bitwise operations, enclose Or and the left and right parameters.</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The out//Out keyword explains the output method of the method parameters. General functions can only have one return value.</p> 
+   <p>//Use Out to return multiple results in one function.</p> 
+   <p><strong>//Out is different from var. Out is a parameter return in the form of a return value, while var is the address of a parameter directly input.</strong></p> 
+   <p>procedure&nbsp;X(out&nbsp;i:&nbsp;Integer;&nbsp;out&nbsp;s:&nbsp;string);</p> 
+   <p>begin</p> 
+   <p>　i := i * 2;</p> 
+   <p>　s := s +'abc';</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>procedure&nbsp;TForm1.Button1Click(Sender:&nbsp;TObject);</p> 
+   <p>var</p> 
+   <p>　i: Integer;</p> 
+   <p>　s: string;</p> 
+   <p>begin</p> 
+   <p>　i := 20;</p> 
+   <p>　s :='xxx';</p> 
+   <p>　X(i,s);</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The overload//Overload keyword points out the method used for overloading, overloading means that the method name is the same,</p> 
+   <p>//But the number, type or order of parameters are different, and the components that meet this condition are overloaded.</p> 
+   <p>function&nbsp;X(i:&nbsp;Integer):&nbsp;string;&nbsp;overload;</p> 
+   <p>function&nbsp;X(s:&nbsp;string):&nbsp;string;&nbsp;overload;</p> 
+   <p>&nbsp;</p> 
+   <p>//When inheriting from the parent class, if the child class has the same method as the parent class, then overload must also be used to constitute an overload.</p> 
+   <p>//But this type of overload must also meet the requirements of the overload.</p> 
+   <p>type</p> 
+   <p>　TDemo = class(TComponent)</p> 
+   <p>　public</p> 
+   <p>　　procedure CreateWnd(AOwner: TWinControl); overload;</p> 
+   <p>　end;</p> 
+   <p>&nbsp;</p> 
+   <p>//As in the above example, the methods owned by the subclass are:</p> 
+   <p>procedure CreateWnd; {inherited from parent class}</p> 
+   <p>procedure CreateWnd(AOwner: TWinControl); {Subclass declaration}</p> 
+   <p>//A total of two CreateWnd methods.</p> 
+   <p>&nbsp;</p> 
+   <p>//If overloading is not used, the method of the parent class can be overridden in the subclass.</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>override//Override is used to override a method in Virtual or Dynamic form.</p> 
+   <p>//The declaration of the overridden method must be used when overwriting, and the parameters and return type of the original method must not be modified.</p> 
+   <p>procedure&nbsp;Create(AOwner:&nbsp;TComponent);&nbsp;override;</p> 
+   <p>&nbsp;</p> 
+   <p>//Override is mostly used for inheritance, and the method of the parent class is overwritten with the subclass.</p> 
+   <p>type</p> 
+   <p>　TClassA = class</p> 
+   <p>　　procedure X; virtual;</p> 
+   <p>　end;</p> 
+   <p>&nbsp;</p> 
+   <p>　TClassB = class(TClassA)</p> 
+   <p>　　procedure X; override;</p> 
+   <p>　end;</p> 
+   <p>&nbsp;</p> 
+   <p>//As in the above example, the methods owned by the subclass are:</p> 
+   <p>procedure X; {override from parent class}</p> 
+   <p>//The methods owned by the parent class are:</p> 
+   <p>procedure X; {parent class own method, not covered}</p> 
+   <p>&nbsp;</p> 
+   <p>//If the method of the parent class is not declared with Virtual or Dynamic,</p> 
+   <p>//Or if you need to modify the parameters, you must use the Reintroduce keyword to cover it.</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The package//Package keyword is used to indicate that a project is a control library.</p> 
+   <p>//The BPL file is generated after the control library is compiled, which can be installed in the Delphi control library, so as to use the control in future development.</p> 
+   <p>package&nbsp;DATAX;</p> 
+   <p>&nbsp;&nbsp;requires</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;rtl,</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;clx;</p> 
+   <p>&nbsp;&nbsp;contains</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;MyUnit&nbsp;in&nbsp;'C:\MyProject\MyUnit.pas';</p> 
+   <p>end.</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The packed//Packed keyword is used to pack structure records or arrays, and the volume of the packed objects can be significantly reduced after packing.</p> 
+   <p>type</p> 
+   <p>　TPerson = packed Record</p> 
+   <p>　　PName: string[32];</p> 
+   <p>　　PAge: Integer;</p> 
+   <p>　end;</p> 
+   <p>　MyArray: packed array of PChar;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>pascal//Pascal indicates the function call agreement,</p> 
+   <p>//Point out that the function follows Pascal reason when calling, that is, initialize all variables first,</p> 
+   <p>//Avoid errors caused by asynchronous thread calls. It is backward compatible.</p> 
+   <p>function&nbsp;X(i:&nbsp;Integer):&nbsp;Integer;&nbsp;Pascal;</p> 
+   <p>begin</p> 
+   <p>　Result := i * 2;</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>Private//Private indicates the access distinguishing authority of the elements in the class, and the elements distinguished by Private can only be accessed inside the class.</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>procedure//Procedure is used to declare the procedure</p> 
+   <p>procedure&nbsp;X(i:&nbsp;Integer);</p> 
+   <p>&nbsp;</p> 
+   <p>//It can also be used for the declaration of dynamic functions</p> 
+   <p>type</p> 
+   <p>　TProc = procedure(i: Integer) of object;</p> 
+   <p>&nbsp;</p> 
+   <p>//In dynamic declaration, you don't need to indicate the procedure name, just indicate the parameters. The specific procedure name can be bound later.</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The program//Program keyword is used to indicate that a project is an application. After the control library is compiled, an exe file is generated, which can be directly executed</p> 
+   <p>program&nbsp;Project1;</p> 
+   <p>uses</p> 
+   <p>&nbsp;&nbsp;Forms,</p> 
+   <p>&nbsp;&nbsp;Unit1&nbsp;in&nbsp;'Unit1.pas'&nbsp;;</p> 
+   <p>{$R&nbsp;*.res}</p> 
+   <p>begin</p> 
+   <p>&nbsp;&nbsp;Application.Initialize;</p> 
+   <p>&nbsp;&nbsp;Application.CreateForm(TForm1,&nbsp;Form1);</p> 
+   <p>&nbsp;&nbsp;Application.Run;</p> 
+   <p>end.</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The property//Property keyword is used to declare properties. Properties are divided into two types: explicit properties and implicit properties.</p> 
+   <p>//Only attributes declared under the published access specifier are explicit attributes, which can be viewed directly in the object viewer.</p> 
+   <p>type</p> 
+   <p>　TDemo = class</p> 
+   <p>　Private</p> 
+   <p>　　fValue: Integr;</p> 
+   <p>　Published</p> 
+   <p>　　property Value: Integer read fValue write fValue;</p> 
+   <p>　end;</p> 
+   <p>&nbsp;</p> 
+   <p>//Event is also a kind of property, which can be declared with Property under the published specifier</p> 
+   <p>type</p> 
+   <p>　TOnTextChange=procedure (Sender: TObject) of object;</p> 
+   <p>　TDemo = class</p> 
+   <p>　private</p> 
+   <p>　　fEvent: TOnTexChange;</p> 
+   <p>　published</p> 
+   <p>　　property OntextChange: TOnTextChange read fEvent write fEvent;</p> 
+   <p>　end;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>protected//Protected indicates the access distinguishing authority of the elements in the class, and the elements distinguished by Protected can only be accessed within the class and its subclasses.</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>public//Public indicates the access distinguishing authority of the elements in the class, and the elements distinguished by Public can be accessed by any object in the class and outside the class.</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p><strong>published//Published indicates the access distinguishing permissions of the elements in the class.</strong></p> 
+   <p><strong>//The elements distinguished by Published can be accessed by any RTTI objects within and outside the class</strong></p> 
+   <p><strong>//Only the attributes declared under the Published discriminator can become explicit attributes and be displayed in the object viewer.</strong></p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The raise//Raise statement is used to throw an exception,</p> 
+   <p>//If you want to handle the exception through an external program, or throw the exception again when the exception occurs, you can use the Raise statement.</p> 
+   <p>function&nbsp;GetString(i:&nbsp;Integer):&nbsp;string;</p> 
+   <p>begin</p> 
+   <p>　if i &lt;0 then</p> 
+   <p>　　raise exception.Create('Integer Cannot smaller than 0');</p> 
+   <p>　Result := IntToStr(i);</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>//In exception handling, the exception can be rethrown</p> 
+   <p>try</p> 
+   <p>　i := StrToInt(s);</p> 
+   <p>except</p> 
+   <p>　on E: exception do</p> 
+   <p>　　raise exception.Create(E.Message);</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>read//Read is used to identify the member or method used for reading in the attribute.</p> 
+   <p>private</p> 
+   <p>　fValue: Integer;</p> 
+   <p>published</p> 
+   <p>　property Value: Integer read fValue;</p> 
+   <p>&nbsp;</p> 
+   <p>//The above example indicates that the value of the Value property is read from the fValue member.</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p><strong>The readonly//ReadOnly keyword is used to identify whether an object is read-only.</strong></p> 
+   <p><strong>property&nbsp;ReadOnly;</strong></p> 
+   <p><strong>&nbsp;</strong></p> 
+   <p><strong>//When ReadOnly is set to True, users are not allowed to modify the properties manually, and can only be operated through other objects.</strong></p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The record//Record keyword is used to declare a structure record,</p> 
+   <p>//A structure can be regarded as an object that does not need to be instantiated and has its own members.</p> 
+   <p>type</p> 
+   <p>　TPerson = record</p> 
+   <p>　　PName: string[32];</p> 
+   <p>　　PAge: Integer;</p> 
+   <p>　end;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p><strong>The register//Register indicates the function call contract, indicating that the function can leave a record in the registry when it is called. It is backward compatible.</strong></p> 
+   <p><strong>function&nbsp;Add(a,b:&nbsp;Integer):&nbsp;Integer;&nbsp;Register;&nbsp;Register</strong></p> 
+   <p><strong>&nbsp;</strong></p> 
+   <p><strong>//Keywords are also used to register controls or expert tools with the control library or IDE.</strong></p> 
+   <p><strong>procedure&nbsp;Register;</strong></p> 
+   <p><strong>begin</strong></p> 
+   <p><strong>　RegisterComponents('Sample', [TDemo]);</strong></p> 
+   <p><strong>end;</strong></p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p><strong>reintroduce//Reintroduce is used to redistribute methods, usually when inherited,</strong></p> 
+   <p><strong>//If the method to be overridden is a static method, or the parameters of the method need to be modified, etc., it must be republished with Reintroduce.</strong></p> 
+   <p><strong>//For Virtual or Dynamic methods, you can directly use Override to overwrite.</strong></p> 
+   <p><strong>type</strong></p> 
+   <p><strong>　TClassA = class</strong></p> 
+   <p><strong>　　procedure X;</strong></p> 
+   <p><strong>　end;</strong></p> 
+   <p><strong>　TClassB = class(TClassA)</strong></p> 
+   <p><strong>　　procedure X; reintroduce;</strong></p> 
+   <p><strong>　end;</strong></p> 
+   <p><strong>　TClassC = class(TClassB)</strong></p> 
+   <p><strong>　　procedure X(i: Integer); reintroduce;</strong></p> 
+   <p><strong>　end;</strong></p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The repeat//repeat keyword is used to introduce the repeat loop structure,</p> 
+   <p>//The loop must first execute the loop body, and then judge the loop conditions. The repeat must be used in conjunction with the Until keyword.</p> 
+   <p>i&nbsp;:=&nbsp;0;</p> 
+   <p>repeat</p> 
+   <p>　sum := sum + i;</p> 
+   <p>　Inc(i);</p> 
+   <p>until(i&nbsp;&gt;=&nbsp;100);</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The requires//Requires keyword points out the prerequisites when compiling the Package. If the Requires conditions are not met, the package is not allowed to be compiled.</p> 
+   <p>package&nbsp;DATAX;</p> 
+   <p>&nbsp;&nbsp;requires</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;rtl,</p> 
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;clx;</p> 
+   <p>end.</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p><strong>resourcestring//ResourceString is used to declare resource strings, which can be used within the declared structure.</strong></p> 
+   <p><strong>ResourceString</strong></p> 
+   <p><strong>　CreateError ='Cannot create file %s';</strong></p> 
+   <p><strong>　OpenError ='Cannot open file %s';</strong></p> 
+   <p><strong>　LineTooLong ='Line too long';</strong></p> 
+   <p><strong>　ProductName ='Borland Rocks';</strong></p> 
+   <p><strong>　SomeResourceString = SomeTrueConstant;</strong></p> 
+   <p><strong>&nbsp;</strong></p> 
+   <p>&nbsp;</p> 
+   <p>Safecall//Safecall is a type of function calling convention, which stipulates the rules and rules that must be followed by functions called by COM.</p> 
+   <p>//At compile time, the function declared by Safecall is compiled into COM interface compatible.</p> 
+   <p>procedure&nbsp;X(s:&nbsp;WideString);&nbsp;safecall;</p> 
+   <p>&nbsp;</p> 
+   <p>//becomes:</p> 
+   <p>procedure&nbsp;X(s:&nbsp;PAnsiString);</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The set//Set keyword is used to declare a collection class, and the collection class allows operation with set operators, such as in.</p> 
+   <p>type</p> 
+   <p>　TCol = (cA,cB,cC);</p> 
+   <p>　TCols = set of TCol;</p> 
+   <p>&nbsp;</p> 
+   <p>//Allow use of plus and minus symbols to add or delete a collection element during operation</p> 
+   <p>var</p> 
+   <p>　Cols: Tcols;</p> 
+   <p>begin</p> 
+   <p>　Cols := Cols + [cA,cB];</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>shl//SHL means shift to the left, and the number of bits shifted to the left is multiplied by a power of 2.</p> 
+   <p>var</p> 
+   <p>　x: Integer;</p> 
+   <p>begin</p> 
+   <p>　X := 2 shl 3; {16}</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>shr//SHR means shift to the right, the number of bits shifted to the right is divided by a power of 2.</p> 
+   <p>var</p> 
+   <p>　x: Integer;</p> 
+   <p>begin</p> 
+   <p>　X := 16 shr 2; {4}</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>Stdcall//Stdcall is a type of function calling convention, which stipulates the rules that functions that can be called by the program should be followed.</p> 
+   <p>//The Stdcall keyword must form a pairing between the caller and the callee.</p> 
+   <p>&nbsp;</p> 
+   <p>//For example, the called party function:</p> 
+   <p>Library&nbsp;Demo;</p> 
+   <p>function&nbsp;X(i:&nbsp;Integer):&nbsp;Integer;&nbsp;stdcall;</p> 
+   <p>begin</p> 
+   <p>　Result := i * 2;</p> 
+   <p>end;</p> 
+   <p>exports</p> 
+   <p>　X;</p> 
+   <p>begin</p> 
+   <p>end.</p> 
+   <p>&nbsp;</p> 
+   <p>//Main function:</p> 
+   <p>function&nbsp;X(i:&nbsp;Integer):&nbsp;Integer;&nbsp;stdcall;&nbsp;external&nbsp;'Demo.dll';</p> 
+   <p>&nbsp;</p> 
+   <p>//At the same time, it should be noted that when using the Stdcall keyword, the called function is case sensitive, and it is extremely easy to make mistakes here.</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p><strong>stored//Stored is used to indicate whether the value of an attribute can be retained. If True is specified, the assignment and undo operation of the attribute value is allowed.</strong></p> 
+   <p><strong>property&nbsp;Value:&nbsp;string&nbsp;read&nbsp;fValue&nbsp;write&nbsp;fValue&nbsp;stored&nbsp;True;</strong></p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>string//String is a data type, it represents a string.</p> 
+   <p>var</p> 
+   <p>　Str: string;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The then//Then keyword is used in the If statement. When the If condition is satisfied, the statement after Then is executed.</p> 
+   <p>var</p> 
+   <p>　a,b: Integer;</p> 
+   <p>begin</p> 
+   <p>　if a&gt; b then</p> 
+   <p>　　WriteLn('a')</p> 
+   <p>　else</p> 
+   <p>　　WriteLn('b');</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p><strong>threadvar//Threadvar identifies a variable created when the thread starts,</strong></p> 
+   <p><strong>//If you use Threadvar to declare a variable, you must manually release the space occupied by it before the end of the program.</strong></p> 
+   <p><strong>threadvar&nbsp;S:&nbsp;AnsiString;</strong></p> 
+   <p><strong>S&nbsp;:=&nbsp;'ABCDEFGHIJKLMNOPQRSTUVWXYZ';</strong></p> 
+   <p><strong>S&nbsp;:=&nbsp;'';</strong></p> 
+   <p><strong>&nbsp;</strong></p> 
+   <p><strong>//S :=''; That is, release the memory occupied by variable S.</strong></p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The to//To keyword is used in the For statement to indicate that the loop variable is incremented.</p> 
+   <p>for&nbsp;i&nbsp;:=&nbsp;10&nbsp;to&nbsp;100&nbsp;do</p> 
+   <p>　ListBox1.Items.Add(IntToStr(i));</p> 
+   <p>&nbsp;</p> 
+   <p>//In the For statement, the To keyword is used to increase the loop variable, and the DownTo keyword is used to decrease it.</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The try//try statement is used for exception handling. For statements that may occur exceptions, they can be placed under the try structure to protect them from exceptions.</p> 
+   <p>try</p> 
+   <p>　i := StrToInt(s);</p> 
+   <p>except</p> 
+   <p>　ShowMessage('Error');</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The type//Type keyword is used to declare various objects, and the objects declared with the Type keyword are passed by reference when passed.</p> 
+   <p>type</p> 
+   <p>　TDemo = class</p> 
+   <p>　end;</p> 
+   <p>&nbsp;</p> 
+   <p>//type is also used to declare enumerated types or variables passed by reference.</p> 
+   <p>type</p> 
+   <p>　TCol = (cA,cB,cC);</p> 
+   <p>　TInt = Integer;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>unit//Unit identifies the beginning of the unit, and the basic structure of the unit is Unit...Interface...implementation...end.</p> 
+   <p>Unit&nbsp;Unit1;</p> 
+   <p>Interface</p> 
+   <p>　uses Classes;</p> 
+   <p>implementation</p> 
+   <p>end.</p> 
+   <p>&nbsp;</p> 
+   <p>//A complete unit must have Unit as the beginning.</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The until//Until keyword is used to determine the loop condition of the repeat loop structure,</p> 
+   <p>//If the loop condition is true, then exit the loop. Until must be used in conjunction with the repeat keyword.</p> 
+   <p>i&nbsp;:=&nbsp;0;</p> 
+   <p>repeat</p> 
+   <p>　sum := sum + i;</p> 
+   <p>　Inc(i);</p> 
+   <p>until(i&nbsp;&gt;=&nbsp;100);</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>uses//Uses is used to refer to an external unit, and can use the public part of the unit.</p> 
+   <p>//Uses statement is usually placed in the interface or implementation part of a unit.</p> 
+   <p>Interface</p> 
+   <p>　uses Classes;</p> 
+   <p>Implemention</p> 
+   <p>　uses frmAbout;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The var//var keyword is used to declare a variable or object, and the variable declared by var is passed by value.</p> 
+   <p>var</p> 
+   <p>　i: Integer;</p> 
+   <p>　s: string;</p> 
+   <p>&nbsp;</p> 
+   <p>//var can also be used to identify method parameters passed by reference</p> 
+   <p>function&nbsp;X(var&nbsp;i:&nbsp;Integer):&nbsp;Integer;</p> 
+   <p>&nbsp;</p> 
+   <p>//The parameter i in the above function is passed by reference, and its value can be changed when the function is executed, and returns to the calling function.</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p><strong>Varargs</strong></p> 
+   <p><strong>//varArgs identifies the reference parameter, which must be used in conjunction with the Cdecl keyword to indicate that the function to be called is allowed to be passed by reference.</strong></p> 
+   <p><strong>//Explain that the parameter table can have a variable number of parameters passed in at the end</strong></p> 
+   <p><strong>function&nbsp;printf(Format:&nbsp;PChar):&nbsp;Integer;&nbsp;cdecl;&nbsp;varargs;</strong></p> 
+   <p><strong>&nbsp;</strong></p> 
+   <p><strong>//The above code references the Printf function from the C++ class library, and allows parameters to be passed in by reference.</strong></p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>virtual//Virtual is used to declare a virtual method,</p> 
+   <p>//Virtual methods can be overridden, and the program can run as fast as possible (different from Dynamic).</p> 
+   <p>procedure&nbsp;X(i:&nbsp;Integer);&nbsp;virtual;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The while//While keyword is used to introduce the While loop statement, the loop condition is judged before the loop, and the loop is executed if the condition is true.</p> 
+   <p>i&nbsp;:=&nbsp;0;</p> 
+   <p>while&nbsp;i&nbsp;&lt;&nbsp;100&nbsp;do</p> 
+   <p>begin</p> 
+   <p>　sum := sum + i;</p> 
+   <p>　Inc(i);</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The with//With keyword is used to group the same objects together. It can save a lot of repetitive code and make the code look simpler.</p> 
+   <p>with&nbsp;Form1.Memo1.Lines&nbsp;do</p> 
+   <p>begin</p> 
+   <p>　Clear;</p> 
+   <p>　Append('abc');</p> 
+   <p>　Append('def');</p> 
+   <p>　SaveToFile('C:\demo.txt');</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>//If the above code does not use the With statement, it seems very redundant to copy the content to the clipboard code:</p> 
+   <p>Form1.Memo1.Lines.Clear;</p> 
+   <p>Form1.Memo1.Lines.Append('abc');</p> 
+   <p>Form1.Memo1.Lines.Append('def');</p> 
+   <p>Form1.Memo1.Lines.SaveToFile('C:\demo.txt');</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>write//Write is used to identify the member or method used for writing in the attribute.</p> 
+   <p>private</p> 
+   <p>　fValue: Integer;</p> 
+   <p>published</p> 
+   <p>　property Value: Integer write fValue;</p> 
+   <p>&nbsp;</p> 
+   <p>//In the above example, it indicates that the value of the Value property is written to the fValue member.</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>The writeonly//writeonly keyword is used to identify whether an object is write-only.</p> 
+   <p>property&nbsp;writeonly;</p> 
+   <p>&nbsp;</p> 
+   <p>//When writeonly is set to True, users are not allowed to read attributes and can only be operated through other objects.</p> 
+   <p>&nbsp;</p> 
+   <p>&nbsp;</p> 
+   <p>xor//Xor is used to take the exclusive OR. When the two operands are equal, it returns False, and when the operands are not equal, it returns True.</p> 
+   <p>var</p> 
+   <p>　a,b: Integer;</p> 
+   <p>begin</p> 
+   <p>　a := 2; b := 3;</p> 
+   <p>　if a xor b then</p> 
+   <p>　　WriteLn('a xor b')</p> 
+   <p>　else</p> 
+   <p>　　WriteLn('a not xor b');</p> 
+   <p>end;</p> 
+   <p>&nbsp;</p> 
+   <p>//Xor is also used to calculate the XOR value</p> 
+   <p>WriteLn(IntToStr(3&nbsp;xor&nbsp;5));&nbsp;{6}</p> 
+   <p>&nbsp;</p> 
+  </div> 
+ </div>
+</div> 
+<p>Reprinted at: https://www.cnblogs.com/h2zZhou/p/10383468.html</p>
+                </div>
+        </div></article>
+                    </div>
+                    <hr />
+                        <div id="reference">
+                            <div class="header header-success" id="title">
+                                <p class="" style="margin:5px 10px 5px 10px">Reference :    https://blog.csdn.net/weixin_30865427/article/details/95395167 </p>
+                            </div>
+                        </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-4">
+
+                <div class="card">
+                    <div class="card-body" style="min-height:300px">
+
+
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body" style="min-height:300px">
+
+
+                    </div>
+                </div>
+
+        </div>
+    </div>
+
+    <script>
+        $('#articleContentId').remove();
+
+        var html = $('article').html();
+        html = html.replace(/(&nbsp;\s*)+(\n)*/g, function (m, c, o, i) {
+            if (m.trim().length == 6) {
+                return m.trim();
+            }
+            return '<br/>' + m;
+        });
+        html = html.replace(/(<br.*?>\s*)+(\n)*/g, function (m, c, o, i) {
+
+            return '<br/>';
+        });
+        $('article').html(html);
+    </script>
+
+<script>
+
+    function _x(STR_XPATH) {
+        var xresult = document.evaluate(STR_XPATH, document, null, XPathResult.ANY_TYPE, null);
+        var xnodes = [];
+        var xres;
+        while (xres = xresult.iterateNext()) {
+            xnodes.push(xres);
+        }
+
+        return xnodes;
+    }
+    $(document).ready(function () {
+        $('#reference').remove();
+        $('.article-title').remove();
+        $("[class='btn btn-rose']").css('display', 'block');
+    });
+    $('a[data-isimg="true"]').each(function () {
+        $(this).addClass('btn btn-xs');
+    });
+    $('a').each(function () {
+        if ($(this).hasClass('logout') == false) {
+            $(this).attr('rel', 'nofollow noopener noreferrer');
+            $(this).attr('target', '_blank');
+        }
+    });
+    document.querySelectorAll("span, p, strong,pre,h1,h2,h3,h5,h6,font")
+        .forEach(el => el.textContent.trim() === "" && el.className != "icon-bar" && el.parentNode.removeChild(el))
+
+    $(document).ready(function () {
+        $('table').addClass('table table-hover text-left');
+        $('table').each(function () {
+            $($(this).parent()).css("overflow-x", "auto");
+        })
+        $('#exp img').removeAttr('style');
+        // GetRelated();
+    });
+    $(document).ready(function () {
+        $("#exp *").each(function () {
+            var s = $(this).attr("style");
+            if (s != undefined) {
+                $(this).attr("style", s.replace(/font[^;]+/g, '').replace(/width:.*px/g, '').replace(/line-height:.*;/g, ''));
+            }
+        });
+        $(_x("//*/text()")).each(function () {
+            var s = $(this).text().trim();
+            if (s == "\\\\" || s == "//" || s == "\\")
+                $(this).remove();
+        });
+    });
+    $(_x('//*/br[1]')).remove();
+</script> 
+        </div> 
+    </div>
+
+    <footer class=" ">
+        <div class="col-md-12 col-xs-12">
+            <hr />
+            <div class="title" style="margin:8px"> &copy; 2022 - Karthi Softek  &emsp;</div>
+            <div class="col-md-12 text-center" style="margin-bottom:10px">
+                <span class="label label-info"><a style="color:white" href="/policies">Policies</a></span> &emsp;
+                <span class="label label-info"><a style="color:white" href="/contact">Contact</a></span>&emsp;
+                <span class="label label-info"><a style="color:white" href="/about">About</a></span>
+            </div>
+        </div>
+    </footer>
+     
+</body>
+</html>

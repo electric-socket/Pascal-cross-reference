@@ -33,7 +33,7 @@
     <RunParams>
       <FormatVersion Value="2"/>
     </RunParams>
-    <Units Count="9">
+    <Units Count="14">
       <Unit0>
         <Filename Value="Crossref.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -71,10 +71,30 @@
         <UnitName Value="Notice"/>
       </Unit7>
       <Unit8>
-        <Filename Value="..\unit_evaluator.pas"/>
+        <Filename Value="FPC_defs.inc"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="unit_Evaluator"/>
       </Unit8>
+      <Unit9>
+        <Filename Value="DELPHIcompdir.txt"/>
+        <IsPartOfProject Value="True"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="..\LAZARUS-CODE-AND-COMPONENT-LIBRARY\readme.MD"/>
+        <IsPartOfProject Value="True"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="hold.txt"/>
+        <IsPartOfProject Value="True"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="TokenCodes.inc"/>
+        <IsPartOfProject Value="True"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="_symboltable.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="_SymbolTable"/>
+      </Unit13>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

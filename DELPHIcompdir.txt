@@ -1,0 +1,178 @@
+The following topic lists the RAD Studio compiler directives.
+
+Align fields (Delphi)                                         {$A} , {$ALIGN}
+Application type (Delphi)                                     {$APPTYPE}
+Assert directives (Delphi)                                    {$C} , {$ASSERTIONS}
+Boolean short-circuit evaluation (Delphi compiler directive)  {$B} , {$BOOLEVAL}
+Code align (Delphi)                                           {$CODEALIGN}
+Conditional compilation (Delphi)  {$IFDEF},{$IFNDEF},{$IF},{$ELSEIF},{$ELSE},{$ENDIF},{$IFEND}
+Debug information (Delphi)                                    {$D} , {$DEBUGINFO}
+DEFINE directive (Delphi)                                     {$DEFINE}
+DENYPACKAGEUNIT directive (Delphi)                            {$DENYPACKAGEUNIT}
+Description (Delphi)                                          {$D} , {$DESCRIPTION}
+DESIGNONLY directive (Delphi)                                 {$DESIGNONLY}
+ELSE (Delphi)                                                 {$ELSE}
+ELSEIF (Delphi)                                               {$ELSEIF}
+ENDIF directive (Delphi)                                      {$ENDIF}
+Executable extension (Delphi)                                 {$E} , {$EXTENSION}
+Export symbols (Delphi)                                       {$ObjExportAll}
+Extended syntax (Delphi)                                      {$X} , {$EXTENDEDSYNTAX}
+Extended type compatibility (Delphi)                          {$EXTENDEDCOMPATIBILITY}
+External Symbols (Delphi)                                     {$EXTERNALSYM [ 'typeNameInHpp' [ 'typeNameInHppUnion' ]]}
+Floating point precision control (Delphi for x64)             {$EXCESSPRECISION}
+HIGHCHARUNICODE directive (Delphi)                            {$HIGHCHARUNICODE}
+Hints (Delphi)                                                {$HINTS}
+HPP emit (Delphi)                                             {$HPPEMIT}
+IFDEF directive (Delphi)                                      {$IFDEF}
+IF directive (Delphi)                                         {$IF}
+IFEND directive (Delphi)                                      {$IFEND}
+IFNDEF directive (Delphi)                                     {$IFNDEF}
+IFOPT directive (Delphi)                                      {$IFOPT}
+Image base address                                            {$IMAGEBASE}
+Implicit Build (Delphi)                                       {$IMPLICITBUILD}
+Imported data                                                 {$G} , {$IMPORTEDDATA}
+Include file (Delphi)                                         {$I} , {$INCLUDE}
+Input output checking (Delphi)                                {$I} , {$IOCHECKS}
+Compiler directives for libraries or shared objects (Delphi)  {$LIBPREFIX}  , {$LIBSUFFIX}  , {$LIBVERSION}
+Legacy IFEND (Delphi)                                         {$LEGACYIFEND}
+Link object file (Delphi)                                     {$L file} , {$LINK file}
+Local symbol information (Delphi)                             {$L+} , {$LOCALSYMBOLS}
+Long strings (Delphi)                                         {$H} , {$LONGSTRINGS}
+Memory allocation sizes (Delphi)                              {$M} , {$MINST
+METHODINFO directive (Delphi)                                 {$METHODINFO}
+Minimum enumeration size (Delphi)                             {$Z1} , {$Z2} , {$Z4} , {$MINENUMSIZE 1} , {$MINENUMSIZE 2} , {$MINENUMSIZE 4}
+NODEFINE directive (Delphi)                                   {$NODEFINE [ 'typeNameInHpp' [ 'typeNameInHppUnion' ]]}
+NOINCLUDE (Delphi)                                            {$NOINCLUDE}
+OBJTYPENAME directive (Delphi)                                {$OBJTYPENAME typeIdent ['{B|N}typeNameInObj']}
+Old type layout (Delphi)                                      {$OLDTYPELAYOUT ON}
+Open String Parameters (Delphi)                               {$P} , {$OPENSTRINGS}
+Optimization (Delphi)                                         {$O} , {$OPTIMIZATION}
+Overflow checking (Delphi)                                    {$Q} , {$OVERFLOWCHECKS}
+PE (portable executable) header flags (Delphi)                {$SetPEFlags} , {$SetPEOptFlags}
+PE header operating system version                            {$SETPEOSVERSION}
+PE header subsystem version                                   {$SETPESUBSYSVERSION}
+PE header user version                                        {$SETPEUSERVERSION}
+Pentium-safe FDIV operations (Delphi)                         {$U} , {$SAFEDIVIDE}
+Pointer Math (Delphi)                                         {$POINTERMATH}
+Range checking                                                {$R} , {$RANGECHECKS}
+Real48 compatibility (Delphi)                                 {$REALCOMPATIBILITY}
+Regions                                                       {$REGION} , {$ENDREGION}
+Reserved address space for resources (Delphi ,  Linux)        {$M} , {$RESOURCERESERVE}
+Resource file (Delphi)                                        {$R} , {$RESOURCE}
+RTTI directive (Delphi)                                       {$RTTI INHERIT|EXPLICIT}
+RUNONLY directive (Delphi)                                    {$RUNONLY}
+Run-Time Type Information (Delphi)                            {$M} , {$TYPEINFO}
+Scoped Enums (Delphi)                                         {$SCOPEDENUMS}
+Stack frames (Delphi)                                         {$W} , {$STACKFRAMES}
+Strong link types (Delphi)                                    {$STRONGLINKTYPES}
+Symbol declaration and cross-reference information (Delphi)   {$Y} , {$REFERENCEINFO} , {DEFINITIONINFO}
+Type-checked pointers (Delphi)                                {$T} , {$TYPEDADDRESS}
+UNDEF directive (Delphi)                                      {$UNDEF}
+Var-string checking (Delphi)                                  {$V} , {$VARSTRINGCHECKS}
+Warning messages (Delphi)                                     {$WARN}
+Warnings (Delphi)                                             {$WARNINGS}
+Weak packaging                                                {$WEAKPACKAGEUNIT}
+WEAKLINKRTTI directive (Delphi)                               {$WEAKLINKRTTI}
+Writeable typed constants (Delphi)                            {$J} , {$WRITEABLECONST}
+Zero-based strings (Delphi)                                   {$ZEROBASEDSTRINGS}
+
+
+Predefined Conditionals
+
+The following standard conditional symbols are defined:
+Category 	         Symbol
+                         DCC32
+                         DCC64
+Since XE2 	         DCCOSX
+Since XE2 	         DCCOSX64
+Since 10.3 Rio Release2  DCCIOSARM
+Since XE3 	         DCCIOS32
+Since XE3 	         DCCAARM
+In XE5 	                 DCCIOSARM64
+Since XE8 	         DCCLINUX64
+Since 10.2 Tokyo 	 DCCAARM64
+Compiler 	         DCC
+Delphi Versions
+                         VER340 	Delphi 10.4 Sydney / C++Builder 10.4 Sydney  Ver 34.0
+                         VER330         Delphi 10.3 Rio / C++Builder 10.3 Rio        Ver 33.0
+                         VER320         Delphi 10.2 Tokyo / C++Builder 10.2 Tokyo    Ver 32.0
+                         VER310         Delphi 10.1 Berlin / C++Builder 10.1 Berlin  Ver 31.0
+                         VER300         Delphi 10 Seattle / C++Builder 10 Seattle    Ver 30.0
+                         VER290         Delphi XE8 / C++Builder XE8  Ver 29.0
+                         VER280         Delphi XE7 / C++Builder XE7  Ver 28.0
+                         VER270         Delphi XE6 / C++Builder XE6  Ver 27.0
+                         VER260         Delphi XE5 / C++Builder XE5  Ver 26.0
+                         VER250         Delphi XE4 / C++Builder XE4  Ver 25.0
+                         VER240         Delphi XE3 / C++Builder XE3  Ver 24.0
+                         VER230         Delphi XE2 / C++Builder XE2  Ver 23.0
+                         VER220         Delphi XE / C++Builder XE  Ver 22.0
+                         VER210         Delphi 2010 / C++Builder 2010  Ver 21.0
+                         VER200         Delphi 2009 / C++Builder 2009  Ver 20.0
+                         VER190         Delphi 2007 for .Net  Ver 19.0
+                         VER185         Delphi 2007 / C++Builder 2007 for Win32  Ver 18.5
+                         VER180         Delphi 2007 / C++Builder 2007 for Win32  Ver 18.5
+                         VER180         Delphi 2006 / C++Builder 2006  Ver 18.0
+                         VER170         Delphi 2005  Ver 17.0
+                         VER160         Delphi 8 for .Net  Ver 16.0
+                         VER150         Delphi 7 (and 7.1)  Ver 15.0
+                         VER140         Delphi 6 / C++Builder 6  Ver 14.0
+                         VER130         Delphi 5 / C++Builder 5  Ver NA
+                         VER125         C++Builder 4  Ver NA
+                         VER120         Delphi 4  Ver NA
+                         VER110         C++Builder 3  Ver NA
+                         VER100         Delphi 3  Ver NA
+                         VER93          C++Builder 1  Ver NA
+                         VER90          Delphi 2  Ver NA
+                         VER80          Delphi 1  Ver NA
+                         VER70          Borland Pascal 7.0  Ver NA
+                         VER15          Turbo Pascal for Windows 1.5  Ver NA
+                         VER10          Turbo Pascal for Windows 1.0  Ver NA
+                         VER60          Turbo Pascal 6.0  Ver NA
+                         VER55          Turbo Pascal 5.5  Ver NA
+                         VER50          Turbo Pascal 5.0  Ver NA
+                         VER40          Turbo Pascal 4.0  Ver NA
+
+Platform
+      CONSOLE           Defined if an application is being compiled as a console application.
+      IOS               Defined if the target platform is iOS.
+      IOS32             Defined if the target platform is iOS32.
+      IOS64             Defined if the target platform is iOS64.
+      NATIVECODE        Defined if the target platform is Dot Net Narive Code
+      MSWINDOWS         Indicates that the operating environment is Windows. Use MSWINDOWS to test for any flavor of the Windows platform instead of WIN32.
+      WIN32             Target platform is the native 32-bit Windows platform.
+      WIN64             Target platform is 64-bit Windows.
+      MACOS             Target platform is macOS.
+      MACOS64           Target platform is 64-bit macOS.
+      LINUX
+      LINUX32
+      LINUX64
+      POSIX
+      POSIX32
+      POSIX64
+      ANDROID           Defined if the target platform is Android.
+      ANDROID32
+      ANDROID64         Delphi compiler for Android 64-bit platform.
+CPU   CPU386            Indicates that the CPU is an Intel 386 or later.
+      CPUX86            CPU is an Intel 386 or later on any platform.
+      CPUX64            The CPU supports the x86-64 instruction set, and is in a 64-bit environment.
+      CPU32BITS         The CPU is in a 32-bit environment, such as DCC32.EXE.
+      CPU64BITS         The CPU is in a 64-bit environment, such as DCC64.EXE.
+      CPUARM            Defined if the CPU is based on the ARM architecture, such as the Delphi mobile compiler for the iOS device (DCCIOSARM.EXE).
+      CPUARM32          The CPU is in a 32-bit ARM environment, such as DCCIOSARM.EXE.
+      CPUARM64          The CPU is in a 64-bit ARM environment, such as DCCIOSARM64.EXE.
+Availability
+      ALIGN_STACK       Defined in code that may be shared with the macOS compiler and another compiler on another platform such as Linux that does not have a rigid stack alignment requirement. For more information, see Eli Boling's blog at http://blogs.embarcadero.com/eboling/2009/05/20/5607 .
+      ASSEMBLER         Assembler syntax is accepted.
+      AUTOREFCOUNT (*)  Defined for compilers that use automatic reference counting, such as the Delphi mobile compilers.
+      EXTERNALLINKER    Defined for compilers that have an external linker and the LLVM code generator; the Delphi mobile compilers have the external ld linker and use LLVM as code generator.
+      UNICODE           UNICODE is defined as the default string type.
+      CONDITIONALEXPRESSIONS    Tests for the use of the $IF directive.
+      ELF               Defined when targeting Executable and Linkable Format (ELF) files.
+      NEXTGEN (*)       Defined for compilers (such as the Delphi mobile compilers) that use "next-generation" language features, such as 0-based strings.
+      PC_MAPPED_EXCEPTIONS      Defined when compiling on a platform or for a target platform that uses address maps instead of stack frames to unwind exceptions (such as macOS).
+      PIC                       Defined for platforms that require Position-Independent Code (PIC), such as macOS.
+      UNDERSCOREIMPORTNAME      Defined for compilers that add a leading underscore (for example, in names of dynamic libraries imported from Mac OS).
+      WEAKREF                   Defined for compilers that can use weak references (the [weak] attribute).
+      WEAKINSTREF (*)           Defined when weak references are defined for instances.
+      WEAKINTFREF               Defined when weak references are defined for interfaces.
+

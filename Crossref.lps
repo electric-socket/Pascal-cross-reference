@@ -4,32 +4,32 @@
     <PathDelim Value="\"/>
     <Version Value="12"/>
     <BuildModes Active="Default"/>
-    <Units Count="63">
+    <Units Count="48">
       <Unit0>
         <Filename Value="Crossref.lpr"/>
         <IsPartOfProject Value="True"/>
-        <CursorPos X="21" Y="18"/>
+        <CursorPos Y="15"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="scan.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="3"/>
-        <TopLine Value="28"/>
-        <CursorPos Y="33"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="454"/>
+        <CursorPos X="15" Y="368"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="setup.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="18"/>
-        <TopLine Value="12"/>
-        <CursorPos Y="42"/>
+        <EditorIndex Value="24"/>
+        <TopLine Value="240"/>
+        <CursorPos Y="264"/>
         <UsageCount Value="200"/>
         <Bookmarks Count="1">
-          <Item0 Y="42" ID="9"/>
+          <Item0 Y="28" ID="9"/>
         </Bookmarks>
         <Loaded Value="True"/>
       </Unit2>
@@ -38,18 +38,17 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="Crossref_Main"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="43"/>
-        <CursorPos X="46" Y="60"/>
+        <TopLine Value="70"/>
+        <CursorPos X="4" Y="82"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
       </Unit3>
       <Unit4>
         <Filename Value="readme.MD"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="2"/>
-        <TopLine Value="8"/>
-        <CursorPos X="5" Y="60"/>
-        <UsageCount Value="183"/>
+        <EditorIndex Value="3"/>
+        <CursorPos X="3"/>
+        <UsageCount Value="211"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="None"/>
       </Unit4>
@@ -57,523 +56,450 @@
         <Filename Value="tables.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Tables"/>
-        <EditorIndex Value="5"/>
-        <TopLine Value="66"/>
-        <CursorPos X="31" Y="61"/>
-        <UsageCount Value="134"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="8"/>
+        <TopLine Value="13"/>
+        <CursorPos X="20" Y="17"/>
+        <UsageCount Value="204"/>
         <Loaded Value="True"/>
       </Unit5>
       <Unit6>
         <Filename Value="command.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Command"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="4"/>
-        <TopLine Value="140"/>
-        <CursorPos X="22" Y="168"/>
-        <UsageCount Value="46"/>
+        <EditorIndex Value="7"/>
+        <TopLine Value="53"/>
+        <CursorPos X="26" Y="90"/>
+        <UsageCount Value="211"/>
         <Loaded Value="True"/>
       </Unit6>
       <Unit7>
         <Filename Value="notice.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Notice"/>
-        <EditorIndex Value="19"/>
-        <TopLine Value="14"/>
+        <EditorIndex Value="28"/>
         <CursorPos X="8" Y="26"/>
-        <UsageCount Value="44"/>
+        <UsageCount Value="209"/>
         <Loaded Value="True"/>
       </Unit7>
       <Unit8>
         <Filename Value="..\unit_evaluator.pas"/>
-        <IsPartOfProject Value="True"/>
         <UnitName Value="unit_Evaluator"/>
-        <EditorIndex Value="12"/>
-        <TopLine Value="37"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="46"/>
         <CursorPos X="35" Y="176"/>
-        <UsageCount Value="38"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="203"/>
       </Unit8>
       <Unit9>
+        <Filename Value="FPC_defs.inc"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="25"/>
+        <TopLine Value="16"/>
+        <CursorPos X="53" Y="5"/>
+        <UsageCount Value="229"/>
+        <Loaded Value="True"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="DELPHIcompdir.txt"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="26"/>
+        <TopLine Value="85"/>
+        <CursorPos X="34" Y="133"/>
+        <UsageCount Value="229"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="None"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="..\LAZARUS-CODE-AND-COMPONENT-LIBRARY\readme.MD"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="10"/>
+        <CursorPos Y="13"/>
+        <UsageCount Value="203"/>
+        <DefaultSyntaxHighlighter Value="None"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="hold.txt"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="107"/>
+        <CursorPos Y="169"/>
+        <UsageCount Value="203"/>
+        <DefaultSyntaxHighlighter Value="None"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="TokenCodes.inc"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="9"/>
+        <TopLine Value="104"/>
+        <CursorPos Y="141"/>
+        <UsageCount Value="203"/>
+        <Loaded Value="True"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="_symboltable.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="_SymbolTable"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="667"/>
+        <CursorPos X="4" Y="690"/>
+        <UsageCount Value="152"/>
+        <Loaded Value="True"/>
+      </Unit14>
+      <Unit15>
         <Filename Value="specials.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="411"/>
         <CursorPos Y="469"/>
-        <UsageCount Value="160"/>
-      </Unit9>
-      <Unit10>
+        <UsageCount Value="130"/>
+      </Unit15>
+      <Unit16>
         <Filename Value="keyword.inc"/>
         <EditorIndex Value="-1"/>
         <CursorPos Y="44"/>
-        <UsageCount Value="123"/>
-      </Unit10>
-      <Unit11>
-        <Filename Value="S:\xdp\lc_ident.pas"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="39" Y="213"/>
-        <UsageCount Value="8"/>
-      </Unit11>
-      <Unit12>
-        <Filename Value="upd.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="137"/>
-        <CursorPos X="38" Y="173"/>
-        <UsageCount Value="9"/>
-      </Unit12>
-      <Unit13>
-        <Filename Value="..\PasCref-work\scan-old.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="473"/>
-        <CursorPos X="41" Y="503"/>
-        <UsageCount Value="8"/>
-      </Unit13>
-      <Unit14>
-        <Filename Value="..\PasCref-work\pascref.pas"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="31" Y="10"/>
-        <UsageCount Value="8"/>
-      </Unit14>
-      <Unit15>
-        <Filename Value="S:\xdp\clean.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="480"/>
-        <CursorPos Y="481"/>
-        <UsageCount Value="3"/>
-      </Unit15>
-      <Unit16>
-        <Filename Value="..\Noisy\n_utility.pas"/>
-        <UnitName Value="N_utility"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="206"/>
-        <CursorPos Y="236"/>
-        <UsageCount Value="7"/>
+        <UsageCount Value="93"/>
       </Unit16>
       <Unit17>
         <Filename Value="configuration.pas"/>
         <UnitName Value="Configuration"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="84"/>
+        <UsageCount Value="54"/>
       </Unit17>
       <Unit18>
         <Filename Value="crefscan.pas"/>
         <UnitName Value="CrefScan"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="84"/>
+        <UsageCount Value="54"/>
       </Unit18>
       <Unit19>
         <Filename Value="delphi-cref.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="109"/>
-        <UsageCount Value="83"/>
+        <UsageCount Value="53"/>
       </Unit19>
       <Unit20>
-        <Filename Value="DZ.PAS"/>
-        <UnitName Value="xrefFull"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="1537"/>
-        <UsageCount Value="6"/>
-      </Unit20>
-      <Unit21>
         <Filename Value="turboprt.pas"/>
         <UnitName Value="TurboPrt"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="521"/>
         <CursorPos X="11" Y="476"/>
-        <UsageCount Value="37"/>
-      </Unit21>
-      <Unit22>
+        <UsageCount Value="7"/>
+      </Unit20>
+      <Unit21>
         <Filename Value="cross-reference notes.txt"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="40"/>
         <CursorPos X="71" Y="23"/>
-        <UsageCount Value="86"/>
+        <UsageCount Value="56"/>
         <DefaultSyntaxHighlighter Value="None"/>
-      </Unit22>
-      <Unit23>
+      </Unit21>
+      <Unit22>
         <Filename Value="design_docs.txt"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="25" Y="190"/>
-        <UsageCount Value="86"/>
+        <UsageCount Value="56"/>
         <DefaultSyntaxHighlighter Value="None"/>
-      </Unit23>
-      <Unit24>
+      </Unit22>
+      <Unit23>
         <Filename Value="Summary.txt"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="14"/>
         <CursorPos Y="63"/>
-        <UsageCount Value="52"/>
+        <UsageCount Value="22"/>
         <DefaultSyntaxHighlighter Value="None"/>
-      </Unit24>
-      <Unit25>
-        <Filename Value="others\PASFORMA.PAS"/>
-        <UnitName Value="pascalformatter"/>
-        <EditorIndex Value="-1"/>
-        <UsageCount Value="20"/>
-      </Unit25>
-      <Unit26>
+      </Unit23>
+      <Unit24>
         <Filename Value="item-types.txt"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="70"/>
         <CursorPos Y="119"/>
-        <UsageCount Value="32"/>
+        <UsageCount Value="2"/>
         <DefaultSyntaxHighlighter Value="None"/>
-      </Unit26>
-      <Unit27>
+      </Unit24>
+      <Unit25>
         <Filename Value="keyword_master.txt"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="5"/>
         <CursorPos Y="57"/>
-        <UsageCount Value="83"/>
+        <UsageCount Value="53"/>
         <DefaultSyntaxHighlighter Value="None"/>
-      </Unit27>
-      <Unit28>
+      </Unit25>
+      <Unit26>
         <Filename Value="pascref.pas"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="132" Y="15"/>
-        <UsageCount Value="83"/>
-      </Unit28>
-      <Unit29>
-        <Filename Value="pform.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="73"/>
-        <UsageCount Value="14"/>
-      </Unit29>
-      <Unit30>
-        <Filename Value="..\Noisy\scansort.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="614"/>
-        <CursorPos X="14" Y="621"/>
-        <UsageCount Value="3"/>
-      </Unit30>
-      <Unit31>
-        <Filename Value="..\Noisy\SortExt.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="132"/>
-        <CursorPos X="36" Y="185"/>
-        <UsageCount Value="9"/>
-      </Unit31>
-      <Unit32>
-        <Filename Value="..\Noisy\filesort.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="312"/>
-        <CursorPos X="12" Y="326"/>
-        <UsageCount Value="3"/>
-      </Unit32>
-      <Unit33>
-        <Filename Value="..\Noisy\freefiles.inc"/>
-        <EditorIndex Value="-1"/>
-        <UsageCount Value="3"/>
-      </Unit33>
-      <Unit34>
-        <Filename Value="..\Noisy\ls_dirscan.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="343"/>
-        <UsageCount Value="7"/>
-      </Unit34>
-      <Unit35>
-        <Filename Value="..\Noisy\N_sort1.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="112"/>
-        <UsageCount Value="7"/>
-      </Unit35>
-      <Unit36>
-        <Filename Value="..\Noisy\n_version.pas"/>
-        <UnitName Value="N_Version"/>
-        <EditorIndex Value="-1"/>
-        <UsageCount Value="7"/>
-      </Unit36>
-      <Unit37>
-        <Filename Value="..\Noisy\SortExtensions.lpr"/>
-        <EditorIndex Value="-1"/>
-        <UsageCount Value="9"/>
-      </Unit37>
-      <Unit38>
-        <Filename Value="..\Noisy\storeext.inc"/>
-        <EditorIndex Value="-1"/>
-        <UsageCount Value="9"/>
-      </Unit38>
-      <Unit39>
+        <UsageCount Value="53"/>
+      </Unit26>
+      <Unit27>
         <Filename Value="crossref-specs.txt"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="41"/>
-        <UsageCount Value="48"/>
+        <UsageCount Value="18"/>
         <DefaultSyntaxHighlighter Value="None"/>
-      </Unit39>
-      <Unit40>
+      </Unit27>
+      <Unit28>
         <Filename Value="references\others\BEGINEND.PAS"/>
-        <EditorIndex Value="13"/>
-        <UsageCount Value="87"/>
+        <EditorIndex Value="21"/>
+        <TopLine Value="4"/>
+        <UsageCount Value="101"/>
         <Loaded Value="True"/>
-      </Unit40>
-      <Unit41>
+      </Unit28>
+      <Unit29>
         <Filename Value="references\others\PASFORMA.PAS"/>
         <UnitName Value="pascalformatter"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="36"/>
+        <UsageCount Value="6"/>
+      </Unit29>
+      <Unit30>
+        <Filename Value="nre_scan.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="130"/>
+        <UsageCount Value="81"/>
+      </Unit30>
+      <Unit31>
+        <Filename Value="references\others\TXREF1A.PAS"/>
+        <UnitName Value="TXREF"/>
+        <EditorIndex Value="22"/>
+        <TopLine Value="235"/>
+        <UsageCount Value="101"/>
+        <Loaded Value="True"/>
+      </Unit31>
+      <Unit32>
+        <Filename Value="references\others\XREF.PAS"/>
+        <EditorIndex Value="23"/>
+        <UsageCount Value="101"/>
+        <Loaded Value="True"/>
+      </Unit32>
+      <Unit33>
+        <Filename Value="references\others\XREF10.PAS"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="31"/>
+        <CursorPos Y="44"/>
+        <UsageCount Value="83"/>
+      </Unit33>
+      <Unit34>
+        <Filename Value="CrossrefPrefixCode.inc"/>
+        <EditorIndex Value="15"/>
+        <CursorPos X="14" Y="13"/>
+        <UsageCount Value="103"/>
+        <Loaded Value="True"/>
+      </Unit34>
+      <Unit35>
+        <Filename Value="references\crossref-specs.txt"/>
+        <EditorIndex Value="16"/>
+        <TopLine Value="37"/>
+        <CursorPos X="25" Y="61"/>
+        <UsageCount Value="103"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="None"/>
+      </Unit35>
+      <Unit36>
+        <Filename Value="references\design_docs.txt"/>
+        <EditorIndex Value="17"/>
+        <TopLine Value="106"/>
+        <UsageCount Value="103"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="None"/>
+      </Unit36>
+      <Unit37>
+        <Filename Value="references\Free Pascal Compiler directives"/>
+        <EditorIndex Value="18"/>
+        <TopLine Value="391"/>
+        <CursorPos X="10" Y="278"/>
+        <UsageCount Value="103"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="None"/>
+      </Unit37>
+      <Unit38>
+        <Filename Value="references\item-types.txt"/>
+        <EditorIndex Value="19"/>
+        <TopLine Value="89"/>
+        <UsageCount Value="103"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="None"/>
+      </Unit38>
+      <Unit39>
+        <Filename Value="references\keyword_master.txt"/>
+        <EditorIndex Value="20"/>
+        <TopLine Value="208"/>
+        <CursorPos X="16" Y="202"/>
+        <UsageCount Value="103"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="None"/>
+      </Unit39>
+      <Unit40>
+        <Filename Value="X:\source\conditional.pas"/>
+        <UnitName Value="Conditional"/>
+        <EditorIndex Value="13"/>
+        <TopLine Value="268"/>
+        <CursorPos X="25" Y="336"/>
+        <UsageCount Value="125"/>
+        <Bookmarks Count="1">
+          <Item0 X="45" Y="102" ID="8"/>
+        </Bookmarks>
+        <Loaded Value="True"/>
+      </Unit40>
+      <Unit41>
+        <Filename Value="X:\source\cref.pas"/>
+        <EditorIndex Value="14"/>
+        <UsageCount Value="125"/>
+        <Loaded Value="True"/>
       </Unit41>
       <Unit42>
-        <Filename Value="nre_scan.pas"/>
-        <EditorIndex Value="14"/>
-        <TopLine Value="22"/>
-        <UsageCount Value="87"/>
+        <Filename Value="..\FileScan\new_ident.pas"/>
+        <EditorIndex Value="6"/>
+        <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit42>
       <Unit43>
-        <Filename Value="references\others\TXREF1A.PAS"/>
-        <UnitName Value="TXREF"/>
-        <EditorIndex Value="15"/>
-        <TopLine Value="235"/>
-        <UsageCount Value="87"/>
+        <Filename Value="..\$compilers\Mad-Pascal-master\src\MP1.pas"/>
+        <EditorIndex Value="11"/>
+        <TopLine Value="287"/>
+        <CursorPos X="3" Y="205"/>
+        <UsageCount Value="102"/>
         <Loaded Value="True"/>
       </Unit43>
       <Unit44>
-        <Filename Value="references\others\XREF.PAS"/>
-        <EditorIndex Value="16"/>
-        <UsageCount Value="87"/>
+        <Filename Value="MCROSS.PAS"/>
+        <UnitName Value="Mcross"/>
+        <EditorIndex Value="12"/>
+        <TopLine Value="131"/>
+        <CursorPos X="41" Y="280"/>
+        <UsageCount Value="102"/>
         <Loaded Value="True"/>
       </Unit44>
       <Unit45>
-        <Filename Value="references\others\XREF10.PAS"/>
-        <EditorIndex Value="17"/>
-        <TopLine Value="31"/>
-        <UsageCount Value="87"/>
+        <Filename Value="ProcTrace.pas"/>
+        <EditorIndex Value="5"/>
+        <UsageCount Value="102"/>
         <Loaded Value="True"/>
       </Unit45>
       <Unit46>
-        <Filename Value="X:\source\Common.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="366"/>
-        <CursorPos X="46" Y="350"/>
-        <UsageCount Value="19"/>
+        <Filename Value="..\$compilers\XPC-master\Source\Parsers\XPC_Delphi.pas"/>
+        <EditorIndex Value="10"/>
+        <TopLine Value="49"/>
+        <UsageCount Value="100"/>
+        <Loaded Value="True"/>
       </Unit46>
       <Unit47>
-        <Filename Value="X:\source\Scanner.pas"/>
-        <EditorIndex Value="-1"/>
-        <UsageCount Value="28"/>
+        <Filename Value="gnu_Pascal_Keywords.txt"/>
+        <EditorIndex Value="27"/>
+        <TopLine Value="334"/>
+        <CursorPos X="19" Y="346"/>
+        <UsageCount Value="42"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="None"/>
       </Unit47>
-      <Unit48>
-        <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\objpas\sysutils\sysstrh.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="198"/>
-        <CursorPos X="10" Y="258"/>
-        <UsageCount Value="0"/>
-      </Unit48>
-      <Unit49>
-        <Filename Value="CrossrefPrefixCode.inc"/>
-        <EditorIndex Value="6"/>
-        <CursorPos X="14" Y="13"/>
-        <UsageCount Value="52"/>
-        <Loaded Value="True"/>
-      </Unit49>
-      <Unit50>
-        <Filename Value="..\Noisy\N_fileopen.inc"/>
-        <EditorIndex Value="-1"/>
-        <UsageCount Value="7"/>
-      </Unit50>
-      <Unit51>
-        <Filename Value="..\Noisy\n_help.pas"/>
-        <UnitName Value="N_Help"/>
-        <EditorIndex Value="-1"/>
-        <UsageCount Value="7"/>
-      </Unit51>
-      <Unit52>
-        <Filename Value="..\Noisy\n_perform.pas"/>
-        <UnitName Value="N_perform"/>
-        <EditorIndex Value="-1"/>
-        <UsageCount Value="7"/>
-      </Unit52>
-      <Unit53>
-        <Filename Value="..\Noisy\n_static.pas"/>
-        <UnitName Value="N_Static"/>
-        <EditorIndex Value="-1"/>
-        <UsageCount Value="7"/>
-      </Unit53>
-      <Unit54>
-        <Filename Value="..\Noisy\noisy.pas"/>
-        <EditorIndex Value="-1"/>
-        <UsageCount Value="7"/>
-      </Unit54>
-      <Unit55>
-        <Filename Value="references\crossref-specs.txt"/>
-        <EditorIndex Value="7"/>
-        <TopLine Value="52"/>
-        <UsageCount Value="19"/>
-        <Loaded Value="True"/>
-        <DefaultSyntaxHighlighter Value="None"/>
-      </Unit55>
-      <Unit56>
-        <Filename Value="references\design_docs.txt"/>
-        <EditorIndex Value="8"/>
-        <TopLine Value="13"/>
-        <CursorPos X="4" Y="43"/>
-        <UsageCount Value="19"/>
-        <Loaded Value="True"/>
-        <DefaultSyntaxHighlighter Value="None"/>
-      </Unit56>
-      <Unit57>
-        <Filename Value="references\dpc2.lst"/>
-        <EditorIndex Value="-1"/>
-        <UsageCount Value="15"/>
-        <DefaultSyntaxHighlighter Value="None"/>
-      </Unit57>
-      <Unit58>
-        <Filename Value="references\Free Pascal Compiler directives"/>
-        <EditorIndex Value="9"/>
-        <TopLine Value="190"/>
-        <UsageCount Value="19"/>
-        <Loaded Value="True"/>
-        <DefaultSyntaxHighlighter Value="None"/>
-      </Unit58>
-      <Unit59>
-        <Filename Value="references\item-types.txt"/>
-        <EditorIndex Value="10"/>
-        <UsageCount Value="19"/>
-        <Loaded Value="True"/>
-        <DefaultSyntaxHighlighter Value="None"/>
-      </Unit59>
-      <Unit60>
-        <Filename Value="references\keyword_master.txt"/>
-        <EditorIndex Value="11"/>
-        <TopLine Value="244"/>
-        <CursorPos Y="288"/>
-        <UsageCount Value="19"/>
-        <Loaded Value="True"/>
-        <DefaultSyntaxHighlighter Value="None"/>
-      </Unit60>
-      <Unit61>
-        <Filename Value="references\Langspec.txt"/>
-        <EditorIndex Value="-1"/>
-        <UsageCount Value="19"/>
-        <DefaultSyntaxHighlighter Value="None"/>
-      </Unit61>
-      <Unit62>
-        <Filename Value="references\Summary.txt"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="23"/>
-        <UsageCount Value="8"/>
-        <DefaultSyntaxHighlighter Value="None"/>
-      </Unit62>
     </Units>
-    <JumpHistory Count="30" HistoryIndex="29">
+    <JumpHistory Count="27" HistoryIndex="26">
       <Position1>
-        <Filename Value="notice.pas"/>
-        <Caret Line="84" Column="24" TopLine="66"/>
+        <Filename Value="crossref_main.pas"/>
+        <Caret Line="78" TopLine="67"/>
       </Position1>
       <Position2>
         <Filename Value="crossref_main.pas"/>
-        <Caret Line="59" Column="31" TopLine="40"/>
+        <Caret Line="82" TopLine="67"/>
       </Position2>
       <Position3>
         <Filename Value="crossref_main.pas"/>
-        <Caret Line="68" Column="12" TopLine="37"/>
+        <Caret Line="82" Column="4" TopLine="70"/>
       </Position3>
       <Position4>
-        <Filename Value="crossref_main.pas"/>
-        <Caret Line="53" Column="46" TopLine="33"/>
+        <Filename Value="_symboltable.pas"/>
+        <Caret Line="635" TopLine="629"/>
       </Position4>
       <Position5>
-        <Filename Value="command.pas"/>
-        <Caret Line="116" Column="24" TopLine="80"/>
+        <Filename Value="_symboltable.pas"/>
+        <Caret Line="636" TopLine="629"/>
       </Position5>
       <Position6>
-        <Filename Value="command.pas"/>
-        <Caret Line="17" Column="18"/>
+        <Filename Value="_symboltable.pas"/>
+        <Caret Line="642" TopLine="629"/>
       </Position6>
       <Position7>
-        <Filename Value="..\unit_evaluator.pas"/>
-        <Caret Line="234" Column="5" TopLine="181"/>
+        <Filename Value="_symboltable.pas"/>
+        <Caret Line="644" TopLine="629"/>
       </Position7>
       <Position8>
-        <Filename Value="..\unit_evaluator.pas"/>
+        <Filename Value="_symboltable.pas"/>
+        <Caret Line="645" TopLine="629"/>
       </Position8>
       <Position9>
-        <Filename Value="Crossref.lpr"/>
-        <Caret Line="29" Column="18"/>
+        <Filename Value="_symboltable.pas"/>
+        <Caret Line="634" TopLine="624"/>
       </Position9>
       <Position10>
-        <Filename Value="Crossref.lpr"/>
-        <Caret Line="14" Column="7"/>
+        <Filename Value="_symboltable.pas"/>
+        <Caret Line="675" TopLine="660"/>
       </Position10>
       <Position11>
-        <Filename Value="Crossref.lpr"/>
-        <Caret Line="16" Column="2"/>
+        <Filename Value="_symboltable.pas"/>
+        <Caret Line="679" TopLine="661"/>
       </Position11>
       <Position12>
-        <Filename Value="Crossref.lpr"/>
-        <Caret Line="25" Column="30"/>
+        <Filename Value="_symboltable.pas"/>
+        <Caret Line="680" TopLine="662"/>
       </Position12>
       <Position13>
-        <Filename Value="Crossref.lpr"/>
-        <Caret Line="26" Column="24"/>
+        <Filename Value="_symboltable.pas"/>
+        <Caret Line="33" Column="15" TopLine="21"/>
       </Position13>
       <Position14>
-        <Filename Value="references\design_docs.txt"/>
-        <Caret Line="83" Column="21" TopLine="78"/>
+        <Filename Value="_symboltable.pas"/>
+        <Caret Line="501" TopLine="485"/>
       </Position14>
       <Position15>
-        <Filename Value="tables.pas"/>
-        <Caret Line="61" Column="31" TopLine="66"/>
+        <Filename Value="_symboltable.pas"/>
+        <Caret Line="679" TopLine="669"/>
       </Position15>
       <Position16>
-        <Filename Value="command.pas"/>
-        <Caret Line="54" Column="38" TopLine="10"/>
+        <Filename Value="_symboltable.pas"/>
+        <Caret Line="48" Column="11" TopLine="36"/>
       </Position16>
       <Position17>
-        <Filename Value="command.pas"/>
-        <Caret Line="53" Column="53" TopLine="31"/>
+        <Filename Value="setup.pas"/>
+        <Caret Line="264" TopLine="240"/>
       </Position17>
       <Position18>
-        <Filename Value="crossref_main.pas"/>
-        <Caret Line="57" Column="48" TopLine="49"/>
+        <Filename Value="_symboltable.pas"/>
+        <Caret Line="509" TopLine="490"/>
       </Position18>
       <Position19>
-        <Filename Value="crossref_main.pas"/>
-        <Caret Line="76" Column="9" TopLine="36"/>
+        <Filename Value="_symboltable.pas"/>
+        <Caret Line="512" TopLine="493"/>
       </Position19>
       <Position20>
-        <Filename Value="crossref_main.pas"/>
-        <Caret TopLine="48"/>
+        <Filename Value="_symboltable.pas"/>
+        <Caret Line="509" TopLine="509"/>
       </Position20>
       <Position21>
-        <Filename Value="command.pas"/>
-        <Caret Line="77" Column="15" TopLine="42"/>
+        <Filename Value="_symboltable.pas"/>
+        <Caret Line="727" Column="16" TopLine="716"/>
       </Position21>
       <Position22>
-        <Filename Value="crossref_main.pas"/>
-        <Caret Line="88" TopLine="48"/>
+        <Filename Value="_symboltable.pas"/>
+        <Caret Line="728" Column="40" TopLine="716"/>
       </Position22>
       <Position23>
-        <Filename Value="crossref_main.pas"/>
-        <Caret Line="62" Column="46" TopLine="51"/>
+        <Filename Value="_symboltable.pas"/>
+        <Caret Line="730" Column="48" TopLine="719"/>
       </Position23>
       <Position24>
-        <Filename Value="command.pas"/>
-        <Caret Line="159" Column="13" TopLine="122"/>
+        <Filename Value="_symboltable.pas"/>
+        <Caret Line="728" Column="40" TopLine="719"/>
       </Position24>
       <Position25>
-        <Filename Value="command.pas"/>
-        <Caret Line="118" Column="38" TopLine="81"/>
+        <Filename Value="_symboltable.pas"/>
+        <Caret Line="732" Column="18" TopLine="719"/>
       </Position25>
       <Position26>
-        <Filename Value="command.pas"/>
-        <Caret Line="34" Column="11" TopLine="48"/>
+        <Filename Value="_symboltable.pas"/>
+        <Caret Line="730" Column="37" TopLine="720"/>
       </Position26>
       <Position27>
-        <Filename Value="command.pas"/>
-        <Caret Line="127" Column="41" TopLine="24"/>
+        <Filename Value="_symboltable.pas"/>
+        <Caret Line="732" Column="46" TopLine="721"/>
       </Position27>
-      <Position28>
-        <Filename Value="crossref_main.pas"/>
-        <Caret Line="60" Column="46" TopLine="43"/>
-      </Position28>
-      <Position29>
-        <Filename Value="command.pas"/>
-        <Caret Line="93" Column="2" TopLine="91"/>
-      </Position29>
-      <Position30>
-        <Filename Value="command.pas"/>
-        <Caret Line="20" Column="17"/>
-      </Position30>
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>

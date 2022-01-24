@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="12"/>
+    <BuildModes Active="Default"/>
+    <Units>
+      <Unit>
+        <Filename Value="NewPcross.pas"/>
+        <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="2551"/>
+        <CursorPos X="41" Y="2571"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit>
+    </Units>
+    <JumpHistory HistoryIndex="29">
+      <Position>
+        <Filename Value="NewPcross.pas"/>
+        <Caret Line="616" Column="36" TopLine="596"/>
+      </Position>
+      <Position>
+        <Filename Value="NewPcross.pas"/>
+        <Caret Line="618" Column="36" TopLine="596"/>
+      </Position>
+      <Position>
+        <Filename Value="NewPcross.pas"/>
+        <Caret Line="621" Column="36" TopLine="596"/>
+      </Position>
+      <Position>
+        <Filename Value="NewPcross.pas"/>
+        <Caret Line="575" Column="37" TopLine="551"/>
+      </Position>
+      <Position>
+        <Filename Value="NewPcross.pas"/>
+        <Caret Line="576" Column="35" TopLine="551"/>
+      </Position>
+      <Position>
+        <Filename Value="NewPcross.pas"/>
+        <Caret Line="581" Column="35" TopLine="561"/>
+      </Position>
+      <Position>
+        <Filename Value="NewPcross.pas"/>
+        <Caret Line="582" Column="35" TopLine="561"/>
+      </Position>
+      <Position>
+        <Filename Value="NewPcross.pas"/>
+        <Caret Line="584" Column="35" TopLine="561"/>
+      </Position>
+      <Position>
+        <Filename Value="NewPcross.pas"/>
+        <Caret Line="589" Column="35" TopLine="561"/>
+      </Position>
+      <Position>
+        <Filename Value="NewPcross.pas"/>
+        <Caret Line="595" Column="35" TopLine="570"/>
+      </Position>
+      <Position>
+        <Filename Value="NewPcross.pas"/>
+        <Caret Line="596" Column="35" TopLine="579"/>
+      </Position>
+      <Position>
+        <Filename Value="NewPcross.pas"/>
+        <Caret Line="601" Column="35" TopLine="579"/>
+      </Position>
+      <Position>
+        <Filename Value="NewPcross.pas"/>
+        <Caret Line="602" Column="35" TopLine="579"/>
+      </Position>
+      <Position>
+        <Filename Value="NewPcross.pas"/>
+        <Caret Line="603" Column="35" TopLine="579"/>
+      </Position>
+      <Position>
+        <Filename Value="NewPcross.pas"/>
+        <Caret Line="604" Column="35" TopLine="579"/>
+      </Position>
+      <Position>
+        <Filename Value="NewPcross.pas"/>
+        <Caret Line="605" Column="35" TopLine="579"/>
+      </Position>
+      <Position>
+        <Filename Value="NewPcross.pas"/>
+        <Caret Line="613" Column="35" TopLine="591"/>
+      </Position>
+      <Position>
+        <Filename Value="NewPcross.pas"/>
+        <Caret Line="615" Column="35" TopLine="591"/>
+      </Position>
+      <Position>
+        <Filename Value="NewPcross.pas"/>
+        <Caret Line="618" Column="35" TopLine="591"/>
+      </Position>
+      <Position>
+        <Filename Value="NewPcross.pas"/>
+        <Caret Line="575" Column="37" TopLine="551"/>
+      </Position>
+      <Position>
+        <Filename Value="NewPcross.pas"/>
+        <Caret Line="581" Column="34" TopLine="561"/>
+      </Position>
+      <Position>
+        <Filename Value="NewPcross.pas"/>
+        <Caret Line="595" Column="34" TopLine="576"/>
+      </Position>
+      <Position>
+        <Filename Value="NewPcross.pas"/>
+        <Caret Line="599" Column="40" TopLine="579"/>
+      </Position>
+      <Position>
+        <Filename Value="NewPcross.pas"/>
+        <Caret Line="604" Column="34" TopLine="579"/>
+      </Position>
+      <Position>
+        <Filename Value="NewPcross.pas"/>
+        <Caret Line="605" Column="34" TopLine="575"/>
+      </Position>
+      <Position>
+        <Filename Value="NewPcross.pas"/>
+        <Caret Line="599" Column="40" TopLine="537"/>
+      </Position>
+      <Position>
+        <Filename Value="NewPcross.pas"/>
+        <Caret Line="2542" Column="20" TopLine="2492"/>
+      </Position>
+      <Position>
+        <Filename Value="NewPcross.pas"/>
+        <Caret Line="556" Column="22" TopLine="556"/>
+      </Position>
+      <Position>
+        <Filename Value="NewPcross.pas"/>
+        <Caret Line="2544" Column="19" TopLine="2527"/>
+      </Position>
+      <Position>
+        <Filename Value="NewPcross.pas"/>
+        <Caret Line="2537" TopLine="2515"/>
+      </Position>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes ActiveMode=""/>
+    </RunParams>
+  </ProjectSession>
+</CONFIG>
