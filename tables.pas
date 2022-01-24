@@ -102,6 +102,16 @@ type
             PLUSTOK,         // +
             QUOTETOK,        // '
             SEMICOLONTOK,    // ;
+            DIGIT0TOK,       // 0
+            DIGIT1TOK,       // 1
+            DIGIT2TOK,       // 2
+            DIGIT3TOK,       // 3
+            DIGIT4TOK,       // 4
+            DIGIT5TOK,       // 5
+            DIGIT6TOK,       // 6
+            DIGIT7TOK,       // 7
+            DIGIT8TOK,       // 8
+            DIGIT9TOK,       // 9
             CCNONETOK,      // used as start of conditionals
         // conditional compilation tokens
             CCDEFINETOK,    // $DEFINE
@@ -333,6 +343,9 @@ type
 
        StateCond =(
               NoState,         // Not in a state
+              inComment,       // start of comment
+              inNumber,        // start of number
+              inHexNum,        // hexadecimal number
               inProgram,       // program
               inUnit,          // unit found
               inLibrary,       // library
@@ -353,6 +366,7 @@ type
               inObject,
               inClass,
               inGeneric,       // defining a generic (template)
+              isSpecific,      // declaring a specific of a generic
               inOneStmt,       // this affects the next statement
               inWith,          // a with statement is in effect (will
                                // carry over to block or stmt following
@@ -972,19 +986,19 @@ Datatype= (notype,     //< not a base type     This must be first
         ( Key: '';		Kind: [NoActDec];  State: NoState),		// Sentinel for start of list
         ( Key: '@';		Kind: [NoActDec];  State: NoState),		// Address
         ( Key: '&';		Kind: [NoActDec];  State: NoState),		// Ampersand
-        ( Key: '{';		Kind: [NoActDec];  State: NoState),		// Brace Comment
+        ( Key: '{';		Kind: [NoActDec];  State: inComment),		// Brace Comment
         ( Key: '}';		Kind: [NoActDec];  State: NoState),		// closure
-        ( Key: '';		Kind: [NoActDec];  State: NoState),		// Optional Comment 1
+        ( Key: '';		Kind: [NoActDec];  State: inComment),		// Optional Comment 1
         ( Key: '';		Kind: [NoActDec];  State: NoState),		// closure
-        ( Key: '';		Kind: [NoActDec];  State: NoState),		// Optional Comment 2
+        ( Key: '';		Kind: [NoActDec];  State: inComment),		// Optional Comment 2
         ( Key: '';		Kind: [NoActDec];  State: NoState),		// closure             
-        ( Key: '';		Kind: [NoActDec];  State: NoState),		// Optional Comment 3
+        ( Key: '';		Kind: [NoActDec];  State: inComment),		// Optional Comment 3
         ( Key: '';		Kind: [NoActDec];  State: NoState),		// closure
-        ( Key: '';		Kind: [NoActDec];  State: NoState),		// Optional Comment 4
+        ( Key: '';		Kind: [NoActDec];  State: inComment),		// Optional Comment 4
         ( Key: '';		Kind: [NoActDec];  State: NoState),		// closure
-        ( Key: '';		Kind: [NoActDec];  State: NoState),		// Optional Comment 5
+        ( Key: '';		Kind: [NoActDec];  State: inComment),		// Optional Comment 5
         ( Key: '';		Kind: [NoActDec];  State: NoState),		// closure
-        ( Key: '(*';		Kind: [NoActDec];  State: NoState),		// Paren Star Comment
+        ( Key: '(*';		Kind: [NoActDec];  State: inComment),		// Paren Star Comment
         ( Key: '*)';		Kind: [NoActDec];  State: NoState),		// Comment End
         ( Key: ']';		Kind: [NoActDec];  State: NoState),		// Close Bracket
         ( Key: '.)';		Kind: [NoActDec];  State: NoState),		// Dot Bracket (Old School [ )
@@ -997,13 +1011,13 @@ Datatype= (notype,     //< not a base type     This must be first
         ( Key: ':';		Kind: [NoActDec];  State: NoState),		// Colon
         ( Key: ',';		Kind: [NoActDec];  State: NoState),		// Comma
         ( Key: ')';		Kind: [NoActDec];  State: NoState),		// Close Paren
-        ( Key: '//';		Kind: [NoActDec];  State: NoState),		// Double Slash
+        ( Key: '//';		Kind: [NoActDec];  State: inComment),		// Double Slash
         ( Key: '^';		Kind: [NoActDec];  State: NoState),		// Dereference
         ( Key: '/';		Kind: [NoActDec];  State: NoState),		// Div
-        ( Key: '$';		Kind: [NoActDec];  State: NoState),		// Dollar
+        ( Key: '$';		Kind: [NoActDec];  State: inHexNum),		// Dollar
         ( Key: '=';		Kind: [NoActDec];  State: NoState),		// EQ
         ( Key: '>';		Kind: [NoActDec];  State: NoState),		// GT
-        ( Key: '#';		Kind: [NoActDec];  State: NoState),		// Hash
+        ( Key: '#';		Kind: [NoActDec];  State: inNumber),		// Hash
         ( Key: '<';		Kind: [NoActDec];  State: NoState),		// LT
         ( Key: '-';		Kind: [NoActDec];  State: NoState),		// Minus
         ( Key: '*';		Kind: [NoActDec];  State: NoState),		// Mul
@@ -1012,8 +1026,56 @@ Datatype= (notype,     //< not a base type     This must be first
         ( Key: '.';		Kind: [NoActDec];  State: NoState),		// Period
         ( Key: '+';		Kind: [NoActDec];  State: NoState),		// Plus
         ( Key: '''';		Kind: [NoActDec];  State: NoState),		// Quote
-        ( Key: ';';		Kind: [NoActDec];  State: NoState),		// Semicolon
+        ( Key: ';';		Kind: [NoActDec];  State: NoState),  		// Semicolon
+        ( Key: '0';		Kind: [NoActDec];  State: inNumber),  		// 0
+        ( Key: '1';		Kind: [NoActDec];  State: inNumber),  		// 1
+        ( Key: '2';		Kind: [NoActDec];  State: inNumber),  		// 2
+        ( Key: '3';		Kind: [NoActDec];  State: inNumber),  		// 3
+        ( Key: '4';		Kind: [NoActDec];  State: inNumber),  		// 4
+        ( Key: '5';		Kind: [NoActDec];  State: inNumber),  		// 5
+        ( Key: '6';		Kind: [NoActDec];  State: inNumber),  		// 6
+        ( Key: '7';		Kind: [NoActDec];  State: inNumber),  		// 7
+        ( Key: '8';		Kind: [NoActDec];  State: inNumber),  		// 8
+        ( Key: '9';		Kind: [NoActDec];  State: inNumber),             // 9
+        // Semicolon
         ( Key: '';		Kind: [NoActDec];  State: NoState),		// end of stmbols / Start of conditionals we care about
+
+                                                                                 NoState,         // Not in a state
+             ,       // program
+             ,          // unit found
+              ,       // library
+              ,          // uses stmt
+              ,     // Which part (carries to succeeding statements)
+              ,
+              ,         // CONST, TYPE, VAR declaration
+                            ,
+              ,       // FORWARD
+              ,      // EXTERNAL
+              ,     // Proc, Func, etc. (carries forward
+              ,      //                   until closed)
+              ,
+              ,
+              ,
+              ,        // block types
+              ,
+              ,
+              ,       // defining a generic (template)
+              ,      // declaring a specific of a generic
+              inOneStmt,       // this affects the next statement
+              inWith,          // a with statement is in effect (will
+                               // carry over to block or stmt following
+              inBegin,         // begin-end block
+              inRepeat,        // repeat-until block
+              inTry,           // try-finally block
+              inIgnore,        // block where we should ignore code (ASM-END)
+              inCase,          // case-end but not record case (that is
+                               // closed with the end statement on record)
+              condIf,          // we are currently in a
+                               // successful {@IF ditective
+              condElse         // we are currently in the {$ELSE part
+
+
+
         ( Key: '$DEFINE';	Kind: [NoActDec];  State: NoState),		// $DEFINE
         ( Key: '$ELSE';		Kind: [NoActDec];  State: NoState),		// $ELSE
         ( Key: '$ELSEIF';	Kind: [NoActDec];  State: NoState),		// $ELSEIFf Conditionals
@@ -1038,11 +1100,11 @@ Datatype= (notype,     //< not a base type     This must be first
         ( Key: 'BITPACKED';	Kind: [NoActDec];  State: NoState),
 	        // C
         ( Key: 'CASE';		Kind: [NoActDec];  State: NoState),		// Case
-        ( Key: 'CLASS';		Kind: [NoActDec];  State: NoState),		// Class
-        ( Key: 'CONSTRUCTOR';	Kind: [NoActDec];  State: NoState),	// Constructor
-        ( Key: 'CONST';		Kind: [NoActDec];  State: NoState),		// Const
+        ( Key: 'CLASS';		Kind: [NoActDec];  State: inClass),		// Class
+        ( Key: 'CONSTRUCTOR';	Kind: [NoActDec];  State: inConstructor),	// Constructor
+        ( Key: 'CONST';		Kind: [NoActDec];  State: inConstDec),		// Const
 	        // D
-        ( Key: 'DESTRUCTOR';	Kind: [NoActDec];  State: NoState),
+        ( Key: 'DESTRUCTOR';	Kind: [NoActDec];  State: inDestructor),
         ( Key: 'DISPINTERFACE';	Kind: [NoActDec];  State: NoState),
         ( Key: 'DIV';		Kind: [NoActDec];  State: NoState),		// Div
         ( Key: 'DO';		Kind: [NoActDec];  State: NoState),		// Do
@@ -1052,29 +1114,29 @@ Datatype= (notype,     //< not a base type     This must be first
         ( Key: 'END';		Kind: [NoActDec];  State: NoState),		// End
         ( Key: 'EXCEPT';	Kind: [NoActDec];  State: NoState),
         ( Key: 'EXPORTS';	Kind: [NoActDec];  State: NoState),		// Exports
-        ( Key: 'EXTERNAL';	Kind: [NoActDec];  State: NoState),	// External
+        ( Key: 'EXTERNAL';	Kind: [NoActDec];  State: inExternal),	// External
 	        // F
         ( Key: 'FILE';		Kind: [NoActDec];  State: NoState),		// File
         ( Key: 'FINALIZATION';	Kind: [NoActDec];  State: NoState),	// Finalization
         ( Key: 'FINALLY';	Kind: [NoActDec];  State: NoState),		// Finally
         ( Key: 'FOR';		Kind: [NoActDec];  State: NoState),		// For
-        ( Key: 'FUNCTION';	Kind: [NoActDec];  State: NoState),	// Function
+        ( Key: 'FUNCTION';	Kind: [NoActDec];  State: inFunction),	// Function
 	        // G
-        ( Key: 'GOTO';		Kind: [NoActDec];  State: NoState),		// Goto
+        ( Key: 'GOTO';		Kind: [NoActDec];  State: NoState),     // Goto
 	        // H
 	        // I
         ( Key: 'IF';		Kind: [NoActDec];  State: NoState),
-        ( Key: 'IMPLEMENTATION';Kind: [NoActDec];  State: NoState),
+        ( Key: 'IMPLEMENTATION';Kind: [NoActDec];  State: inImplementation),
         ( Key: 'INHERITED';	Kind: [NoActDec];  State: NoState),
         ( Key: 'INITIALIZATION';Kind: [NoActDec];  State: NoState),
         ( Key: 'IN';		Kind: [NoActDec];  State: NoState),
-        ( Key: 'INTERFACE';	Kind: [NoActDec];  State: NoState),
+        ( Key: 'INTERFACE';	Kind: [NoActDec];  State: inInterface),
         ( Key: 'IS';		Kind: [NoActDec];  State: NoState),
 	        // J
 	        // K
 	        // L
         ( Key: 'LABEL';		Kind: [NoActDec];  State: NoState),
-        ( Key: 'LIBRARY';	Kind: [NoActDec];  State: NoState),
+        ( Key: 'LIBRARY';	Kind: [NoActDec];  State: inLibrary),
 	        // M
         ( Key: 'MOD';		Kind: [NoActDec];  State: NoState),		// Mod
         ( Key: 'MODULE';	Kind: [NoActDec];  State: NoState),
@@ -1082,7 +1144,7 @@ Datatype= (notype,     //< not a base type     This must be first
         ( Key: 'NIL';		Kind: [NoActDec];  State: NoState),
         ( Key: 'NOT';		Kind: [NoActDec];  State: NoState),
 	        // O
-        ( Key: 'OBJECT';	Kind: [NoActDec];  State: NoState),
+        ( Key: 'OBJECT';	Kind: [NoActDec];  State: inObject),
         ( Key: 'OF';		Kind: [NoActDec];  State: NoState),
         ( Key: 'OPERATOR';	Kind: [NoActDec];  State: NoState),
         ( Key: 'OR';		Kind: [NoActDec];  State: NoState),
@@ -1090,13 +1152,13 @@ Datatype= (notype,     //< not a base type     This must be first
         ( Key: 'OTHERWISE';	Kind: [NoActDec];  State: NoState),
 	        // P
         ( Key: 'PACKED';	Kind: [NoActDec];  State: NoState),
-        ( Key: 'PROCEDURE';	Kind: [NoActDec];  State: NoState),
-        ( Key: 'PROGRAM';	Kind: [NoActDec];  State: NoState),
-        ( Key: 'PROPERTY';	Kind: [NoActDec];  State: NoState),
+        ( Key: 'PROCEDURE';	Kind: [NoActDec];  State: inProcedure),
+        ( Key: 'PROGRAM';	Kind: [NoActDec];  State: inProgram),
+        ( Key: 'PROPERTY';	Kind: [NoActDec];  State: inProperty),
 	        // Q
 	        // R
         ( Key: 'RAISE';		Kind: [NoActDec];  State: NoState),
-        ( Key: 'RECORD';	Kind: [NoActDec];  State: NoState),
+        ( Key: 'RECORD';	Kind: [NoActDec];  State: inRecord),
         ( Key: 'REM';		Kind: [NoActDec];  State: NoState),
         ( Key: 'REPEAT';	Kind: [NoActDec];  State: NoState),
         ( Key: 'RESOURCESTRING';Kind: [NoActDec];  State: NoState),
@@ -1112,13 +1174,13 @@ Datatype= (notype,     //< not a base type     This must be first
         ( Key: 'THREADVAR';	Kind: [NoActDec];  State: NoState),
         ( Key: 'TO';		Kind: [NoActDec];  State: NoState),
         ( Key: 'TRY';		Kind: [NoActDec];  State: NoState),
-        ( Key: 'TYPE';		Kind: [NoActDec];  State: NoState),
+        ( Key: 'TYPE';		Kind: [NoActDec];  State: inTypeDec),
 	        // U
-        ( Key: 'UNIT';		Kind: [NoActDec];  State: NoState),		// Unit
+        ( Key: 'UNIT';		Kind: [NoActDec];  State: inUnit),		// Unit
         ( Key: 'UNTIL';		Kind: [NoActDec];  State: NoState),		// Until
-        ( Key: 'USES';		Kind: [NoActDec];  State: NoState),		// Uses
+        ( Key: 'USES';		Kind: [NoActDec];  State: inUses),		// Uses
 	        // V
-        ( Key: 'VAR';		Kind: [NoActDec];  State: NoState),		// Var
+        ( Key: 'VAR';		Kind: [NoActDec];  State: inVarDec),		// Var
         ( Key: 'VIRTUAL';	Kind: [NoActDec];  State: NoState),
 	        // W
         ( Key: 'WHILE';		Kind: [NoActDec];  State: NoState),		// While
@@ -1159,8 +1221,8 @@ Datatype= (notype,     //< not a base type     This must be first
         ( Key:  'EXTERNAL';	Kind: [NoActDec];  State: NoState),
         ( Key:  'FAR';		Kind: [NoActDec];  State: NoState),
         ( Key:  'FAR16';	Kind: [NoActDec];  State: NoState),
-        ( Key:  'FORWARD';	Kind: [NoActDec];  State: NoState),
-        ( Key:  'GENERIC';	Kind: [NoActDec];  State: NoState),
+        ( Key:  'FORWARD';	Kind: [NoActDec];  State: inforward),
+        ( Key:  'GENERIC';	Kind: [NoActDec];  State: inGeneric),
         ( Key:  'HELPER';	Kind: [NoActDec];  State: NoState),
         ( Key:  'IMPLEMENTS';	Kind: [NoActDec];  State: NoState),
         ( Key:  'INDEX';	Kind: [NoActDec];  State: NoState),
