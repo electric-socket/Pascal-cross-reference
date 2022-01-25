@@ -83,5 +83,30 @@ Paul Robinson,
 2021-12-29
 
 #Version 0.04 - Add keywords and modifiers to the system
-I decided not to put keywords in the symbol table, but to use an array, and keep everything there: symbols, keywords, and
+I decided not to put keywords in the symbol table, but to use an array, and
+keep everything there: symbols, keywords, and modifiers. Something I didn't
+explain was the difference between a keyword and a modifier. A keyword is
+absolutely prohibited as an identifier, a modifier is not, e.g. you can declare
+in a program, which will compile successfully:
+
+    Const
+        Forward = 6;
+        Virtual = 5;
+
+You cannot, however, compile a program with this in open code:
+
+    Const
+        Begin = 3;
+        Class = 2;
+        property = 10;
+
+any of these used except by the syntax rules, will fail the compile.
+In short, a modifier is a "temporary" keyword, it only has one for the
+particular context it is expected; at any other time, it's a perfectly
+acceptable identifier.
+
+Well, that's the larest update for now.
+
+Paul Robinson
+2022-01-25
 
